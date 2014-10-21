@@ -86,7 +86,7 @@ Key of 4048 length, stored in a file:
 
     $ keygen --short --length 4048 > example.key
 
-*(Use `--short` / `-s` this to remove verbose output)*
+*(Use `--short` / `-s` write only the key)*
 
 10 Keys of 40 length each (each key in a line):
 
@@ -111,7 +111,7 @@ A cool matrix-like screen (use fullscreen terminal for better experience):
 
     while :; do ./keygen -s -l $COLUMNS; sleep 0.1; done
 
-*(Use `Ctrl+C` to quit)*
+*(Press `Ctrl+C` to quit)*
 
 ### Library
 
