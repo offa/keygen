@@ -66,7 +66,7 @@ static inline void transformAscii(UByte* buffer, const unsigned int length)
  * @param buffer        Key buffer
  * @param length        Length (size)
  */
-static inline void transformsciiBlanks(UByte* buffer, const unsigned int length)
+static inline void transformAsciiBlanks(UByte* buffer, const unsigned int length)
 {
     for( unsigned int i=0; i<length; i++ )
     {
@@ -126,7 +126,7 @@ KeyGenError keygen_createKey(UByte* buffer, const unsigned int length, enum Form
                 transformAscii(random, length);
                 break;
             case ASCII_BLANKS:
-                transformsciiBlanks(random, length);
+                transformAsciiBlanks(random, length);
                 break;
             default:
                 rtn = KG_ERR_ILL_ARGUMENT;
