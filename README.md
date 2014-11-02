@@ -1,6 +1,6 @@
 # [KeyGen](https://github.com/offa/keygen)
 
-KeyGen is a generator for random keys and passwords. It's usable as applicatllllor as library. 
+KeyGen is a generator for random keys and passwords. It's usable as standalone application and library. 
 
 The cryptography behind is provided by *OpenSSL*.
 
