@@ -86,7 +86,7 @@ Key of 4048 length, stored in a file:
 
     $ keygen --short --length 4048 > example.key
 
-*(Use `--short` / `-s` write only the key)*
+*(Use `--short` / `-s` to write key only)*
 
 10 Keys of 40 length each (each key in a line):
 
