@@ -1,5 +1,3 @@
-## Tests
-
 message(STATUS "Running Tests")
 
 
