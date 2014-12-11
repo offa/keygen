@@ -22,7 +22,7 @@ Furthermore there are build targets either application or library. Run `make <Ta
 
 ## Testing
 
-After building the tests are executed within the build directory using:
+After building, the tests are executed within the build directory using:
 
     make test
 
