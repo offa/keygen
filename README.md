@@ -20,6 +20,14 @@ Building the library and application:
 
 Furthermore there are build targets either application or library. Run `make <Target>` to build them.
 
+## Testing
+
+After building the tests are executed within the build directory using:
+
+    make test
+
+*Note: CTest is used for testing.*
+
 ## Usage
 
 The unit of length are (ascii-) characters (1 char = 1 byte). So a length of 20 means 20 (ascii-) char's = 20 Byte.
