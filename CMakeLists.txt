@@ -27,6 +27,9 @@ if( OPENSSL_FOUND )
 	message(STATUS "Using OpenSSL ${OPENSSL_VERSION}")
 endif()
 
+enable_testing()
+subdirs(test)
+
 
 add_definitions(-std=c99)
 add_definitions(-Wall -Wextra -pedantic)
@@ -35,6 +38,7 @@ add_definitions(-DKEYGEN_VERSION="${PROJECT_VERSION}")
 
 add_library(${LIB_NAME} ${LIB_SRC})
 set_target_properties(${LIB_NAME} PROPERTIES PREFIX "")
+
 
 add_executable(${APP_NAME} ${APP_SRC})
 target_link_libraries(${APP_NAME} ${LIB_NAME} ${OPENSSL_LIBRARIES})
