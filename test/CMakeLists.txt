@@ -1,4 +1,4 @@
-message(STATUS "Running Tests")
+message(STATUS "Building Tests")
 
 
 set(CTEST_START_WITH_EMPTY_BINARY_DIRECTORY TRUE)
