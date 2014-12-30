@@ -112,7 +112,7 @@ KeyGenError keygen_createKey(UByte* buffer, const unsigned int length, enum Form
         return KG_ERR_ILL_ARGUMENT;
     }
     
-    KeyGenError rtn;
+    KeyGenError rtn = KG_ERR_UNKNOWN;
     UByte random[length];
     int err = getRandomBytes(random, length);
     
