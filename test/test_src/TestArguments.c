@@ -24,7 +24,7 @@ int main(int argc, char** argv)
     UNUSED(argc);
     UNUSED(argv);
 
-    UByte* buffer = malloc(SIZE);
+    buffer = malloc(SIZE);
 
     KeyGenError expected = KG_ERR_ILL_ARGUMENT;
     TEST_RESULT(keygen_createKey(NULL, 100, ASCII) == expected);
