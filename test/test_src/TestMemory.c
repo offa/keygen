@@ -9,6 +9,8 @@
 #include "TestUtils.h"
 
 
+
+
 static const int NUM_RUNS = 1000;
 
 
@@ -33,6 +35,8 @@ int main(int argc, char** argv)
         {
             TEST_RESULT(buffer[i] == 0);
         }
+        
+        free(buffer);
     }
 
     return EXIT_SUCCESS;
