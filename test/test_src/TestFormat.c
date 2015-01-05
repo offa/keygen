@@ -55,7 +55,6 @@ int main(int arg, char** argv)
     UNUSED(arg);
     UNUSED(argv);
 
-    
     buffer = malloc(SIZE);
     TEST_RESULT(buffer != NULL);
 
