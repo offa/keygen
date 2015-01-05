@@ -26,6 +26,12 @@ After building, the tests are executed within the build directory using:
 
     make test
 
+or by running
+
+    ctest
+
+within the build directory.
+
 *Note: CTest is used for testing.*
 
 ## Usage
