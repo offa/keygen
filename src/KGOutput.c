@@ -105,7 +105,6 @@ void printHelp()
     printHelpOption(OPT_L_VERSION, OPT_VERSION, NULL, "Shows version informations and license.");
 }
 
-
 void printKey(const UByte* key, struct CLOptions options)
 {
     if( options.shortOutput == true )
@@ -123,7 +122,6 @@ void printKey(const UByte* key, struct CLOptions options)
         printf("  Length : %d / %d\n\n", (int) strlen((char*) key), options.keyLength);
     }
 }
-
 
 void printVersion()
 {
@@ -146,6 +144,7 @@ void printVersion()
     "\n   along with this program.  If not, see <http://www.gnu.org/licenses/>."
     "\n\n");
 }
+
 
 int generateKey(const struct CLOptions options)
 {
@@ -178,4 +177,22 @@ int generateKey(const struct CLOptions options)
     keygen_cleanBuffer(buffer, length+1);
     
     return EXIT_SUCCESS;
+}
+
+const char* errorMessage(KeyGenError error)
+{
+    switch(error)
+    {
+        case KG_ERR_SUCCESS:
+            return "";
+        case KG_ERR_GENERAL:
+            return "General error";
+        case KG_ERR_ILL_ARGUMENT:
+            return "Illegal argument error";
+        case KG_ERR_SECURITY:
+            return "Security error";
+        case KG_ERR_UNKNOWN:
+        default:
+            return "Unknown";
+    }
 }

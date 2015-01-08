@@ -71,6 +71,15 @@ extern "C"
      *                      on a clean exit or an error code in case of an error
      */
     int generateKey(const struct CLOptions options);
+    
+    
+    /**
+     * Returns an error message for the error code.
+     * 
+     * @param error     Error code
+     * @return          Error message
+     */
+    const char* errorMessage(KeyGenError error);
 
 #ifdef	__cplusplus
 }
