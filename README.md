@@ -44,14 +44,19 @@ The application is used with commandline arguments. Run `keygen -h` to print the
 
 #### Arguments:
 
-     Usage: keygen [Options]
+```
+ Usage: keygen [Options]
 
-      --ascii	-a :  Generates a key of ASCII characters, ranging from '!' to '~' (default)
-      --ascii-blank	-w :  Generates a key of ASCII characters, ranging from ' ' to '~'; same as --ascii, but includes blanks
-      --length <n>	-l <n> :  Generates a key of <n> bytes length
-      --short	-s :  Shows only the key
-      --help	-h :  Shows the help
-      --version	-v :  Shows version informations and license.
+  --ascii	-a :  Generates a key of ASCII characters, ranging from '!'
+			to'~' (default)
+  --ascii-blank	-w :  Generates a key of ASCII characters, ranging from ' '
+			to'~'; same as --ascii, but includes blanks
+  --alphanum	-p :  Generates a key of alphanumeric characters
+  --length <n>	-l <n> :  Generates a key of <n> bytes length
+  --short	-s :  Shows only the key
+  --help	-h :  Shows the help
+  --version	-v :  Shows version informations and license.
+```
 
 **Note:** For generating, the `--length` / `-l` parameter is *always* necessary.
  
