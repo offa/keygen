@@ -47,10 +47,9 @@ The application is used with commandline arguments. Run `keygen -h` to print the
 ```
  Usage: keygen [Options]
 
-  --ascii	-a :  Generates a key of ASCII characters, ranging from '!'
-			to'~' (default)
-  --ascii-blank	-w :  Generates a key of ASCII characters, ranging from ' '
-			to'~'; same as --ascii, but includes blanks
+  --ascii	-a :  Generates a key of ASCII characters, ranging from '!' to'~' (default)
+  --ascii-blank	-w :  Generates a key of ASCII characters, ranging from ' ' to'~';
+                      same as --ascii, but includes blanks
   --alphanum	-p :  Generates a key of alphanumeric characters
   --length <n>	-l <n> :  Generates a key of <n> bytes length
   --short	-s :  Shows only the key
