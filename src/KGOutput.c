@@ -99,6 +99,7 @@ void printHelp()
     
     printHelpOption(OPT_L_ASCII, OPT_ASCII, NULL, "Generates a key of ASCII characters, ranging from '!'\n\t\t\tto'~' (default)");
     printHelpOption(OPT_L_ASCII_BLANKS, OPT_ASCII_BLANKS, NULL, "Generates a key of ASCII characters, ranging from ' '\n\t\t\tto'~'; same as --ascii, but includes blanks");
+    printHelpOption(OPT_L_ALPHANUMERIC, OPT_ALPHANUMERIC, NULL, "Generates a key of alphanumeric characters");
     printHelpOption(OPT_L_LENGTH, OPT_LENGTH, "n", "Generates a key of <n> bytes length");
     printHelpOption(OPT_L_SHORT, OPT_SHORT, NULL, "Shows only the key");
     printHelpOption(OPT_L_HELP, OPT_HELP, NULL, "Shows the help");

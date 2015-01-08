@@ -34,13 +34,14 @@
 /** Minimum of arguments. */
 #define OPT_MIN_ARGS            2
 /** Getopt string. */
-#define GETOPT_CLI_STR          "sawl:hv"
+#define GETOPT_CLI_STR          "sawpl:hv"
 
 
 static const struct option getoptOptions[] =
 {
     { OPT_L_ASCII, no_argument, 0, OPT_ASCII },
     { OPT_L_ASCII_BLANKS, no_argument, 0, OPT_ASCII_BLANKS },
+    { OPT_L_ALPHANUMERIC, no_argument, 0, OPT_ALPHANUMERIC },
     { OPT_L_LENGTH, required_argument, 0, OPT_LENGTH },
     { OPT_L_SHORT, no_argument, 0, OPT_SHORT },
     { OPT_L_HELP, no_argument, 0, OPT_HELP },
@@ -83,6 +84,10 @@ struct CLOptions parseOptions(int argc, char** argv)
                     break;
                 case OPT_ASCII_BLANKS:
                     options.keyFormat = ASCII_BLANKS;
+                    options.valid &= true;
+                    break;
+                case OPT_ALPHANUMERIC:
+                    options.keyFormat = ALPHA_NUMERIC;
                     options.valid &= true;
                     break;
                 case OPT_LENGTH:

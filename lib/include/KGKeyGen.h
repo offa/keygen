@@ -55,7 +55,8 @@ extern "C"
     enum Format
     {
         ASCII,  ///< Ascii
-        ASCII_BLANKS    ///< Ascii including blanks
+        ASCII_BLANKS,   ///< Ascii including blanks
+        ALPHA_NUMERIC   ///< Alphanumeric
     };
     
     /**

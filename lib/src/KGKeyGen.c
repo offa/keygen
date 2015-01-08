@@ -30,6 +30,7 @@
 
 #include <string.h>
 #include <stdbool.h>
+#include <assert.h>
 #include <openssl/rand.h>
 #include <openssl/err.h>
 
@@ -44,6 +45,17 @@
 #define LIM_ASCII_LOWER_BLANK       ' '
 /** Ascii upper bound (including blanks). */
 #define LIM_ASCII_UPPER_BLANK       ( '~' - LIM_ASCII_LOWER_BLANK )
+
+static const char ALPHANUMERIC_CHARS[] =
+{
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
+    'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+    'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+    'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+    'y', 'z'
+};
+
+static const unsigned int ALPHANUMERIC_LENGTH = sizeof(ALPHANUMERIC_CHARS);
 
 
 /**
@@ -74,6 +86,22 @@ static inline void transformAsciiBlanks(UByte* buffer, const unsigned int length
     }
 }
 
+/**
+ * Transforms the buffer to alphanumeric.
+ * 
+ * @param buffer        Key buffer
+ * @param length        Length (size)
+ */
+static inline void transformAlphaNumeric(UByte* buffer, const unsigned int length)
+{
+    for( unsigned i=0; i<length; i++ )
+    {
+        const unsigned int pos = buffer[i] % ALPHANUMERIC_LENGTH;
+        assert(pos < ALPHANUMERIC_LENGTH);
+
+        buffer[i] = ALPHANUMERIC_CHARS[pos];
+    }
+}
 
 /**
  * Generates random bytes of length <code>length</code> and writes them into
@@ -127,6 +155,9 @@ KeyGenError keygen_createKey(UByte* buffer, const unsigned int length, enum Form
                 break;
             case ASCII_BLANKS:
                 transformAsciiBlanks(random, length);
+                break;
+            case ALPHA_NUMERIC:
+                transformAlphaNumeric(random, length);
                 break;
             default:
                 rtn = KG_ERR_ILL_ARGUMENT;
