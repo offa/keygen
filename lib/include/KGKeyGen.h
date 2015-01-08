@@ -21,7 +21,7 @@
 /**
  * @file        KGKeyGen.h
  * 
- * @version     0.1
+ * @version     0.2
  * @author      offa
  * @date        21.10.2014
  * 
@@ -55,7 +55,8 @@ extern "C"
     enum Format
     {
         ASCII,  ///< Ascii
-        ASCII_BLANKS    ///< Ascii including blanks
+        ASCII_BLANKS,   ///< Ascii including blanks
+        ALPHA_NUMERIC   ///< Alphanumeric
     };
     
     /**

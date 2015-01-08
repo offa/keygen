@@ -21,7 +21,7 @@
 /**
  * @file        KGOptions.h
  * 
- * @version     0.1
+ * @version     0.2
  * @author      offa
  * @date        21.10.2014
  * 
@@ -44,6 +44,7 @@ extern "C"
 
 #define OPT_ASCII               'a' ///< Ascii format
 #define OPT_ASCII_BLANKS        'w' ///< Ascii format including blanks
+#define OPT_ALPHANUMERIC        'p' ///< Alphanumeric
 #define OPT_LENGTH              'l' ///< Keylength
 #define OPT_SHORT               's' ///< Reduced output
 #define OPT_HELP                'h' ///< Print help
@@ -51,6 +52,7 @@ extern "C"
 
 #define OPT_L_ASCII             "ascii"     ///< Ascii format
 #define OPT_L_ASCII_BLANKS      "ascii-blank" ///< Ascii format including blanks
+#define OPT_L_ALPHANUMERIC      "alphanum"  ///< Alphanumeric
 #define OPT_L_LENGTH            "length"    ///< Keylength
 #define OPT_L_SHORT             "short"     ///< Reduced output
 #define OPT_L_HELP              "help"      ///< Print help

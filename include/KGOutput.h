@@ -21,7 +21,7 @@
 /**
  * @file        KGOutput.h
  * 
- * @version     0.1
+ * @version     0.2
  * @author      offa
  * @date        21.10.2014
  * 

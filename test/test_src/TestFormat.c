@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <ctype.h>
 
 #include <KGKeyGen.h>
 
@@ -30,6 +31,16 @@ static bool testFormat(UByte* buffer, unsigned int size, enum Format format)
             for( int i=0; i<(int)size; i++ )
             {
                 if( buffer[i] < ' ' || buffer[i] > '~' )
+                {
+                    printf("Test failed: <%c> is not allowed\n", buffer[i]);
+                    return false;
+                }
+            }
+            return true;
+        case ALPHA_NUMERIC:
+            for( int i=0; i<(int)size; i++ )
+            {
+                if( isalnum(buffer[i]) == false )
                 {
                     printf("Test failed: <%c> is not allowed\n", buffer[i]);
                     return false;
@@ -81,6 +92,19 @@ int main(int arg, char** argv)
         TEST_RESULT(rtn == KG_ERR_SUCCESS);
         TEST_RESULT(testFormat(buffer, SIZE, format) == true);
 
+        keygen_cleanBuffer(buffer, SIZE);
+    }
+    
+    // Alphanumeric
+    format = ALPHA_NUMERIC;
+    
+    for( int n=0; n<NUM_RUNS; n++ )
+    {
+        KeyGenError rtn = keygen_createKey(buffer, SIZE, format);
+        
+        TEST_RESULT(rtn == KG_ERR_SUCCESS);
+        TEST_RESULT(testFormat(buffer, SIZE, format) == true);
+        
         keygen_cleanBuffer(buffer, SIZE);
     }
 
