@@ -21,7 +21,7 @@
 /**
  * @file        KGKeyGen.h
  * 
- * @version     0.2
+ * @version     0.3
  * @author      offa
  * @date        21.10.2014
  * 
@@ -66,6 +66,7 @@ extern "C"
     {
         KG_ERR_SUCCESS = 0,    ///< Success / No error
         KG_ERR_GENERAL,        ///< General error
+        KG_ERR_MEMORY,         ///< Memory error
         KG_ERR_ILL_ARGUMENT,   ///< Illegal argument
         KG_ERR_SECURITY,       ///< Security error
         KG_ERR_UNKNOWN         ///< Unknown error
@@ -139,7 +140,25 @@ extern "C"
      */
     void keygen_cleanBuffer(UByte* buffer, unsigned int length);
     
-
+    
+    /**
+     * Calls @link keygen_cleanBuffer() @endlink followed by
+     * <code>free()</code>.
+     * 
+     * This function is equal to:
+     * 
+     * @code{.c}
+     * keygen_cleanBuffer(buffer, length);
+     * free(buffer);
+     * @endcode
+     * 
+     * @param buffer        Buffer
+     * @param length        Length (size) (>= 0)
+     * 
+     * @see keygen_cleanBuffer()
+     */
+    void keygen_cleanAndFreeBuffer(UByte* buffer, unsigned int length);
+    
 #ifdef	__cplusplus
 }
 #endif

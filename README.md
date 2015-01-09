@@ -145,7 +145,7 @@ KeyGenError err = keygen_createKey(buffer, KEY_LENGTH, ASCII);
 
 if( err == KG_ERR_SUCCESS )
 {
-    // Key generated, to something
+    // Key generated, do something
 }
 else
 {
@@ -154,6 +154,34 @@ else
 
 // Finally clean the buffer 
 keygen_cleanBuffer(buffer, length);
+```
+
+For longer keys use `malloc()` instead:
+
+```c
+const int KEY_LENGTH = 100000; // Key length
+UByte* buffer = malloc(KEY_LENGTH * sizeof(UByte)); // allocate buffer
+
+if( buffer == NULL )
+{
+    // Error - malloc() failed
+}
+else
+{
+    KeyGenError err = keygen_createKey(buffer, KEY_LENGTH, ASCII);
+
+    if( err == KG_ERR_SUCCESS )
+    {
+        // Key generated, do something
+    }
+    else
+    {
+        // Error - handle that case
+    }
+
+    // Finally clean and free the buffer
+    keygen_cleanAndFreeBuffer(buffer, length);
+}
 ```
 
 ## Notes

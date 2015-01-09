@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 project(keygen)
-set(PROJECT_VERSION 0.0.2)
+set(PROJECT_VERSION 0.0.3)
 
 message(STATUS "~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~")
 
@@ -32,7 +32,7 @@ subdirs(test)
 
 
 add_definitions(-std=c99)
-add_definitions(-Wall -Wextra -pedantic)
+add_definitions(-Wall -Wextra -pedantic -Werror)
 add_definitions(-DKEYGEN_VERSION="${PROJECT_VERSION}")
 
 

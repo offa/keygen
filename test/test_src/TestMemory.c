@@ -9,16 +9,26 @@
 #include "TestUtils.h"
 
 
-
-
-static const int NUM_RUNS = 1000;
+static void testOverlength()
+{
+    const unsigned int overLength =  100000000;
+    
+    UByte* buffer = malloc(overLength * sizeof(UByte));
+    KeyGenError rtn = keygen_createKey(buffer, overLength, ASCII);
+    
+    TEST_RESULT(rtn == KG_ERR_SUCCESS);
+    
+    keygen_cleanBuffer(buffer, overLength);
+    free(buffer);
+}
 
 
 int main(int argc, char** argv)
 {
     UNUSED(argc);
     UNUSED(argv);
-
+    
+    const int NUM_RUNS = 1000;
 
     for( int n=0; n<NUM_RUNS; n++ )
     {
@@ -38,6 +48,8 @@ int main(int argc, char** argv)
         
         free(buffer);
     }
+    
+    testOverlength();
 
     return EXIT_SUCCESS;
 }

@@ -21,7 +21,7 @@
 /**
  * @file        KGOutput.c
  * 
- * @version     0.2
+ * @version     0.3
  * @author      offa
  * @date        21.10.2014
  */
@@ -158,7 +158,7 @@ int generateKey(const struct CLOptions options)
         return KG_RTN_ERR_KEY_TO_SHORT;
     }
 
-    UByte buffer[length+1];
+    UByte* buffer = malloc(length * sizeof(UByte) + 1);
     memset(buffer, 0, length+1);
 
     KeyGenError err = keygen_createKey(buffer, length, options.keyFormat);
@@ -176,6 +176,7 @@ int generateKey(const struct CLOptions options)
     }
 
     keygen_cleanBuffer(buffer, length+1);
+    free(buffer);
     
     return EXIT_SUCCESS;
 }
@@ -188,6 +189,8 @@ const char* errorMessage(KeyGenError error)
             return "";
         case KG_ERR_GENERAL:
             return "General error";
+        case KG_ERR_MEMORY:
+            return "Memory error";
         case KG_ERR_ILL_ARGUMENT:
             return "Illegal argument error";
         case KG_ERR_SECURITY:

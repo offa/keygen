@@ -21,7 +21,7 @@
 /**
  * @file        KGKeyGen.c
  * 
- * @version     0.2
+ * @version     0.3
  * @author      offa
  * @date        21.10.2014
  */
@@ -141,7 +141,13 @@ KeyGenError keygen_createKey(UByte* buffer, const unsigned int length, enum Form
     }
     
     KeyGenError rtn = KG_ERR_UNKNOWN;
-    UByte random[length];
+    UByte* random = malloc(length * sizeof(UByte));
+    
+    if( random == NULL )
+    {
+        return KG_ERR_MEMORY;
+    }
+    
     int err = getRandomBytes(random, length);
     
     if( err == ERR_LIB_NONE )
@@ -170,7 +176,7 @@ KeyGenError keygen_createKey(UByte* buffer, const unsigned int length, enum Form
             memcpy(buffer, random, length);
             rtn = KG_ERR_SUCCESS;
         }
-        else
+        else // TODO: really required?
         {
             keygen_cleanBuffer(random, length);
         }
@@ -180,7 +186,7 @@ KeyGenError keygen_createKey(UByte* buffer, const unsigned int length, enum Form
         rtn = KG_ERR_SECURITY;
     }
     
-    keygen_cleanBuffer(random, length);
+    keygen_cleanAndFreeBuffer(random, length);
     
     return rtn;
 }
@@ -191,4 +197,10 @@ void keygen_cleanBuffer(UByte* buffer, unsigned int length)
     {
         OPENSSL_cleanse(buffer, length);
     }
+}
+
+void keygen_cleanAndFreeBuffer(UByte* buffer, unsigned int length)
+{
+    keygen_cleanBuffer(buffer, length);
+    free(buffer);
 }
