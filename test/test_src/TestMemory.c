@@ -11,7 +11,7 @@
 
 static void testOverlength()
 {
-    const unsigned int overLength =  100000000;
+    const unsigned int overLength =  1000000;
     
     UByte* buffer = malloc(overLength * sizeof(UByte));
     KeyGenError rtn = keygen_createKey(buffer, overLength, ASCII);
