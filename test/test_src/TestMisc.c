@@ -26,12 +26,31 @@ static void testFormatCharLengths()
 }
 
 
+static void testFormatChars()
+{
+    const char* charsAsciiBlanks = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+    const char* charsAscii = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
+    const char* charsAlphaNum = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    
+    
+    int result = memcmp(charsAscii, ASCII_CHARS, ASCII_LENGTH);
+    TEST_RESULT(result == 0);
+    
+    result = memcmp(charsAsciiBlanks, ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
+    TEST_RESULT(result == 0);
+    
+    result = memcmp(charsAlphaNum, ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);
+    TEST_RESULT(result == 0);
+}
+
+
 int main(int argc, char** argv)
 {
     UNUSED(argc);
     UNUSED(argv);
 
     testFormatCharLengths();
+    testFormatChars();
 
     return EXIT_SUCCESS;
 }
