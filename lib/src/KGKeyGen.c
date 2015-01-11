@@ -79,59 +79,24 @@ const unsigned int ASCII_LENGTH = sizeof(ASCII_CHARS);
 
 
 /**
- * Transforms the buffer to ascii.
+ * Transforms the buffer to the given format.
  * 
- * @param buffer        Key buffer
- * @param length        Length (size)
+ * @param buffer        Input buffer
+ * @param length        Input buffer length
+ * @param fmtChars      Format char's
+ * @param fmtLength     Format char's length
  */
-static inline void transformAscii(UByte* buffer, const unsigned int length)
+static void transformBuffer(UByte* buffer, const unsigned int length, 
+                            const char* fmtChars, const unsigned int fmtLength)
 {
     assert(buffer != NULL);
-    
+    assert(length > 0);
+
     for( unsigned i=0; i<length; i++ )
     {
-        const unsigned int pos = buffer[i] % ASCII_LENGTH;
-        assert(pos < ASCII_LENGTH);
+        const unsigned int pos = buffer[i] % fmtLength;
         
-        buffer[i] = ASCII_CHARS[pos];
-    }
-}
-
-/**
- * Transforms the buffer to ascii with blanks.
- * 
- * @param buffer        Key buffer
- * @param length        Length (size)
- */
-static inline void transformAsciiBlanks(UByte* buffer, const unsigned int length)
-{
-    assert(buffer != NULL);
-    
-    for( unsigned i=0; i<length; i++ )
-    {
-        const unsigned int pos = buffer[i] % ASCII_LENGTH;
-        assert(pos < ASCII_BLANK_LENGTH);
-        
-        buffer[i] = ASCII_BLANK_CHARS[pos];
-    }
-}
-
-/**
- * Transforms the buffer to alphanumeric.
- * 
- * @param buffer        Key buffer
- * @param length        Length (size)
- */
-static inline void transformAlphaNumeric(UByte* buffer, const unsigned int length)
-{
-    assert(buffer != NULL);
-    
-    for( unsigned i=0; i<length; i++ )
-    {
-        const unsigned int pos = buffer[i] % ALPHANUMERIC_LENGTH;
-        assert(pos < ALPHANUMERIC_LENGTH);
-
-        buffer[i] = ALPHANUMERIC_CHARS[pos];
+        buffer[i] = fmtChars[pos];
     }
 }
 
@@ -189,13 +154,13 @@ KeyGenError keygen_createKey(UByte* buffer, const unsigned int length, enum Form
         switch(format)
         {
             case ASCII:
-                transformAscii(random, length);
+                transformBuffer(random, length, ASCII_CHARS, ASCII_LENGTH);
                 break;
             case ASCII_BLANKS:
-                transformAsciiBlanks(random, length);
+                transformBuffer(random, length, ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
                 break;
             case ALPHA_NUMERIC:
-                transformAlphaNumeric(random, length);
+                transformBuffer(random, length, ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);
                 break;
             default:
                 rtn = KG_ERR_ILL_ARGUMENT;
@@ -207,10 +172,6 @@ KeyGenError keygen_createKey(UByte* buffer, const unsigned int length, enum Form
         {
             memcpy(buffer, random, length);
             rtn = KG_ERR_SUCCESS;
-        }
-        else // TODO: really required?
-        {
-            keygen_cleanBuffer(random, length);
         }
     }
     else
