@@ -37,16 +37,8 @@
 /** Buffer size of error messages. */
 #define ERR_MSG_LENGTH              128
 
-/** Ascii lower bound. */
-#define LIM_ASCII_LOWER             '!'
-/** Ascii upper bound. */
-#define LIM_ASCII_UPPER             ( '~' - LIM_ASCII_LOWER )
-/** Ascii lower bound (including blanks). */
-#define LIM_ASCII_LOWER_BLANK       ' '
-/** Ascii upper bound (including blanks). */
-#define LIM_ASCII_UPPER_BLANK       ( '~' - LIM_ASCII_LOWER_BLANK )
 
-static const char ALPHANUMERIC_CHARS[] =
+const char ALPHANUMERIC_CHARS[] =
 {
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
     'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
@@ -55,7 +47,35 @@ static const char ALPHANUMERIC_CHARS[] =
     'y', 'z'
 };
 
-static const unsigned int ALPHANUMERIC_LENGTH = sizeof(ALPHANUMERIC_CHARS);
+const unsigned int ALPHANUMERIC_LENGTH = sizeof(ALPHANUMERIC_CHARS);
+
+
+const char ASCII_BLANK_CHARS[] =
+{
+    ' ', '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', 
+    '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', 
+    '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 
+    'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', 
+    '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 
+    'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 
+    'z', '{', '|', '}', '~'
+};
+
+const unsigned int ASCII_BLANK_LENGTH = sizeof(ASCII_BLANK_CHARS);
+
+
+const char ASCII_CHARS[] =
+{
+    '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', 
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', 
+    '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 
+    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', 
+    ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 
+    'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 
+    '{', '|', '}', '~'
+};
+
+const unsigned int ASCII_LENGTH = sizeof(ASCII_CHARS);
 
 
 /**
@@ -66,9 +86,14 @@ static const unsigned int ALPHANUMERIC_LENGTH = sizeof(ALPHANUMERIC_CHARS);
  */
 static inline void transformAscii(UByte* buffer, const unsigned int length)
 {
-    for( unsigned int i=0; i<length; i++ )
+    assert(buffer != NULL);
+    
+    for( unsigned i=0; i<length; i++ )
     {
-        buffer[i] = LIM_ASCII_LOWER + ( buffer[i] % LIM_ASCII_UPPER );
+        const unsigned int pos = buffer[i] % ASCII_LENGTH;
+        assert(pos < ASCII_LENGTH);
+        
+        buffer[i] = ASCII_CHARS[pos];
     }
 }
 
@@ -80,9 +105,14 @@ static inline void transformAscii(UByte* buffer, const unsigned int length)
  */
 static inline void transformAsciiBlanks(UByte* buffer, const unsigned int length)
 {
-    for( unsigned int i=0; i<length; i++ )
+    assert(buffer != NULL);
+    
+    for( unsigned i=0; i<length; i++ )
     {
-        buffer[i] = LIM_ASCII_LOWER_BLANK + ( buffer[i] % LIM_ASCII_UPPER_BLANK );
+        const unsigned int pos = buffer[i] % ASCII_LENGTH;
+        assert(pos < ASCII_BLANK_LENGTH);
+        
+        buffer[i] = ASCII_BLANK_CHARS[pos];
     }
 }
 
@@ -94,6 +124,8 @@ static inline void transformAsciiBlanks(UByte* buffer, const unsigned int length
  */
 static inline void transformAlphaNumeric(UByte* buffer, const unsigned int length)
 {
+    assert(buffer != NULL);
+    
     for( unsigned i=0; i<length; i++ )
     {
         const unsigned int pos = buffer[i] % ALPHANUMERIC_LENGTH;
