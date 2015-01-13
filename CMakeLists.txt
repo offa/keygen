@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 project(keygen)
-set(PROJECT_VERSION 0.0.3)
+set(PROJECT_VERSION 0.0.4)
 
 message(STATUS "~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~")
 
