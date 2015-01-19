@@ -21,7 +21,7 @@
 /**
  * @file        KGOutput.c
  * 
- * @version     0.3
+ * @version     0.4
  * @author      offa
  * @date        21.10.2014
  */
@@ -99,6 +99,7 @@ void printHelp()
     
     printHelpOption(OPT_L_ASCII, OPT_ASCII, NULL, "Generates a key of ASCII characters, ranging from '!'\n\t\t\tto'~' (default)");
     printHelpOption(OPT_L_ASCII_BLANKS, OPT_ASCII_BLANKS, NULL, "Generates a key of ASCII characters, ranging from ' '\n\t\t\tto'~'; same as --ascii, but includes blanks");
+    printHelpOption(OPT_L_ASCII_REDUCED, OPT_ASCII_REDUCED, NULL, "Generates a key of reduced ASCII");
     printHelpOption(OPT_L_ALPHANUMERIC, OPT_ALPHANUMERIC, NULL, "Generates a key of alphanumeric characters");
     printHelpOption(OPT_L_LENGTH, OPT_LENGTH, "n", "Generates a key of <n> bytes length");
     printHelpOption(OPT_L_SHORT, OPT_SHORT, NULL, "Shows only the key");

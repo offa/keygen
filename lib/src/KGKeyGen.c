@@ -21,7 +21,7 @@
 /**
  * @file        KGKeyGen.c
  * 
- * @version     0.3
+ * @version     0.4
  * @author      offa
  * @date        21.10.2014
  */
@@ -48,6 +48,19 @@ const char ALPHANUMERIC_CHARS[] =
 };
 
 const unsigned int ALPHANUMERIC_LENGTH = sizeof(ALPHANUMERIC_CHARS);
+
+
+const char ASCII_REDUCED_CHARS[] =
+{
+    '!', '#', '$', '%', '&', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', 
+    '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?', '@', 
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 
+    'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', ']', '_', 'a', 
+    'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 
+    'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '}', '~'
+};
+
+const unsigned int ASCII_REDUCED_LENGTH = sizeof(ASCII_REDUCED_CHARS);
 
 
 const char ASCII_BLANK_CHARS[] =
@@ -158,6 +171,9 @@ KeyGenError keygen_createKey(UByte* buffer, const unsigned int length, enum Form
                 break;
             case ASCII_BLANKS:
                 transformBuffer(random, length, ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
+                break;
+            case ASCII_REDUCED:
+                transformBuffer(random, length, ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH);
                 break;
             case ALPHA_NUMERIC:
                 transformBuffer(random, length, ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);

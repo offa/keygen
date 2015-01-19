@@ -21,7 +21,7 @@
 /**
  * @file        KGOptions.c
  * 
- * @version     0.2
+ * @version     0.3
  * @author      offa
  * @date        21.10.2014
  */
@@ -34,12 +34,13 @@
 /** Minimum of arguments. */
 #define OPT_MIN_ARGS            2
 /** Getopt string. */
-#define GETOPT_CLI_STR          "sawpl:hv"
+#define GETOPT_CLI_STR          "sawrpl:hv"
 
 
 static const struct option getoptOptions[] =
 {
     { OPT_L_ASCII, no_argument, 0, OPT_ASCII },
+    { OPT_L_ASCII_REDUCED, no_argument, 0, OPT_ASCII_REDUCED },
     { OPT_L_ASCII_BLANKS, no_argument, 0, OPT_ASCII_BLANKS },
     { OPT_L_ALPHANUMERIC, no_argument, 0, OPT_ALPHANUMERIC },
     { OPT_L_LENGTH, required_argument, 0, OPT_LENGTH },
@@ -84,6 +85,10 @@ struct CLOptions parseOptions(int argc, char** argv)
                     break;
                 case OPT_ASCII_BLANKS:
                     options.keyFormat = ASCII_BLANKS;
+                    options.valid &= true;
+                    break;
+                case OPT_ASCII_REDUCED:
+                    options.keyFormat = ASCII_REDUCED;
                     options.valid &= true;
                     break;
                 case OPT_ALPHANUMERIC:
