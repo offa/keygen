@@ -31,7 +31,7 @@ static bool isIn(const char* allowedChars, unsigned int allowedCharsSize, char t
 {
     for( unsigned int i=0; i<allowedCharsSize; i++ )
     {
-        if( allowedChars[i] == testFor )
+        if( strchr(allowedChars, testFor) != NULL )
         {
             return true;
         }
