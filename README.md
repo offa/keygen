@@ -1,5 +1,7 @@
 # [KeyGen](https://github.com/offa/keygen)
 
+[![Build Status](https://travis-ci.org/offa/keygen.svg?branch=master)](https://travis-ci.org/offa/keygen)
+
 KeyGen is a generator for random keys and passwords. It's usable as standalone application and library. 
 
 The cryptography behind is provided by *OpenSSL*.
