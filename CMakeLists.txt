@@ -3,6 +3,8 @@ cmake_minimum_required(VERSION 2.8.11)
 project(keygen)
 set(PROJECT_VERSION 0.1.0)
 
+option(COVERAGE "Enables source code coverage" OFF)
+
 message(STATUS "~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~")
 
 set(LIB_NAME lib${PROJECT_NAME})
@@ -30,6 +32,7 @@ endif()
 enable_testing()
 subdirs(test)
 
+include(cmake/Coverage.cmake)
 
 add_definitions(-std=c99)
 add_definitions(-Wall -Wextra -pedantic -Werror)
