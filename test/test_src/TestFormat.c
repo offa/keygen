@@ -157,6 +157,11 @@ int main(int arg, char** argv)
         
         keygen_cleanBuffer(buffer, SIZE);
     }
+    
+    // Invalid format
+    format = 99;
+    KeyGenError rtn = keygen_createKey(buffer, SIZE, format);
+    TEST_RESULT(rtn == KG_ERR_ILL_ARGUMENT);
 
     return EXIT_SUCCESS;
 }
