@@ -7,6 +7,8 @@ option(COVERAGE "Enables source code coverage" OFF)
 
 message(STATUS "~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~")
 
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 set(LIB_NAME lib${PROJECT_NAME})
 set(APP_NAME ${PROJECT_NAME})
 
@@ -32,7 +34,7 @@ endif()
 enable_testing()
 subdirs(test)
 
-include(cmake/Coverage.cmake)
+include(Coverage)
 
 add_definitions(-std=c99)
 add_definitions(-Wall -Wextra -pedantic -Werror)
