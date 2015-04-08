@@ -7,6 +7,12 @@ option(COVERAGE "Enables source code coverage" OFF)
 
 message(STATUS "~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~")
 
+if( NOT CMAKE_BUILD_TYPE )
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
+
+message(STATUS "Building ${CMAKE_BUILD_TYPE}")
+
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 set(LIB_NAME lib${PROJECT_NAME})
