@@ -92,31 +92,6 @@ Key of 4048 length, stored in a file:
 ### Library
 
 ```c
-#include <KeyGen.h>
-
-// ...
-const int KEY_LENGTH = 4048; // Key length
-UByte buffer[KEY_LENGTH];    // Buffer holding the key
-
-// Generate a key of Ascii characters
-KeyGenError err = keygen_createKey(buffer, KEY_LENGTH, ASCII);
-
-if( err == KG_ERR_SUCCESS )
-{
-    // Key generated, do something
-}
-else
-{
-    // Error - handle that case
-}
-
-// Finally clean the buffer 
-keygen_cleanBuffer(buffer, length);
-```
-
-For longer keys use `malloc()` instead:
-
-```c
 const int KEY_LENGTH = 100000; // Key length
 UByte* buffer = malloc(KEY_LENGTH * sizeof(UByte)); // allocate buffer
 
