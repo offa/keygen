@@ -11,5 +11,8 @@ if( ${COVERAGE} )
     set(GCOV_FLAGS "-ftest-coverage -fprofile-arcs")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${GCOV_FLAGS}")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCOV_FLAGS}")
+    set(GCOV_SCRIPT "${CMAKE_BINARY_DIR}/GenerateCoverage.cmake")
 
+    configure_file("${CMAKE_MODULE_PATH}/GenerateCoverage.cmake.in" ${GCOV_SCRIPT} @ONLY)
+    add_custom_target(coverage "${CMAKE_COMMAND}" "-P" ${GCOV_SCRIPT})
 endif()
