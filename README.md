@@ -62,7 +62,7 @@ The application is used with commandline arguments. Run `keygen -h` to print the
 
 **Note:** For generating, the `--length` / `-l` parameter is *always* necessary.
  
-**Examples:**
+#### Examples
 
 Key of 24 length:
 
@@ -81,27 +81,6 @@ The same key size, but with short (key only) output:
     $ keygen -s -l 20
     ZI^fD{dX<qa?uw?%'acM
 
-Key of 4048 length and short output:
-
-    $ keygen -s -l 4048
-    dF45Wn\]}*AXI|`8.Xk5o#[m'qQ;Mo\Xa9d+USb(RP<o]#9^!MHlOU[6-SYB=*y:M' [...]
-
-*(Reduced in this example)*
-
-Key of 7 length (to short; not working):
-
-    $ keygen -l 7
-    A keylength of 7 is to short! A minimum length of 8 is required!
-
-Key of 40 length, including blanks:
-
-    $ keygen -w -l 40
-
-        Generated key:
-      ----------
-      /ssA\KUJcwPPVO&r\Q"d({'XLfvWL#I<GgdH I "
-      ----------
-        Length : 40 / 40
 
 Key of 4048 length, stored in a file:
 
@@ -109,30 +88,6 @@ Key of 4048 length, stored in a file:
 
 *(Use `--short` / `-s` to write key only)*
 
-10 Keys of 40 length each (each key in a line):
-
-    $ for i in {1..10}; do ./keygen -s -l 40 ; done;
-    -lJ(rcm1UcD6lM}em-).w4WR;._c2}PH%3%5(+"C
-    nM0c2H;CD8E`qhD)P<6(%e+P7&3L)XO"l;N%C):a
-    b2KP^_Wq9WtVb+%w\k.Q(.+9D#[&8}.ZX*eb>/]a
-    Aizu5%9f]5K7R_xnZu.:$-zn;CYQm09C3S"IIR'v
-    Yh;%RYT8QG*hV?37@(Z5zX#7^:'URA1!-"iRLchM
-    [q5Qho!s@uF*8jf8p3!&83*\`oZ,{_\mIv!:F?4/
-    yGoheg3lnb/?+lP4?%C!BH`]M$,!B)dm<Qb*M3OH
-    L4x(3kyry*y}]cd`w!^S(CvI1-yJ&sc[0Lf4x]')
-    c;Ty$K+>,Art3+hX>}h-1P(5PH>e!<5IO31Oq+#y
-    dlmn+&ECcuVk"<{AD*!g<4^6G.;YTb$4oLYN;KU9
-
-Key of 40 length *Base64* encoded:
-
-    $ keygen -s -l 40 | base64 
-    Z1t5IWJJZUhKIi09PlVAXV1fQSRxfU57S3JPQiMnOklTMlQlNmExJgo=
-
-A cool matrix-like screen (use fullscreen terminal for better experience):
-
-    while :; do ./keygen -s -l $COLUMNS; sleep 0.1; done
-
-*(Press `Ctrl+C` to quit)*
 
 ### Library
 
