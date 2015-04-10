@@ -2,6 +2,11 @@
 message(STATUS "Code coverage ${COVERAGE}")
 
 if( ${COVERAGE} )
+
+    if( NOT CMAKE_BUILD_TYPE )
+        set(CMAKE_BUILD_TYPE Debug)
+    endif()
+
     find_program(GCOV_EXEC gcov)
 
     if( NOT GCOV_EXEC )
