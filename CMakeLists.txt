@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 project(keygen)
-set(PROJECT_VERSION 0.1.0)
+set(PROJECT_VERSION 0.1.1)
 
 option(COVERAGE "Enables source code coverage" OFF)
 
