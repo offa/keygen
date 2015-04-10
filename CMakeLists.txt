@@ -4,6 +4,7 @@ project(keygen)
 set(PROJECT_VERSION 0.1.1)
 
 option(COVERAGE "Enables source code coverage" OFF)
+option(DOXYFILE "Generates the Doxyfile for Doxygen documentation" ON)
 
 message(STATUS "~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~")
 
@@ -41,6 +42,7 @@ enable_testing()
 subdirs(test)
 
 include(Coverage)
+include(Doxygen)
 
 add_definitions(-std=c99)
 add_definitions(-Wall -Wextra -pedantic -Werror)
