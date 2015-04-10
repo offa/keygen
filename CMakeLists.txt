@@ -7,7 +7,6 @@ option(COVERAGE "Enables source code coverage" OFF)
 option(DOXYFILE "Generates the Doxyfile for Doxygen documentation" ON)
 
 message(STATUS "~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~")
-message(STATUS "Building ${CMAKE_BUILD_TYPE}")
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
