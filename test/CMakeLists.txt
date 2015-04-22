@@ -7,15 +7,17 @@ set(CTEST_BINARY_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/test_unit_bin")
 
 set(TEST_DIR ${CTEST_SOURCE_DIRECTORY})
 
+if( COVERAGE )
+    set(TEST_ARGS "--no-early-exit")
+endif()
 
 find_package(Criterion REQUIRED)
 
 macro(_add_test _name)
-    set(TEST_NAME "${TEST_PREF}${_name}")
-    add_test(NAME ${_name} COMMAND ${TEST_NAME})
-    add_executable(${TEST_NAME} ${TEST_DIR}/${_name}.c)
-    target_include_directories(${TEST_NAME} PUBLIC ${Criterion_INCLUDE_DIRS})
-    target_link_libraries(${TEST_NAME} ${LIB_NAME} ${OPENSSL_LIBRARIES} ${Criterion_LIBRARIES})
+    add_test(NAME ${_name} COMMAND ${_name} ${TEST_ARGS})
+    add_executable(${_name} ${TEST_DIR}/${_name}.c)
+    target_include_directories(${_name} PUBLIC ${Criterion_INCLUDE_DIRS})
+    target_link_libraries(${_name} ${LIB_NAME} ${OPENSSL_LIBRARIES} ${Criterion_LIBRARIES})
 endmacro(_add_test)
 
 _add_test(ArgumentTest)
