@@ -1,12 +1,7 @@
+
+#include <criterion/criterion.h>
 #include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <string.h>
-
 #include <KGKeyGen.h>
-
-#include "TestUtils.h"
-
 
 extern const char ALPHANUMERIC_CHARS[];
 extern const unsigned int ALPHANUMERIC_LENGTH;
@@ -21,16 +16,17 @@ extern const char ASCII_CHARS[];
 extern const unsigned int ASCII_LENGTH;
 
 
-static void testFormatCharLengths()
+TestSuite(DataTest);
+
+Test(DataTest, testFormatCharsLength)
 {
-    TEST_RESULT(ASCII_LENGTH == 94);
-    TEST_RESULT(ASCII_BLANK_LENGTH == 95);
-    TEST_RESULT(ASCII_REDUCED_LENGTH == 88);
-    TEST_RESULT(ALPHANUMERIC_LENGTH == 62);
+    assert_eq(94, ASCII_LENGTH);
+    assert_eq(95, ASCII_BLANK_LENGTH);
+    assert_eq(88, ASCII_REDUCED_LENGTH);
+    assert_eq(62, ALPHANUMERIC_LENGTH);
 }
 
-
-static void testFormatChars()
+Test(DataTest, testFormatChars)
 {
     const char* charsAsciiReduced = "!#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]_abcdefghijklmnopqrstuvwxyz{}~";
     const char* charsAsciiBlanks = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
@@ -39,26 +35,14 @@ static void testFormatChars()
     
     
     int result = memcmp(charsAscii, ASCII_CHARS, ASCII_LENGTH);
-    TEST_RESULT(result == 0);
+    assert_eq(0, result);
     
     result = memcmp(charsAsciiBlanks, ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
-    TEST_RESULT(result == 0);
+    assert_eq(0, result);
     
     result = memcmp(charsAsciiReduced, ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH);
-    TEST_RESULT(result == 0);
+    assert_eq(0, result);
     
     result = memcmp(charsAlphaNum, ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);
-    TEST_RESULT(result == 0);
-}
-
-
-int main(int argc, char** argv)
-{
-    UNUSED(argc);
-    UNUSED(argv);
-
-    testFormatCharLengths();
-    testFormatChars();
-
-    return EXIT_SUCCESS;
+    assert_eq(0, result);
 }

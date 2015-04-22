@@ -33,6 +33,7 @@ if( OPENSSL_FOUND )
 endif()
 
 enable_testing()
+#subdirs(test_ctest)
 subdirs(test)
 
 include(Coverage)
