@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 2.8.11)
 project(keygen)
 set(PROJECT_VERSION 0.1.1)
 
+option(UNITTEST "Builds unit tests" ON)
 option(COVERAGE "Enables source code coverage" OFF)
 option(DOXYFILE "Generates the Doxyfile for Doxygen documentation" ON)
 
@@ -32,9 +33,10 @@ if( OPENSSL_FOUND )
 	message(STATUS "Using OpenSSL ${OPENSSL_VERSION}")
 endif()
 
-enable_testing()
-#subdirs(test_ctest)
-subdirs(test)
+if( UNITTEST )
+    enable_testing()
+    subdirs(test)
+endif()
 
 include(Coverage)
 include(Doxygen)

@@ -1,4 +1,4 @@
-message(STATUS "Building Unit Tests") # TODO: Add option
+message(STATUS "Building Unit Tests ${UNITTEST}")
 
 set(CTEST_START_WITH_EMPTY_BINARY_DIRECTORY TRUE)
 set(CTEST_COMMAND "ctest")
