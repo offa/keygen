@@ -8,70 +8,61 @@
 static bool testFormat(UByte* buffer, unsigned int size, enum Format format);
 
 
-TestSuite(FormatTest);
+static unsigned int size;
+static UByte* buffer;
 
-Test(ArgumentTest, testFormatAscii)
+
+void setUp()
+{
+    size = 2000 * sizeof(UByte);
+    buffer = malloc(size);
+}
+
+void tearDown()
+{
+    keygen_cleanAndFreeBuffer(buffer, size);
+}
+
+
+TestSuite(FormatTest, .init = setUp, .fini = tearDown);
+
+Test(FormatTest, testFormatAscii)
 {
     const enum Format format = ASCII;
-    const unsigned size = 2000 * sizeof(UByte);
-    UByte* buffer = malloc(size);
-    
     KeyGenError rtn = keygen_createKey(buffer, size, format);
-    
     assert_eq(KG_ERR_SUCCESS, rtn);
     assert_eq(true, testFormat(buffer, size, format));
-    keygen_cleanAndFreeBuffer(buffer, size);
 }
 
-Test(ArgumentTest, testFormatAsciiBlanks)
+Test(FormatTest, testFormatAsciiBlanks)
 {
     const enum Format format = ASCII_BLANKS;
-    const unsigned size = 2000 * sizeof(UByte);
-    UByte* buffer = malloc(size);
-    
     KeyGenError rtn = keygen_createKey(buffer, size, format);
-    
     assert_eq(KG_ERR_SUCCESS, rtn);
     assert_eq(true, testFormat(buffer, size, format));
-    keygen_cleanAndFreeBuffer(buffer, size);
 }
 
-Test(ArgumentTest, testFormatAsciiReduced)
+Test(FormatTest, testFormatAsciiReduced)
 {
     const enum Format format = ASCII_REDUCED;
-    const unsigned size = 2000 * sizeof(UByte);
-    UByte* buffer = malloc(size);
-    
     KeyGenError rtn = keygen_createKey(buffer, size, format);
-    
     assert_eq(KG_ERR_SUCCESS, rtn);
     assert_eq(true, testFormat(buffer, size, format));
-    keygen_cleanAndFreeBuffer(buffer, size);
 }
 
-Test(ArgumentTest, testFormatAlphaNumeric)
+Test(FormatTest, testFormatAlphaNumeric)
 {
     const enum Format format = ALPHA_NUMERIC;
-    const unsigned size = 2000 * sizeof(UByte);
-    UByte* buffer = malloc(size);
-    
     KeyGenError rtn = keygen_createKey(buffer, size, format);
-    
     assert_eq(KG_ERR_SUCCESS, rtn);
     assert_eq(true, testFormat(buffer, size, format));
-    keygen_cleanAndFreeBuffer(buffer, size);
 }
 
-Test(ArgumentTest, testFormatIllegal)
+Test(FormatTest, testFormatIllegal)
 {
     const enum Format format = 99;
-    const unsigned size = 2000 * sizeof(UByte);
-    UByte* buffer = malloc(size);
-    
     KeyGenError rtn = keygen_createKey(buffer, size, format);
-    
     assert_eq(KG_ERR_ILL_ARGUMENT, rtn);
-    keygen_cleanAndFreeBuffer(buffer, size);
 }
 
 
