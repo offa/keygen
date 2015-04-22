@@ -8,9 +8,10 @@ The cryptography behind is provided by *OpenSSL*.
 
 ## Requirements
 
- - **OpenSSL**
- - **CMake** - for building
- - **Doxygen** - for documentation (*OPTIONAL*)
+ - [**OpenSSL**](https://www.openssl.org/)
+ - [**CMake**](http://www.cmake.org/) - for building
+ - [**Doxygen**](http://doxygen.nl/) - for documentation *(Optional)*
+ - [**Criterion**](https://github.com/Snaipe/Criterion) - for testing *(Optional)*
 
 ## Building
 
