@@ -6,10 +6,7 @@ set(CTEST_SOURCE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 set(CTEST_BINARY_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/test_unit_bin")
 
 set(TEST_DIR ${CTEST_SOURCE_DIRECTORY})
-
-if( COVERAGE )
-    set(TEST_ARGS "--no-early-exit")
-endif()
+set(TEST_ARGS "--no-early-exit")
 
 find_package(Criterion REQUIRED)
 
