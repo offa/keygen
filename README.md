@@ -29,15 +29,15 @@ Furthermore there are build targets either application or library. Run `make <Ta
 
 After building, the tests are executed within the build directory using:
 
-    make test
-
-or by running
-
     ctest
 
-within the build directory.
+or running make with one of these targets:
 
-*Note: CTest is used for testing.*
+make  | < target >
+------------- | -------------
+`test`  | Runs ctest (same as `ctest`)
+`unittest`  | Builds and  runs all test
+`unittest.verbose`  | Builds and  runs all test in verbose
 
 ## Usage
 
