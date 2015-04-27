@@ -39,10 +39,10 @@ TestSuite(DataTest);
 
 Test(DataTest, testFormatCharsLength)
 {
-    assert_eq(94, ASCII_LENGTH);
-    assert_eq(95, ASCII_BLANK_LENGTH);
-    assert_eq(88, ASCII_REDUCED_LENGTH);
-    assert_eq(62, ALPHANUMERIC_LENGTH);
+    cr_assert_eq(94, ASCII_LENGTH);
+    cr_assert_eq(95, ASCII_BLANK_LENGTH);
+    cr_assert_eq(88, ASCII_REDUCED_LENGTH);
+    cr_assert_eq(62, ALPHANUMERIC_LENGTH);
 }
 
 Test(DataTest, testFormatChars)
@@ -54,14 +54,14 @@ Test(DataTest, testFormatChars)
     
     
     int result = memcmp(charsAscii, ASCII_CHARS, ASCII_LENGTH);
-    assert_eq(0, result);
+    cr_assert_eq(0, result);
     
     result = memcmp(charsAsciiBlanks, ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
-    assert_eq(0, result);
+    cr_assert_eq(0, result);
     
     result = memcmp(charsAsciiReduced, ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH);
-    assert_eq(0, result);
+    cr_assert_eq(0, result);
     
     result = memcmp(charsAlphaNum, ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);
-    assert_eq(0, result);
+    cr_assert_eq(0, result);
 }

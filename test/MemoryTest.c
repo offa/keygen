@@ -33,10 +33,10 @@ Test(MemoryTest, testCleanUp)
     memset(expected, 0, size);
     
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
-    assert_eq(KG_ERR_SUCCESS, rtn);
+    cr_assert_eq(KG_ERR_SUCCESS, rtn);
     
     keygen_cleanBuffer(buffer, size);
-    assert_arrays_eq(expected, buffer, size);
+    cr_assert_arrays_eq(expected, buffer, size);
     
     free(buffer);
 }
@@ -56,14 +56,14 @@ Test(MemoryTest, testCleanUpBorderCheck)
     expected[allocSize - 1] = 0xFE;
     
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
-    assert_eq(KG_ERR_SUCCESS, rtn);
+    cr_assert_eq(KG_ERR_SUCCESS, rtn);
     
     keygen_cleanBuffer(buffer, size);
-    assert_arrays_eq(expected + 2, buffer, size);
-    assert_eq(0xCA, expected[0]);
-    assert_eq(0xFE, expected[1]);
-    assert_eq(0xCA, expected[allocSize - 2]);
-    assert_eq(0xFE, expected[allocSize - 1]);
+    cr_assert_arrays_eq(expected + 2, buffer, size);
+    cr_assert_eq(0xCA, expected[0]);
+    cr_assert_eq(0xFE, expected[1]);
+    cr_assert_eq(0xCA, expected[allocSize - 2]);
+    cr_assert_eq(0xFE, expected[allocSize - 1]);
     
     free(allocBuffer);
 }
@@ -75,7 +75,7 @@ Test(MemoryTest, testOverlength)
     UByte* buffer = malloc(overLength * sizeof(UByte));
     KeyGenError rtn = keygen_createKey(buffer, overLength, ASCII);
     
-    assert_eq(KG_ERR_SUCCESS, rtn);
+    cr_assert_eq(KG_ERR_SUCCESS, rtn);
     
     keygen_cleanAndFreeBuffer(buffer, overLength);
 }
@@ -93,19 +93,19 @@ Test(MemoryTest, testOverAndUnderflow)
     allocBuffer[allocSize - 1] = 0xFE;
     
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
-    assert_eq(KG_ERR_SUCCESS, rtn);
+    cr_assert_eq(KG_ERR_SUCCESS, rtn);
     
-    assert_eq(0xCA, allocBuffer[0]);
-    assert_eq(0XFE, allocBuffer[1]);
-    assert_eq(0xCA, allocBuffer[allocSize - 2]);
-    assert_eq(0xFE, allocBuffer[allocSize - 1]);
+    cr_assert_eq(0xCA, allocBuffer[0]);
+    cr_assert_eq(0XFE, allocBuffer[1]);
+    cr_assert_eq(0xCA, allocBuffer[allocSize - 2]);
+    cr_assert_eq(0xFE, allocBuffer[allocSize - 1]);
     
     keygen_cleanBuffer(buffer, size);
     
-    assert_eq(0xCA, allocBuffer[0]);
-    assert_eq(0XFE, allocBuffer[1]);
-    assert_eq(0xCA, allocBuffer[allocSize - 2]);
-    assert_eq(0xFE, allocBuffer[allocSize - 1]);
+    cr_assert_eq(0xCA, allocBuffer[0]);
+    cr_assert_eq(0XFE, allocBuffer[1]);
+    cr_assert_eq(0xCA, allocBuffer[allocSize - 2]);
+    cr_assert_eq(0xFE, allocBuffer[allocSize - 1]);
     
     free(allocBuffer);
 }

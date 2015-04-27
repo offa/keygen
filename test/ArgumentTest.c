@@ -40,7 +40,7 @@ Test(ArgumentTest, testToShortLengthRejected)
     buffer = malloc(size);
     
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
-    assert_eq(KG_ERR_ILL_ARGUMENT, rtn);
+    cr_assert_eq(KG_ERR_ILL_ARGUMENT, rtn);
 }
 
 Test(ArgumentTest, testToShortLengthDoesntChangeBuffer)
@@ -53,8 +53,8 @@ Test(ArgumentTest, testToShortLengthDoesntChangeBuffer)
     memset(buffer, 0, size);
     
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
-    assert_eq(KG_ERR_ILL_ARGUMENT, rtn);
-    assert_arrays_eq(expected, buffer, size);
+    cr_assert_eq(KG_ERR_ILL_ARGUMENT, rtn);
+    cr_assert_arrays_eq(expected, buffer, size);
 }
 
 Test(ArgumentTest, testAllowedSizeGeneratesKey8Byte)
@@ -63,7 +63,7 @@ Test(ArgumentTest, testAllowedSizeGeneratesKey8Byte)
     buffer = malloc(size);
     
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
-    assert_eq(KG_ERR_SUCCESS, rtn);
+    cr_assert_eq(KG_ERR_SUCCESS, rtn);
 }
 
 Test(ArgumentTest, testAllowedSizeGeneratesKey1200Byte)
@@ -72,5 +72,5 @@ Test(ArgumentTest, testAllowedSizeGeneratesKey1200Byte)
     buffer = malloc(size);
     
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
-    assert_eq(KG_ERR_SUCCESS, rtn);
+    cr_assert_eq(KG_ERR_SUCCESS, rtn);
 }
