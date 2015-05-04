@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 project(keygen)
-set(PROJECT_VERSION 0.2.0)
+set(PROJECT_VERSION 0.2.1)
 
 option(UNITTEST "Builds unit tests" ON)
 option(COVERAGE "Enables source code coverage" OFF)
