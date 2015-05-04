@@ -4,10 +4,14 @@ compiler:
     - gcc
     - clang
 
+env:
+    - BUILD_TYPE=Debug
+    - BUILD_TYPE=Release
+
 script:
     - mkdir build
     - cd build
-    - cmake -DCriterion_INCLUDE_DIR="${CRITERION_INCL}" -DCriterion_LIBRARY="${CRITERION_LIB}" ..
+    - cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCriterion_INCLUDE_DIR="${CRITERION_INCL}" -DCriterion_LIBRARY="${CRITERION_LIB}" ..
     - make all
     - ctest
 
@@ -22,3 +26,5 @@ before_install:
     - export CRITERION_INCL=$PWD/criterion-1.2.1/include
     - export CRITERION_LIB=$PWD/criterion-1.2.1/lib/libcriterion.a
 
+after_failure:
+    - cat Testing/Temporary/LastTest.log
