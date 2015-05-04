@@ -47,7 +47,7 @@ Test(MemoryTest, testCleanUpBorderCheck)
     const unsigned int allocSize = size + 4;
     UByte* allocBuffer = malloc(allocSize);
     UByte* buffer = allocBuffer + 2;
-    UByte expected[size];
+    UByte expected[allocSize];
     
     memset(expected, 0, allocSize);
     expected[0] = 0xCA;
