@@ -22,7 +22,8 @@ file(GLOB_RECURSE APP_HDR "${APP_HDR_PATH}/*.h")
 file(GLOB_RECURSE LIB_SRC "lib/src/*.c")
 file(GLOB_RECURSE LIB_HDR "${LIB_HDR_PATH}/*.c")
 
-include_directories("lib/include")
+include_directories(${LIB_HDR_PATH})
+include_directories(${APP_HDR_PATH})
 
 
 find_package(PkgConfig REQUIRED)
@@ -52,4 +53,3 @@ set_target_properties(${LIB_NAME} PROPERTIES PREFIX "")
 
 add_executable(${APP_NAME} ${APP_SRC})
 target_link_libraries(${APP_NAME} ${LIB_NAME} ${OPENSSL_LIBRARIES})
-target_include_directories(${APP_NAME} PUBLIC ${APP_HDR_PATH})
