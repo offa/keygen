@@ -31,7 +31,8 @@ void setUpDisableStdErr()
 {
     fflush(stderr);
     origStdErr = dup(STDERR_FILENO);
-    freopen("NUL", "a", stderr);
+    FILE* unused = freopen("NUL", "a", stderr);
+    (void) unused;
 }
 
 void tearDownResetStdErr()
