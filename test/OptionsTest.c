@@ -22,7 +22,6 @@
 #include <stdlib.h>
 #include <KGOptions.h>
 
-// TODO: Test with long format
 
 void setUp()
 {
@@ -53,6 +52,17 @@ Test(OptionsTest, testFormatArgumentAscii)
     cr_assert_eq(ASCII, result.keyFormat);
 }
 
+Test(OptionsTest, testFormatArgumentAsciiLong)
+{
+    char* argv[] = { "OptionTest", "--ascii" };
+    int argc = sizeof(argv) / sizeof(char*);
+    
+    struct CLOptions result = parseOptions(argc, argv);
+    
+    cr_assert_eq(true, result.valid);
+    cr_assert_eq(ASCII, result.keyFormat);
+}
+
 Test(OptionsTest, testFormatArgumentAsciiReduced)
 {
     char* argv[] = { "OptionTest", "-r" };
@@ -64,9 +74,31 @@ Test(OptionsTest, testFormatArgumentAsciiReduced)
     cr_assert_eq(ASCII_REDUCED, result.keyFormat);
 }
 
-Test(OptionsTest, testFormatArgumentAsciiBlanks)
+Test(OptionsTest, testFormatArgumentAsciiReducedLong)
+{
+    char* argv[] = { "OptionTest", "--ascii-reduced" };
+    int argc = sizeof(argv) / sizeof(char*);
+    
+    struct CLOptions result = parseOptions(argc, argv);
+    
+    cr_assert_eq(true, result.valid);
+    cr_assert_eq(ASCII_REDUCED, result.keyFormat);
+}
+
+Test(OptionsTest, testFormatArgumentAsciiBlank)
 {
     char* argv[] = { "OptionTest", "-w" };
+    int argc = sizeof(argv) / sizeof(char*);
+    
+    struct CLOptions result = parseOptions(argc, argv);
+    
+    cr_assert_eq(true, result.valid);
+    cr_assert_eq(ASCII_BLANKS, result.keyFormat);
+}
+
+Test(OptionsTest, testFormatArgumentAsciiBlankLong)
+{
+    char* argv[] = { "OptionTest", "--ascii-blank" };
     int argc = sizeof(argv) / sizeof(char*);
     
     struct CLOptions result = parseOptions(argc, argv);
@@ -86,6 +118,17 @@ Test(OptionsTest, testFormatArgumentAlphaNumeric)
     cr_assert_eq(ALPHA_NUMERIC, result.keyFormat);
 }
 
+Test(OptionsTest, testFormatArgumentAlphaNumericLong)
+{
+    char* argv[] = { "OptionTest", "--alphanum" };
+    int argc = sizeof(argv) / sizeof(char*);
+    
+    struct CLOptions result = parseOptions(argc, argv);
+    
+    cr_assert_eq(true, result.valid);
+    cr_assert_eq(ALPHA_NUMERIC, result.keyFormat);
+}
+
 Test(OptionsTest, testLength)
 {
     char* argv[] = { "OptionTest", "-l", "10" };
@@ -97,9 +140,31 @@ Test(OptionsTest, testLength)
     cr_assert_eq(10, result.keyLength);
 }
 
+Test(OptionsTest, testLengthLong)
+{
+    char* argv[] = { "OptionTest", "--length", "10" };
+    int argc = sizeof(argv) / sizeof(char*);
+    
+    struct CLOptions result = parseOptions(argc, argv);
+    
+    cr_assert_eq(true, result.valid);
+    cr_assert_eq(10, result.keyLength);
+}
+
 Test(OptionsTest, testFormatArgumentShort)
 {
     char* argv[] = { "OptionTest", "-s" };
+    int argc = sizeof(argv) / sizeof(char*);
+    
+    struct CLOptions result = parseOptions(argc, argv);
+    
+    cr_assert_eq(true, result.valid);
+    cr_assert_eq(true, result.shortOutput);
+}
+
+Test(OptionsTest, testFormatArgumentShortLong)
+{
+    char* argv[] = { "OptionTest", "--short" };
     int argc = sizeof(argv) / sizeof(char*);
     
     struct CLOptions result = parseOptions(argc, argv);
@@ -120,9 +185,33 @@ Test(OptionsTest, testShowHelp)
     cr_assert_eq(true, result.exit);
 }
 
+Test(OptionsTest, testShowHelpLong)
+{
+    char* argv[] = { "OptionTest", "--help" };
+    int argc = sizeof(argv) / sizeof(char*);
+    
+    struct CLOptions result = parseOptions(argc, argv);
+    
+    cr_assert_eq(true, result.valid);
+    cr_assert_eq(true, result.showHelp);
+    cr_assert_eq(true, result.exit);
+}
+
 Test(OptionsTest, testShowVersion)
 {
     char* argv[] = { "OptionTest", "-v" };
+    int argc = sizeof(argv) / sizeof(char*);
+    
+    struct CLOptions result = parseOptions(argc, argv);
+    
+    cr_assert_eq(true, result.valid);
+    cr_assert_eq(true, result.showVersion);
+    cr_assert_eq(true, result.exit);
+}
+
+Test(OptionsTest, testShowVersionLong)
+{
+    char* argv[] = { "OptionTest", "--version" };
     int argc = sizeof(argv) / sizeof(char*);
     
     struct CLOptions result = parseOptions(argc, argv);
