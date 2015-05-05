@@ -21,7 +21,24 @@
 #include <criterion/criterion.h>
 #include <stdlib.h>
 #include <KGOptions.h>
+#include <stdio.h>
+#include <unistd.h>
 
+
+static int origStdErr;
+
+void setUpDisableStdErr()
+{
+    fflush(stderr);
+    origStdErr = dup(STDERR_FILENO);
+    freopen("NUL", "a", stderr);
+}
+
+void tearDownResetStdErr()
+{
+    fflush(stderr);
+    dup2(origStdErr, STDERR_FILENO);
+}
 
 void setUp()
 {
@@ -221,14 +238,14 @@ Test(OptionsTest, testShowVersionLong)
     cr_assert_eq(true, result.exit);
 }
 
-Test(OptionsTest, testInvalidOptionSetsInvalidAndExit)
+Test(OptionsTest, testInvalidOptionSetsInvalidAndExit, 
+        .init = setUpDisableStdErr, 
+        .fini = tearDownResetStdErr)
 {
     char* argv[] = { "OptionTest", "-q" };
     int argc = sizeof(argv) / sizeof(char*);
-    
-    
+
     struct CLOptions result = parseOptions(argc, argv);
-    // TODO: disable output of stderr (setup / teardown) for this test
     
     cr_assert_eq(false, result.valid);
     cr_assert_eq(true, result.exit);
