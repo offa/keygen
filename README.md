@@ -4,7 +4,7 @@
 [![GitHub release](https://img.shields.io/github/release/offa/keygen.svg)](https://github.com/offa/keygen/releases)
 [![License](https://img.shields.io/badge/license-GPLv3-yellow.svg)](LICENSE)
 
-KeyGen is a generator for random keys and passwords. It's usable as standalone application and library. 
+KeyGen is a generator for keys and passwords. It's usable as standalone application and library. 
 
 The cryptography behind is provided by *OpenSSL*.
 
