@@ -12,6 +12,7 @@ find_package(Criterion REQUIRED)
 
 add_custom_target(unittest)
 add_custom_target(unittest.verbose)
+add_custom_target(build-tests DEPENDS unittest)
 
 macro(_add_test _name)
     add_test(NAME ${_name} COMMAND ${_name} ${TEST_ARGS})
