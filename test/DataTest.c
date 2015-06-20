@@ -23,26 +23,26 @@
 #include <KGKeyGen.h>
 
 extern const char ALPHANUMERIC_CHARS[];
-extern const unsigned int ALPHANUMERIC_LENGTH;
+extern const size_t ALPHANUMERIC_LENGTH;
 
 extern const char ASCII_REDUCED_CHARS[];
-extern const unsigned int ASCII_REDUCED_LENGTH;
+extern const size_t ASCII_REDUCED_LENGTH;
 
 extern const char ASCII_BLANK_CHARS[];
-extern const unsigned int ASCII_BLANK_LENGTH;
+extern const size_t ASCII_BLANK_LENGTH;
 
 extern const char ASCII_CHARS[];
-extern const unsigned int ASCII_LENGTH;
+extern const size_t ASCII_LENGTH;
 
 
 TestSuite(DataTest);
 
 Test(DataTest, testFormatCharsLength)
 {
-    cr_assert_eq(94, ASCII_LENGTH);
-    cr_assert_eq(95, ASCII_BLANK_LENGTH);
-    cr_assert_eq(88, ASCII_REDUCED_LENGTH);
-    cr_assert_eq(62, ALPHANUMERIC_LENGTH);
+    cr_assert_eq(94u, ASCII_LENGTH);
+    cr_assert_eq(95u, ASCII_BLANK_LENGTH);
+    cr_assert_eq(88u, ASCII_REDUCED_LENGTH);
+    cr_assert_eq(62u, ALPHANUMERIC_LENGTH);
 }
 
 Test(DataTest, testFormatChars)

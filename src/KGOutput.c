@@ -121,7 +121,7 @@ void printKey(const UByte* key, struct CLOptions options)
         printf("%s\n", key);
         fflush(stdout);
         printLine('-', 10, true);
-        printf("  Length : %d / %d\n\n", (int) strlen((char*) key), options.keyLength);
+        printf("  Length : %ld / %ld\n\n", (long) strlen((char*) key), options.keyLength);
     }
 }
 
@@ -150,11 +150,11 @@ void printVersion()
 
 int generateKey(const struct CLOptions options)
 {
-    const int length = options.keyLength;
+    const long length = options.keyLength;
 
     if( length < KEY_MIN_LENGTH )
     {
-        fprintf(stderr, "A keylength of %d is to short! A minimum length of %d is required!\n", length, KEY_MIN_LENGTH);
+        fprintf(stderr, "A keylength of %ld is to short! A minimum length of %d is required!\n", length, KEY_MIN_LENGTH);
 
         return KG_RTN_ERR_KEY_TO_SHORT;
     }

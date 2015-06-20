@@ -26,7 +26,7 @@ TestSuite(MemoryTest);
 
 Test(MemoryTest, testCleanUp)
 {
-    const unsigned int size = 1000 * sizeof(UByte);
+    const size_t size = 1000 * sizeof(UByte);
     UByte* buffer = malloc(size);
     UByte expected[size];
     
@@ -43,8 +43,8 @@ Test(MemoryTest, testCleanUp)
 
 Test(MemoryTest, testCleanUpBorderCheck)
 {
-    const unsigned int size = 1000 * sizeof(UByte);
-    const unsigned int allocSize = size + 4;
+    const size_t size = 1000 * sizeof(UByte);
+    const size_t allocSize = size + 4;
     UByte* allocBuffer = malloc(allocSize);
     UByte* buffer = allocBuffer + 2;
     UByte expected[allocSize];
@@ -70,7 +70,7 @@ Test(MemoryTest, testCleanUpBorderCheck)
 
 Test(MemoryTest, testOverlength)
 {
-    const unsigned int overLength =  1000000 * sizeof(UByte);
+    const size_t overLength =  1000000 * sizeof(UByte);
     
     UByte* buffer = malloc(overLength * sizeof(UByte));
     KeyGenError rtn = keygen_createKey(buffer, overLength, ASCII);
@@ -82,8 +82,8 @@ Test(MemoryTest, testOverlength)
 
 Test(MemoryTest, testOverAndUnderflow)
 {
-    const unsigned int size = 1000 * sizeof(UByte);
-    const unsigned int allocSize = size + 4;
+    const size_t size = 1000 * sizeof(UByte);
+    const size_t allocSize = size + 4;
     UByte* allocBuffer = malloc(allocSize);
     UByte* buffer = allocBuffer + 2;
     

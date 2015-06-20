@@ -24,10 +24,10 @@
 #include <ctype.h>
 #include <KGKeyGen.h>
 
-static bool testFormat(UByte* buffer, unsigned int size, enum Format format);
+static bool testFormat(UByte* buffer, size_t size, enum Format format);
 
 
-static unsigned int size;
+static size_t size;
 static UByte* buffer;
 
 
@@ -86,14 +86,14 @@ Test(FormatTest, testFormatIllegal)
 
 
 extern const char ALPHANUMERIC_CHARS[];
-extern const unsigned int ALPHANUMERIC_LENGTH;
+extern const size_t ALPHANUMERIC_LENGTH;
 
 extern const char ASCII_REDUCED_CHARS[];
-extern const unsigned int ASCII_REDUCED_LENGTH;
+extern const size_t ASCII_REDUCED_LENGTH;
 
-static bool isIn(const char allowedChars[], unsigned int allowedCharsSize, char testFor)
+static bool isIn(const char allowedChars[], size_t allowedCharsSize, char testFor)
 {
-    for( unsigned int i=0; i<allowedCharsSize; i++ )
+    for( size_t i=0; i<allowedCharsSize; i++ )
     {
         if( strchr(allowedChars, testFor) != NULL )
         {
@@ -104,12 +104,12 @@ static bool isIn(const char allowedChars[], unsigned int allowedCharsSize, char 
     return false;
 }
 
-static bool testFormat(UByte* buffer, unsigned int size, enum Format format)
+static bool testFormat(UByte* buffer, size_t size, enum Format format)
 {
     switch(format)
     {
         case ASCII:
-            for( int i=0; i<(int)size; i++ )
+            for( size_t i=0; i<size; i++ )
             {
                 if( buffer[i] <= ' ' || buffer[i] > '~' )
                 {
@@ -119,7 +119,7 @@ static bool testFormat(UByte* buffer, unsigned int size, enum Format format)
             }
             return true;
         case ASCII_BLANKS:
-            for( int i=0; i<(int)size; i++ )
+            for( size_t i=0; i<size; i++ )
             {
                 if( buffer[i] < ' ' || buffer[i] > '~' )
                 {
@@ -129,7 +129,7 @@ static bool testFormat(UByte* buffer, unsigned int size, enum Format format)
             }
             return true;
         case ASCII_REDUCED:
-            for( int i=0; i<(int)size; i++ )
+            for( size_t i=0; i<size; i++ )
             {
                 if( isIn(ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH, buffer[i]) == false )
                 {
@@ -139,7 +139,7 @@ static bool testFormat(UByte* buffer, unsigned int size, enum Format format)
             }
             return true;
         case ALPHA_NUMERIC:
-            for( int i=0; i<(int)size; i++ )
+            for( size_t i=0; i<size; i++ )
             {
                 if( isalnum(buffer[i]) == false )
                 {

@@ -23,7 +23,7 @@
 #include <KGKeyGen.h>
 
 
-static unsigned int size;
+static size_t size;
 static UByte* buffer;
 
 

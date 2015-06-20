@@ -40,6 +40,8 @@
 #ifndef KEYGEN_H
 #define	KEYGEN_H
 
+#include <stddef.h>
+
 #ifdef	__cplusplus
 extern "C"
 {
@@ -114,7 +116,7 @@ extern "C"
      * @return              Returns <code>KG_ERR_SUCCESS</code> on success or
      *                      an error code
      */
-    KeyGenError keygen_createKey(UByte* buffer, const unsigned int length, enum Format format);
+    KeyGenError keygen_createKey(UByte* buffer, const size_t length, enum Format format);
     
     
     /**
@@ -139,7 +141,7 @@ extern "C"
      * @param buffer        Buffer
      * @param length        Length (size) (>= 0)
      */
-    void keygen_cleanBuffer(UByte* buffer, unsigned int length);
+    void keygen_cleanBuffer(UByte* buffer, size_t length);
     
     
     /**
@@ -158,7 +160,7 @@ extern "C"
      * 
      * @see keygen_cleanBuffer()
      */
-    void keygen_cleanAndFreeBuffer(UByte* buffer, unsigned int length);
+    void keygen_cleanAndFreeBuffer(UByte* buffer, size_t length);
     
 #ifdef	__cplusplus
 }

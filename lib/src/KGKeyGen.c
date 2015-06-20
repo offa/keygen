@@ -47,7 +47,7 @@ const char ALPHANUMERIC_CHARS[] =
     'y', 'z'
 };
 
-const unsigned int ALPHANUMERIC_LENGTH = sizeof(ALPHANUMERIC_CHARS);
+const size_t ALPHANUMERIC_LENGTH = sizeof(ALPHANUMERIC_CHARS);
 
 
 const char ASCII_REDUCED_CHARS[] =
@@ -60,7 +60,7 @@ const char ASCII_REDUCED_CHARS[] =
     'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '}', '~'
 };
 
-const unsigned int ASCII_REDUCED_LENGTH = sizeof(ASCII_REDUCED_CHARS);
+const size_t ASCII_REDUCED_LENGTH = sizeof(ASCII_REDUCED_CHARS);
 
 
 const char ASCII_BLANK_CHARS[] =
@@ -74,7 +74,7 @@ const char ASCII_BLANK_CHARS[] =
     'z', '{', '|', '}', '~'
 };
 
-const unsigned int ASCII_BLANK_LENGTH = sizeof(ASCII_BLANK_CHARS);
+const size_t ASCII_BLANK_LENGTH = sizeof(ASCII_BLANK_CHARS);
 
 
 const char ASCII_CHARS[] =
@@ -88,7 +88,7 @@ const char ASCII_CHARS[] =
     '{', '|', '}', '~'
 };
 
-const unsigned int ASCII_LENGTH = sizeof(ASCII_CHARS);
+const size_t ASCII_LENGTH = sizeof(ASCII_CHARS);
 
 
 /**
@@ -99,15 +99,15 @@ const unsigned int ASCII_LENGTH = sizeof(ASCII_CHARS);
  * @param fmtChars      Format char's
  * @param fmtLength     Format char's length
  */
-static void transformBuffer(UByte* buffer, const unsigned int length, 
-                            const char* fmtChars, const unsigned int fmtLength)
+static void transformBuffer(UByte* buffer, const size_t length, 
+                            const char* fmtChars, const size_t fmtLength)
 {
     assert(buffer != NULL);
     assert(length > 0);
 
-    for( unsigned i=0; i<length; i++ )
+    for( size_t i=0; i<length; i++ )
     {
-        const unsigned int pos = buffer[i] % fmtLength;
+        const size_t pos = buffer[i] % fmtLength;
         
         buffer[i] = fmtChars[pos];
     }
@@ -125,7 +125,7 @@ static void transformBuffer(UByte* buffer, const unsigned int length,
  * @return              Returns <code>ERR_LIB_NONE</code> on success or an
  *                      error code
  */
-static int getRandomBytes(UByte* buffer, int length)
+static int getRandomBytes(UByte* buffer, size_t length)
 {
     int rtn = RAND_bytes(buffer, length);
 
@@ -143,7 +143,7 @@ static int getRandomBytes(UByte* buffer, int length)
     return rtn;
 }
 
-KeyGenError keygen_createKey(UByte* buffer, const unsigned int length, enum Format format)
+KeyGenError keygen_createKey(UByte* buffer, const size_t length, enum Format format)
 {
     if( buffer == NULL || length < KEY_MIN_LENGTH )
     {
@@ -200,7 +200,7 @@ KeyGenError keygen_createKey(UByte* buffer, const unsigned int length, enum Form
     return rtn;
 }
 
-void keygen_cleanBuffer(UByte* buffer, unsigned int length)
+void keygen_cleanBuffer(UByte* buffer, size_t length)
 {
     if( buffer != NULL && length > 0 )
     {
@@ -208,7 +208,7 @@ void keygen_cleanBuffer(UByte* buffer, unsigned int length)
     }
 }
 
-void keygen_cleanAndFreeBuffer(UByte* buffer, unsigned int length)
+void keygen_cleanAndFreeBuffer(UByte* buffer, size_t length)
 {
     keygen_cleanBuffer(buffer, length);
     free(buffer);
