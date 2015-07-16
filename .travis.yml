@@ -15,11 +15,13 @@ script:
     - make all
     - ctest
 
+addons:
+    sources:
+        - kalakris-cmake
+    packages:
+        -cmake
+
 before_install:
-    # CMake
-    - sudo add-apt-repository --yes ppa:kalakris/cmake
-    - sudo apt-get update -qq
-    - sudo apt-get install -y cmake
     # Criterion
     - wget https://github.com/Snaipe/Criterion/releases/download/v1.2.1/criterion-1.2.1-linux-x86_64.tar.bz2
     - tar xvjf criterion-1.2.1-linux-x86_64.tar.bz2 
