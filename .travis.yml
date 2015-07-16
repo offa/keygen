@@ -20,7 +20,7 @@ addons:
         sources:
             - kalakris-cmake
         packages:
-            -cmake
+            - cmake
 
 before_install:
     # Criterion
