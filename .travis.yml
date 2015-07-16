@@ -16,10 +16,11 @@ script:
     - ctest
 
 addons:
-    sources:
-        - kalakris-cmake
-    packages:
-        -cmake
+    apt:
+        sources:
+            - kalakris-cmake
+        packages:
+            -cmake
 
 before_install:
     # Criterion
