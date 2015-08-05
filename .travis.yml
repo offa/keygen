@@ -24,7 +24,7 @@ addons:
 
 before_install:
     # Criterion
-    - export CRITERION_VERSION=1.2.1
+    - export CRITERION_VERSION=1.3.0
     - wget https://github.com/Snaipe/Criterion/releases/download/v${CRITERION_VERSION}/criterion-${CRITERION_VERSION}-linux-x86_64.tar.bz2
     - tar xvjf criterion-${CRITERION_VERSION}-linux-x86_64.tar.bz2 
     - export CRITERION_INCL=$PWD/criterion-${CRITERION_VERSION}/include
