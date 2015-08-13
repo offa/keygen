@@ -17,10 +17,11 @@ set(APP_NAME ${PROJECT_NAME})
 set(APP_HDR_PATH "include")
 set(LIB_HDR_PATH "lib/include")
 
-file(GLOB_RECURSE APP_SRC "src/*.c")
-file(GLOB_RECURSE APP_HDR "${APP_HDR_PATH}/*.h")
-file(GLOB_RECURSE LIB_SRC "lib/src/*.c")
-file(GLOB_RECURSE LIB_HDR "${LIB_HDR_PATH}/*.c")
+set(APP_SRC src/Main.c
+            src/KGOutput.c
+            src/KGOptions.c
+    )
+set(LIB_SRC lib/src/KGKeyGen.c)
 
 include_directories(${LIB_HDR_PATH})
 include_directories(${APP_HDR_PATH})
