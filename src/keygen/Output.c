@@ -24,7 +24,6 @@
  */
 
 #include "keygen/Output.h"
-#include "keygen/Config.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>

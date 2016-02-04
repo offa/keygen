@@ -53,7 +53,7 @@ extern "C"
      */
     enum Format
     {
-        ASCII,  ///< Ascii
+        ASCII,          ///< Ascii
         ASCII_BLANKS,   ///< Ascii including blanks
         ASCII_REDUCED,  ///< Ascii reduced
         ALPHA_NUMERIC   ///< Alphanumeric
