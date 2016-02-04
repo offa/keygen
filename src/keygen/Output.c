@@ -26,9 +26,8 @@
  * @date        21.10.2014
  */
 
-#include "lib/KGOutput.h"
-#include "lib/KGConfig.h"
-
+#include "keygen/Output.h"
+#include "keygen/Config.h"
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>

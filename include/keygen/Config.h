@@ -19,7 +19,7 @@
  */
 
 /**
- * @file        KGConfig.h
+ * @file        Config.h
  * 
  * @version     0.1
  * @author      offa

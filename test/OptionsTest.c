@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
-#include "lib/KGOptions.h"
+#include "keygen/Options.h"
 
 
 static int origStdErr;

@@ -26,8 +26,7 @@
  * @date        21.10.2014
  */
 
-#include "lib/KGOptions.h"
-
+#include "keygen/Options.h"
 #include <stdio.h>
 #include <stdlib.h>
 

@@ -19,7 +19,7 @@
  */
 
 /**
- * @file        KGKeyGen.h
+ * @file        KeyGen.h
  * 
  * @version     0.3
  * @author      offa

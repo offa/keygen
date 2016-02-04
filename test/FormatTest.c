@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <ctype.h>
-#include "lib/KGKeyGen.h"
+#include "keygen/KeyGen.h"
 
 static bool testFormat(UByte* buffer, size_t size, enum Format format);
 

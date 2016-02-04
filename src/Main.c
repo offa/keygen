@@ -34,8 +34,8 @@
 #include <string.h>
 #include <getopt.h>
 
-#include "lib/KGOptions.h"
-#include "lib/KGOutput.h"
+#include "keygen/Options.h"
+#include "keygen/Output.h"
 
 
 

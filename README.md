@@ -37,7 +37,7 @@ make  | < target >
 ------------- | -------------
 `test`  | Runs ctest (same as `ctest`)
 `unittest`  | Builds and  runs all test
-`unittest.verbose`  | Builds and  runs all test in verbose
+`coverage`  | Coverage
 
 ## Usage
 

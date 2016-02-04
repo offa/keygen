@@ -19,7 +19,7 @@
  */
 
 /**
- * @file        KGOptions.h
+ * @file        Options.h
  *
  * @version     0.3
  * @author      offa
@@ -28,13 +28,13 @@
  * Provides types and functions for options and settings.
  */
 
-#ifndef CLOPTIONS_H
-#define	CLOPTIONS_H
+#ifndef OPTIONS_H
+#define	OPTIONS_H
 
 #include <getopt.h>
 #include <stdbool.h>
 
-#include "lib/KGKeyGen.h"
+#include "keygen/KeyGen.h"
 
 
 #ifdef	__cplusplus

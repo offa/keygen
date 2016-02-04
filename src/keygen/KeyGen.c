@@ -26,7 +26,7 @@
  * @date        21.10.2014
  */
 
-#include "lib/KGKeyGen.h"
+#include "keygen/KeyGen.h"
 
 #include <string.h>
 #include <stdbool.h>

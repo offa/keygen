@@ -20,7 +20,7 @@
 
 #include <criterion/criterion.h>
 #include <stdlib.h>
-#include "lib/KGKeyGen.h"
+#include "keygen/KeyGen.h"
 
 TestSuite(MemoryTest);
 

@@ -19,7 +19,7 @@
  */
 
 /**
- * @file        KGOutput.h
+ * @file        Output.h
  *
  * @version     0.2
  * @author      offa
@@ -28,11 +28,11 @@
  * Contains functions to show informations and other output.
  */
 
-#ifndef CLOUTPUT_H
-#define	CLOUTPUT_H
+#ifndef OUTPUT_H
+#define	OUTPUT_H
 
-#include "lib/KGOptions.h"
-#include "lib/KGKeyGen.h"
+#include "keygen/Options.h"
+#include "keygen/KeyGen.h"
 
 
 #ifdef	__cplusplus
