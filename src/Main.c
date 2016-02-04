@@ -20,10 +20,7 @@
 
 /**
  * @file        Main.c
- *
- * @version     0.1
  * @author      offa
- * @date        21.10.2014
  *
  * Contains the <code>main()</code> function.
  */

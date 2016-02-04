@@ -20,10 +20,7 @@
 
 /**
  * @file        Config.h
- * 
- * @version     0.1
  * @author      offa
- * @date        21.10.2014
  * 
  * Global configurations.
  */

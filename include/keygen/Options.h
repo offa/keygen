@@ -20,10 +20,7 @@
 
 /**
  * @file        Options.h
- *
- * @version     0.3
  * @author      offa
- * @date        21.10.2014
  *
  * Provides types and functions for options and settings.
  */

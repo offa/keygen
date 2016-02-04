@@ -20,10 +20,7 @@
 
 /**
  * @file        KGKeyGen.c
- *
- * @version     0.4
  * @author      offa
- * @date        21.10.2014
  */
 
 #include "keygen/KeyGen.h"

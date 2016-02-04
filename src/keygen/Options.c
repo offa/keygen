@@ -20,10 +20,7 @@
 
 /**
  * @file        KGOptions.c
- *
- * @version     0.3
  * @author      offa
- * @date        21.10.2014
  */
 
 #include "keygen/Options.h"

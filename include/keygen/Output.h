@@ -20,10 +20,7 @@
 
 /**
  * @file        Output.h
- *
- * @version     0.2
  * @author      offa
- * @date        21.10.2014
  *
  * Contains functions to show informations and other output.
  */

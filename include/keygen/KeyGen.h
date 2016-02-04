@@ -20,10 +20,7 @@
 
 /**
  * @file        KeyGen.h
- * 
- * @version     0.3
  * @author      offa
- * @date        21.10.2014
  * 
  * Key- and password generator. For the cryptography <i>OpenSSL</i> is used.
  * Please consult the <i>OpenSSL</i> documentation for futher details.
