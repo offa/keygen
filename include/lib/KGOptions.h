@@ -1,7 +1,7 @@
 /*
  * KeyGen is a key- and password generator.
  * Copyright (C) 2014-2015  offa
- * 
+ *
  * This file is part of KeyGen.
  *
  * KeyGen is free software: you can redistribute it and/or modify
@@ -20,11 +20,11 @@
 
 /**
  * @file        KGOptions.h
- * 
+ *
  * @version     0.3
  * @author      offa
  * @date        21.10.2014
- * 
+ *
  * Provides types and functions for options and settings.
  */
 
@@ -34,7 +34,7 @@
 #include <getopt.h>
 #include <stdbool.h>
 
-#include <KGKeyGen.h>
+#include "lib/KGKeyGen.h"
 
 
 #ifdef	__cplusplus
@@ -59,8 +59,8 @@ extern "C"
 #define OPT_L_SHORT             "short"     ///< Reduced output
 #define OPT_L_HELP              "help"      ///< Print help
 #define OPT_L_VERSION           "version"   ///< Print version
-    
-    
+
+
     /**
      * Options holding the parsed arguments.
      */
@@ -74,12 +74,12 @@ extern "C"
         long keyLength;      ///< Keylength
         enum Format keyFormat;  ///< Key format
     };
-    
-    
-    
+
+
+
     /**
      * Parses the command line arguments into a options struct.
-     * 
+     *
      * @param argc      Argument count
      * @param argv      Argument vector
      * @return          Parsed options

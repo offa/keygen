@@ -1,7 +1,7 @@
 /*
  * KeyGen is a key- and password generator.
  * Copyright (C) 2014-2015  offa
- * 
+ *
  * This file is part of KeyGen.
  *
  * KeyGen is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 
 #include <criterion/criterion.h>
 #include <stdlib.h>
-#include <KGKeyGen.h>
+#include "lib/KGKeyGen.h"
 
 extern const char ALPHANUMERIC_CHARS[];
 extern const size_t ALPHANUMERIC_LENGTH;
@@ -51,17 +51,17 @@ Test(DataTest, testFormatChars)
     const char* charsAsciiBlanks = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
     const char* charsAscii = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
     const char* charsAlphaNum = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    
-    
+
+
     int result = memcmp(charsAscii, ASCII_CHARS, ASCII_LENGTH);
     cr_assert_eq(0, result);
-    
+
     result = memcmp(charsAsciiBlanks, ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
     cr_assert_eq(0, result);
-    
+
     result = memcmp(charsAsciiReduced, ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH);
     cr_assert_eq(0, result);
-    
+
     result = memcmp(charsAlphaNum, ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);
     cr_assert_eq(0, result);
 }

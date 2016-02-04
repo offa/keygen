@@ -1,7 +1,7 @@
 /*
  * KeyGen is a key- and password generator.
  * Copyright (C) 2014-2015  offa
- * 
+ *
  * This file is part of KeyGen.
  *
  * KeyGen is free software: you can redistribute it and/or modify
@@ -20,19 +20,19 @@
 
 /**
  * @file        KGOutput.h
- * 
+ *
  * @version     0.2
  * @author      offa
  * @date        21.10.2014
- * 
+ *
  * Contains functions to show informations and other output.
  */
 
 #ifndef CLOUTPUT_H
 #define	CLOUTPUT_H
 
-#include "KGOptions.h"
-#include <KGKeyGen.h>
+#include "lib/KGOptions.h"
+#include "lib/KGKeyGen.h"
 
 
 #ifdef	__cplusplus
@@ -44,38 +44,38 @@ extern "C"
      * Shows help information.
      */
     void printHelp();
-    
+
     /**
      * Prints the key with the given options.
-     * 
+     *
      * @param key       Key
      * @param options   Options to use for printing
      */
     void printKey(const UByte* key, struct CLOptions options);
-    
+
     /**
      * Shows version informations and license.
      */
     void printVersion();
-    
+
     /**
      * Generates and prints a key according the parameters in
      * <code>options</code>.
-     * 
+     *
      * @remark
      * A key less than <code>KEY_LENGTH_MIN</code> is not supported and results
      * in an error.
-     * 
+     *
      * @param options       Options
      * @return              Returns <code>EXIT_SUCCESS</code> <code>(0)</code>
      *                      on a clean exit or an error code in case of an error
      */
     int generateKey(const struct CLOptions options);
-    
-    
+
+
     /**
      * Returns an error message for the error code.
-     * 
+     *
      * @param error     Error code
      * @return          Error message
      */

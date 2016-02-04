@@ -1,7 +1,7 @@
 /*
  * KeyGen is a key- and password generator.
  * Copyright (C) 2014-2015  offa
- * 
+ *
  * This file is part of KeyGen.
  *
  * KeyGen is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <ctype.h>
-#include <KGKeyGen.h>
+#include "lib/KGKeyGen.h"
 
 static bool testFormat(UByte* buffer, size_t size, enum Format format);
 
@@ -100,7 +100,7 @@ static bool isIn(const char allowedChars[], size_t allowedCharsSize, char testFo
             return true;
         }
     }
-    
+
     return false;
 }
 

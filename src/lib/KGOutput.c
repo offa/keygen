@@ -1,7 +1,7 @@
 /*
  * KeyGen is a key- and password generator.
  * Copyright (C) 2014-2015  offa
- * 
+ *
  * This file is part of KeyGen.
  *
  * KeyGen is free software: you can redistribute it and/or modify
@@ -20,15 +20,14 @@
 
 /**
  * @file        KGOutput.c
- * 
+ *
  * @version     0.4
  * @author      offa
  * @date        21.10.2014
  */
 
-#include "KGOutput.h"
-
-#include "KGConfig.h"
+#include "lib/KGOutput.h"
+#include "lib/KGConfig.h"
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -40,7 +39,7 @@
  * Prints a line of <code>lc</code> characters with the length
  * <code>length</code>. If <code>newLine</code> is set to <tt>true</tt> a new
  * line (<code>\n</code>) is appended.
- * 
+ *
  * @param lc        Character
  * @param length    Length
  * @param newLine   If <tt>true</tt> a new line is appended, if <tt>false</tt>
@@ -52,7 +51,7 @@ static inline void printLine(char lc, unsigned int length, bool newLine)
     {
         printf("%c", lc);
     }
-    
+
     if( newLine == true )
     {
         printf("\n");
@@ -61,7 +60,7 @@ static inline void printLine(char lc, unsigned int length, bool newLine)
 
 /**
  * Prints a help for the command line argument.
- * 
+ *
  * @param optLong       Long argument
  * @param optShort      Short argument
  * @param value         Value description if the arguments requires anargument,
@@ -78,7 +77,7 @@ static inline void printHelpOption(const char* optLong, char optShort, const cha
     {
         printf("  --%s\t-%c", optLong, optShort);
     }
-    
+
     printf(" :  %s\n", text);
 }
 
@@ -96,7 +95,7 @@ void printHelp()
     printHead();
     printf("\nGenerates key's and passwords.\n");
     printf("\n Usage: keygen [Options]\n\n");
-    
+
     printHelpOption(OPT_L_ASCII, OPT_ASCII, NULL, "Generates a key of ASCII characters, ranging from '!'\n\t\t\tto'~' (default)");
     printHelpOption(OPT_L_ASCII_BLANKS, OPT_ASCII_BLANKS, NULL, "Generates a key of ASCII characters, ranging from ' '\n\t\t\tto'~'; same as --ascii, but includes blanks");
     printHelpOption(OPT_L_ASCII_REDUCED, OPT_ASCII_REDUCED, NULL, "Generates a key of reduced ASCII");
@@ -136,12 +135,12 @@ void printVersion()
     "\n   it under the terms of the GNU General Public License as published by"
     "\n   the Free Software Foundation, either version 3 of the License, or"
     "\n   (at your option) any later version."
-    "\n" 
+    "\n"
     "\n   This program is distributed in the hope that it will be useful,"
     "\n   but WITHOUT ANY WARRANTY; without even the implied warranty of"
     "\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
     "\n   GNU General Public License for more details."
-    "\n" 
+    "\n"
     "\n   You should have received a copy of the GNU General Public License"
     "\n   along with this program.  If not, see <http://www.gnu.org/licenses/>."
     "\n\n");
@@ -178,7 +177,7 @@ int generateKey(const struct CLOptions options)
 
     keygen_cleanBuffer(buffer, length+1);
     free(buffer);
-    
+
     return EXIT_SUCCESS;
 }
 

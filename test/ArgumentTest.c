@@ -1,7 +1,7 @@
 /*
  * KeyGen is a key- and password generator.
  * Copyright (C) 2014-2015  offa
- * 
+ *
  * This file is part of KeyGen.
  *
  * KeyGen is free software: you can redistribute it and/or modify
@@ -20,7 +20,7 @@
 
 #include <criterion/criterion.h>
 #include <stdlib.h>
-#include <KGKeyGen.h>
+#include "lib/KGKeyGen.h"
 
 
 static size_t size;
@@ -38,7 +38,7 @@ Test(ArgumentTest, testToShortLengthRejected)
 {
     size = 7 * sizeof(UByte);
     buffer = malloc(size);
-    
+
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
     cr_assert_eq(KG_ERR_ILL_ARGUMENT, rtn);
 }
@@ -48,10 +48,10 @@ Test(ArgumentTest, testToShortLengthDoesntChangeBuffer)
     size = 7 * sizeof(UByte);
     buffer = malloc(size);
     UByte expected[size];
-    
+
     memset(expected, 0, size);
     memset(buffer, 0, size);
-    
+
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
     cr_assert_eq(KG_ERR_ILL_ARGUMENT, rtn);
     cr_assert_arrays_eq(expected, buffer, size);
@@ -61,7 +61,7 @@ Test(ArgumentTest, testAllowedSizeGeneratesKey8Byte)
 {
     size = 8 * sizeof(UByte);
     buffer = malloc(size);
-    
+
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
     cr_assert_eq(KG_ERR_SUCCESS, rtn);
 }
@@ -70,7 +70,7 @@ Test(ArgumentTest, testAllowedSizeGeneratesKey1200Byte)
 {
     size = 1200 * sizeof(UByte);
     buffer = malloc(size);
-    
+
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
     cr_assert_eq(KG_ERR_SUCCESS, rtn);
 }

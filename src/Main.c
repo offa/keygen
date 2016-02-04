@@ -1,7 +1,7 @@
 /*
  * KeyGen is a key- and password generator.
  * Copyright (C) 2014-2015  offa
- * 
+ *
  * This file is part of KeyGen.
  *
  * KeyGen is free software: you can redistribute it and/or modify
@@ -20,11 +20,11 @@
 
 /**
  * @file        Main.c
- * 
+ *
  * @version     0.1
  * @author      offa
  * @date        21.10.2014
- * 
+ *
  * Contains the <code>main()</code> function.
  */
 
@@ -34,14 +34,14 @@
 #include <string.h>
 #include <getopt.h>
 
-#include "KGOptions.h"
-#include "KGOutput.h"
+#include "lib/KGOptions.h"
+#include "lib/KGOutput.h"
 
 
 
 /**
  * The <code>main</code> function of the program.
- * 
+ *
  * @param argc      Argument count
  * @param argv      Argument vector
  * @return          Returns <code>EXIT_SUCCESS</code> <code>(0)</code> on a
@@ -64,7 +64,7 @@ int main(int argc, char** argv)
         else
         {
             const int rtn = generateKey(options);
-            
+
             if( rtn != EXIT_SUCCESS )
             {
                 return rtn;
@@ -75,6 +75,6 @@ int main(int argc, char** argv)
     {
         /* empty */
     }
-    
+
     return EXIT_SUCCESS;
 }

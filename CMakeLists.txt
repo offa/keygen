@@ -11,20 +11,7 @@ message(STATUS "~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~")
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-set(LIB_NAME lib${PROJECT_NAME})
-set(APP_NAME ${PROJECT_NAME})
-
-set(APP_HDR_PATH "include")
-set(LIB_HDR_PATH "lib/include")
-
-set(APP_SRC src/Main.c
-            src/KGOutput.c
-            src/KGOptions.c
-    )
-set(LIB_SRC lib/src/KGKeyGen.c)
-
-include_directories(${LIB_HDR_PATH})
-include_directories(${APP_HDR_PATH})
+include_directories("include")
 
 
 find_package(PkgConfig REQUIRED)
@@ -43,14 +30,8 @@ endif()
 include(Coverage)
 include(Doxygen)
 
-add_definitions(-std=c99)
-add_definitions(-Wall -Wextra -pedantic -Werror)
+add_definitions(-std=c99 -Wall -Wextra -Werror -pedantic)
 add_definitions(-DKEYGEN_VERSION="${PROJECT_VERSION}")
 
+subdirs(src)
 
-add_library(${LIB_NAME} ${LIB_SRC})
-set_target_properties(${LIB_NAME} PROPERTIES PREFIX "")
-
-
-add_executable(${APP_NAME} ${APP_SRC})
-target_link_libraries(${APP_NAME} ${LIB_NAME} ${OPENSSL_LIBRARIES})

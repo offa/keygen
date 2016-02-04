@@ -1,7 +1,7 @@
 /*
  * KeyGen is a key- and password generator.
  * Copyright (C) 2014-2015  offa
- * 
+ *
  * This file is part of KeyGen.
  *
  * KeyGen is free software: you can redistribute it and/or modify
@@ -20,13 +20,13 @@
 
 /**
  * @file        KGOptions.c
- * 
+ *
  * @version     0.3
  * @author      offa
  * @date        21.10.2014
  */
 
-#include "KGOptions.h"
+#include "lib/KGOptions.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -127,7 +127,7 @@ struct CLOptions parseOptions(int argc, char** argv)
                 break;
             }
         }
-        
+
         if ( optind < argc )
         {
             fprintf(stderr, "Not an option: %s\n", argv[optind]);
