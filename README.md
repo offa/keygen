@@ -4,7 +4,7 @@
 [![GitHub release](https://img.shields.io/github/release/offa/keygen.svg)](https://github.com/offa/keygen/releases)
 [![License](https://img.shields.io/badge/license-GPLv3-yellow.svg)](LICENSE)
 
-KeyGen is a generator for keys and passwords. It's usable as standalone application and library. 
+KeyGen is a generator for keys and passwords. It's usable as standalone application and library.
 
 The cryptography behind is provided by *OpenSSL*.
 
@@ -31,13 +31,13 @@ After building, the tests are executed within the build directory using:
 
     ctest
 
-or running make with one of these targets:
+or running `make` with one of these targets:
 
-make  | < target >
-------------- | -------------
-`test`  | Runs ctest (same as `ctest`)
+make        | < target >
+----------- | -------------------------------
+`test`      | Runs ctest (same as `ctest`)
 `unittest`  | Builds and  runs all test
-`coverage`  | Coverage
+`coverage`  | Coverage (requires lcov)
 
 ## Usage
 
