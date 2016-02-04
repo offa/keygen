@@ -1,26 +1,44 @@
 message(STATUS "Building Unit Tests ${UNITTEST}")
 
-find_package(Criterion REQUIRED)
+find_package(CppUTest REQUIRED)
 
-set(TEST_ARGS "--no-early-exit")
-
-macro(_add_test _name)
-    add_executable(${_name} "${_name}.c")
-    target_include_directories(${_name} PUBLIC ${Criterion_INCLUDE_DIRS})
-    target_link_libraries(${_name} keygen-lib ${OPENSSL_LIBRARIES} ${Criterion_LIBRARIES})
-    add_test(NAME ${_name} COMMAND ${_name} ${TEST_ARGS})
-endmacro(_add_test)
-
-_add_test(ArgumentTest)
-_add_test(FormatTest)
-_add_test(MemoryTest)
-_add_test(DataTest)
-_add_test(OptionsTest)
-
-add_custom_target(unittest ArgumentTest ${TEST_ARGS}
-                            COMMAND FormatTest ${TEST_ARGS}
-                            COMMAND MemoryTest ${TEST_ARGS}
-                            COMMAND DataTest ${TEST_ARGS}
-                            COMMAND OptionsTest ${TEST_ARGS}
+add_library(testmain OBJECT TestMain.cpp)
+target_include_directories(testmain PUBLIC
+                            ${CppUTest_INCLUDE_DIR}
+                            ${CppUTestExt_INCLUDE_DIR}
                             )
+
+macro(_add_test _NAME _SRC _LIBS)
+    add_executable(${_NAME} ${_SRC} $<TARGET_OBJECTS:testmain>)
+    add_test(NAME ${_NAME} COMMAND ${_NAME})
+
+    target_include_directories(${_NAME} PUBLIC
+                                ${CppUTest_INCLUDE_DIR}
+                                ${CppUTestExt_INCLUDE_DIR}
+                                )
+    target_link_libraries(${_NAME} ${CppUTest_LIBRARY}
+                                ${CppUTestExt_LIBRARY}
+                                keygen-lib
+                                ${${_LIBS}}
+                                )
+endmacro()
+
+
+list(APPEND TEST_LIB ${OPENSSL_LIBRARIES})
+
+_add_test(ArgumentTest ArgumentTest.cpp TEST_LIB)
+_add_test(FormatTest FormatTest.cpp TEST_LIB)
+_add_test(MemoryTest MemoryTest.cpp TEST_LIB)
+_add_test(DataTest DataTest.cpp TEST_LIB)
+_add_test(OptionsTest OptionsTest.cpp TEST_LIB)
+
+
+add_custom_target(unittest ArgumentTest -c
+                        COMMAND FormatTest -c
+                        COMMAND MemoryTest -c
+                        COMMAND DataTest -c
+                        COMMAND OptionsTest -c
+                        COMMENT "Running unittests\n\n"
+                        VERBATIM
+                        )
 

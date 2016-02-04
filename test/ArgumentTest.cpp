@@ -18,59 +18,63 @@
  * along with KeyGen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <criterion/criterion.h>
-#include <stdlib.h>
+#include <CppUTest/TestHarness.h>
+#include <string.h>
 #include "keygen/KeyGen.h"
+#include "TestUtil.h"
 
 
-static size_t size;
-static UByte* buffer;
-
-
-void tearDown()
+TEST_GROUP(ArgumentTest)
 {
-    keygen_cleanAndFreeBuffer(buffer, size);
-}
+    void teardown()
+    {
+        keygen_cleanAndFreeBuffer(buffer, size);
+    }
 
-TestSuite(ArgumentTest, .fini = tearDown);
+    UByte* buffer;
+    size_t size;
+};
 
-Test(ArgumentTest, testToShortLengthRejected)
+TEST(ArgumentTest, toShortLengthRejected)
 {
     size = 7 * sizeof(UByte);
-    buffer = malloc(size);
+    buffer = allocate(size);
 
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
-    cr_assert_eq(KG_ERR_ILL_ARGUMENT, rtn);
+    CHECK_EQUAL(KG_ERR_ILL_ARGUMENT, rtn);
 }
 
-Test(ArgumentTest, testToShortLengthDoesntChangeBuffer)
+TEST(ArgumentTest, toShortLengthDoesntChangeBuffer)
 {
     size = 7 * sizeof(UByte);
-    buffer = malloc(size);
-    UByte expected[size];
+    buffer = allocate(size);
+    UByte* expected = allocate(size);
 
     memset(expected, 0, size);
     memset(buffer, 0, size);
 
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
-    cr_assert_eq(KG_ERR_ILL_ARGUMENT, rtn);
-    cr_assert_arrays_eq(expected, buffer, size);
+    CHECK_EQUAL(KG_ERR_ILL_ARGUMENT, rtn);
+    MEMCMP_EQUAL(expected, buffer, size);
+
+    free(expected);
 }
 
-Test(ArgumentTest, testAllowedSizeGeneratesKey8Byte)
+TEST(ArgumentTest, allowedSizeGeneratesKey8Byte)
 {
     size = 8 * sizeof(UByte);
-    buffer = malloc(size);
+    buffer = allocate(size);
 
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
-    cr_assert_eq(KG_ERR_SUCCESS, rtn);
+    CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 }
 
-Test(ArgumentTest, testAllowedSizeGeneratesKey1200Byte)
+TEST(ArgumentTest, allowedSizeGeneratesKey1200Byte)
 {
     size = 1200 * sizeof(UByte);
-    buffer = malloc(size);
+    buffer = allocate(size);
 
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
-    cr_assert_eq(KG_ERR_SUCCESS, rtn);
+    CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 }
+
