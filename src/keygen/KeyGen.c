@@ -102,7 +102,7 @@ static void transformBuffer(UByte* buffer, const size_t length,
     assert(buffer != NULL);
     assert(length > 0);
 
-    for( size_t i=0; i<length; i++ )
+    for( size_t i=0; i<length; ++i )
     {
         const size_t pos = buffer[i] % fmtLength;
 

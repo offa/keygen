@@ -43,7 +43,7 @@ TEST_GROUP(FormatTest)
 
     bool isIn(const char allowedChars[], size_t allowedCharsSize, char testFor)
     {
-        for( size_t i=0; i<allowedCharsSize; i++ )
+        for( size_t i=0; i<allowedCharsSize; ++i )
         {
             if( strchr(allowedChars, testFor) != NULL )
             {
@@ -56,51 +56,28 @@ TEST_GROUP(FormatTest)
 
     bool testFormat(const UByte* buffer, size_t size, enum Format format)
     {
-        switch(format)
+        for( size_t i = 0; i < size; ++i )
         {
-            case ASCII:
-                for( size_t i=0; i<size; i++ )
-                {
-                    if( buffer[i] <= ' ' || buffer[i] > '~' )
-                    {
-                        FAIL("Invalid character");
-                        return false;
-                    }
-                }
-                return true;
-            case ASCII_BLANKS:
-                for( size_t i=0; i<size; i++ )
-                {
-                    if( buffer[i] < ' ' || buffer[i] > '~' )
-                    {
-                        FAIL("Invalid character");
-                        return false;
-                    }
-                }
-                return true;
-            case ASCII_REDUCED:
-                for( size_t i=0; i<size; i++ )
-                {
-                    if( isIn(ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH, buffer[i]) == false )
-                    {
-                        FAIL("Invalid character");
-                        return false;
-                    }
-                }
-                return true;
-            case ALPHA_NUMERIC:
-                for( size_t i=0; i<size; i++ )
-                {
-                    if( isalnum(buffer[i]) == false )
-                    {
-                        FAIL("Invalid character");
-                        return false;
-                    }
-                }
-                return true;
-            default:
-                return false;
+            switch( format )
+            {
+                case ASCII:
+                    CHECK_FALSE(buffer[i] <= ' ' || buffer[i] > '~');
+                    return true;
+                case ASCII_BLANKS:
+                    CHECK_FALSE(buffer[i] < ' ' || buffer[i] > '~');
+                    return true;
+                case ASCII_REDUCED:
+                    CHECK_TRUE(isIn(ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH, buffer[i]));
+                    return true;
+                case ALPHA_NUMERIC:
+                    CHECK_TRUE(isalnum(buffer[i]))
+                    return true;
+                default:
+                    break;
+            }
         }
+        
+        return false;
     }
 
     size_t size;
