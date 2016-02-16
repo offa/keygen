@@ -32,12 +32,17 @@ _add_test(MemoryTest MemoryTest.cpp TEST_LIB)
 _add_test(DataTest DataTest.cpp TEST_LIB)
 _add_test(OptionsTest OptionsTest.cpp TEST_LIB)
 
+set(TEST_FLAGS -c)
 
-add_custom_target(unittest ArgumentTest -c
-                        COMMAND FormatTest -c
-                        COMMAND MemoryTest -c
-                        COMMAND DataTest -c
-                        COMMAND OptionsTest -c
+if( UNITTEST_VERBOSE )
+    set(TEST_FLAGS ${TEST_FLAGS} -v)
+endif()
+
+add_custom_target(unittest ArgumentTest ${TEST_FLAGS}
+                        COMMAND FormatTest ${TEST_FLAGS}
+                        COMMAND MemoryTest ${TEST_FLAGS}
+                        COMMAND DataTest ${TEST_FLAGS}
+                        COMMAND OptionsTest ${TEST_FLAGS}
                         COMMENT "Running unittests\n\n"
                         VERBATIM
                         )

@@ -4,6 +4,7 @@ project(keygen)
 set(PROJECT_VERSION 0.2.3)
 
 option(UNITTEST "Builds unit tests" ON)
+option(UNITTEST_VERBOSE "Verbose unit test output" OFF)
 option(COVERAGE "Enables source code coverage" OFF)
 option(DOXYFILE "Generates the Doxyfile for Doxygen documentation" ON)
 
