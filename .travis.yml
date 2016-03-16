@@ -22,9 +22,9 @@ addons:
             - cmake
 
 before_install:
-    - export CPPUTEST_VERSION=3.7.2
+    - export CPPUTEST_VERSION=${master}
     - export CPPUTEST=cpputest-${CPPUTEST_VERSION}
-    - wget https://github.com/cpputest/cpputest/releases/download/${CPPUTEST_VERSION}/${CPPUTEST}.tar.gz
+    - wget https://github.com/cpputest/cpputest/archive/${CPPUTEST_VERSION}.tar.gz
     - tar -xzvf *.tar.gz
     - cd ${CPPUTEST}
     - mkdir _build && cd _build
