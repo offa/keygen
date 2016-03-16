@@ -18,50 +18,40 @@
  * along with KeyGen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <criterion/criterion.h>
-#include <stdlib.h>
+#include <CppUTest/TestHarness.h>
 #include "keygen/KeyGen.h"
+#include <string.h>
 
 extern const char ALPHANUMERIC_CHARS[];
 extern const size_t ALPHANUMERIC_LENGTH;
-
 extern const char ASCII_REDUCED_CHARS[];
 extern const size_t ASCII_REDUCED_LENGTH;
-
 extern const char ASCII_BLANK_CHARS[];
 extern const size_t ASCII_BLANK_LENGTH;
-
 extern const char ASCII_CHARS[];
 extern const size_t ASCII_LENGTH;
 
-
-TestSuite(DataTest);
-
-Test(DataTest, testFormatCharsLength)
+TEST_GROUP(DataTest)
 {
-    cr_assert_eq(94u, ASCII_LENGTH);
-    cr_assert_eq(95u, ASCII_BLANK_LENGTH);
-    cr_assert_eq(88u, ASCII_REDUCED_LENGTH);
-    cr_assert_eq(62u, ALPHANUMERIC_LENGTH);
+};
+
+TEST(DataTest, formatCharsLength)
+{
+    CHECK_EQUAL(94u, ASCII_LENGTH);
+    CHECK_EQUAL(95u, ASCII_BLANK_LENGTH);
+    CHECK_EQUAL(88u, ASCII_REDUCED_LENGTH);
+    CHECK_EQUAL(62u, ALPHANUMERIC_LENGTH);
 }
 
-Test(DataTest, testFormatChars)
+TEST(DataTest, formatChars)
 {
     const char* charsAsciiReduced = "!#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]_abcdefghijklmnopqrstuvwxyz{}~";
     const char* charsAsciiBlanks = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
     const char* charsAscii = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
     const char* charsAlphaNum = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-
-    int result = memcmp(charsAscii, ASCII_CHARS, ASCII_LENGTH);
-    cr_assert_eq(0, result);
-
-    result = memcmp(charsAsciiBlanks, ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
-    cr_assert_eq(0, result);
-
-    result = memcmp(charsAsciiReduced, ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH);
-    cr_assert_eq(0, result);
-
-    result = memcmp(charsAlphaNum, ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);
-    cr_assert_eq(0, result);
+    MEMCMP_EQUAL(charsAscii, ASCII_CHARS, ASCII_LENGTH);
+    MEMCMP_EQUAL(charsAsciiBlanks, ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
+    MEMCMP_EQUAL(charsAsciiReduced, ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH);
+    MEMCMP_EQUAL(charsAlphaNum, ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);
 }

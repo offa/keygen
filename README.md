@@ -13,7 +13,7 @@ The cryptography behind is provided by *OpenSSL*.
  - [**OpenSSL**](https://www.openssl.org/)
  - [**CMake**](http://www.cmake.org/) - for building
  - [**Doxygen**](http://doxygen.nl/) - for documentation *(Optional)*
- - [**Criterion 1.2.1**](https://github.com/Snaipe/Criterion) - for testing *(Optional)*
+ - [**CppUTest**](https://github.com/cpputest/cpputest) - for testing *(Optional; requires C++ Compiler)*
 
 ## Building
 

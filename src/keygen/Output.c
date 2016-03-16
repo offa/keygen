@@ -42,7 +42,7 @@
  */
 static inline void printLine(char lc, unsigned int length, bool newLine)
 {
-    for( unsigned int i=0; i<length; i++ )
+    for( unsigned int i=0; i<length; ++i )
     {
         printf("%c", lc);
     }

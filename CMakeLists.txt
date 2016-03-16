@@ -4,6 +4,7 @@ project(keygen)
 set(PROJECT_VERSION 0.2.4)
 
 option(UNITTEST "Builds unit tests" ON)
+option(UNITTEST_VERBOSE "Verbose unit test output" OFF)
 option(COVERAGE "Enables source code coverage" OFF)
 option(DOXYFILE "Generates the Doxyfile for Doxygen documentation" ON)
 
@@ -30,8 +31,9 @@ endif()
 include(Coverage)
 include(Doxygen)
 
-add_definitions(-std=c99 -Wall -Wextra -Werror -pedantic)
+add_definitions(-Wall -Wextra -Werror -pedantic)
 add_definitions(-DKEYGEN_VERSION="${PROJECT_VERSION}")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 
 subdirs(src)
 

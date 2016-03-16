@@ -9,9 +9,8 @@ env:
     - BUILD_TYPE=Release
 
 script:
-    - mkdir build
-    - cd build
-    - cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCriterion_INCLUDE_DIR="${CRITERION_INCL}" -DCriterion_LIBRARY="${CRITERION_LIB}" ..
+    - mkdir build && cd build
+    - cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ..
     - make all
     - ctest
 
@@ -23,12 +22,15 @@ addons:
             - cmake
 
 before_install:
-    # Criterion
-    - export CRITERION_VERSION=1.2.1
-    - wget https://github.com/Snaipe/Criterion/releases/download/v${CRITERION_VERSION}/criterion-${CRITERION_VERSION}-linux-x86_64.tar.bz2
-    - tar xvjf criterion-${CRITERION_VERSION}-linux-x86_64.tar.bz2 
-    - export CRITERION_INCL=$PWD/criterion-${CRITERION_VERSION}/include
-    - export CRITERION_LIB=$PWD/criterion-${CRITERION_VERSION}/lib/libcriterion.a
+    - export CPPUTEST_VERSION=master
+    - export CPPUTEST=cpputest-${CPPUTEST_VERSION}
+    - wget https://github.com/cpputest/cpputest/archive/${CPPUTEST_VERSION}.tar.gz
+    - tar -xzvf *.tar.gz
+    - cd ${CPPUTEST}
+    - mkdir _build && cd _build
+    - cmake -DC++11=OFF -DTESTS=OFF ..
+    - make -j4 && sudo make install && cd ../..
+
 
 after_failure:
     - cat Testing/Temporary/LastTest.log

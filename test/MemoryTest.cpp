@@ -18,34 +18,36 @@
  * along with KeyGen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <criterion/criterion.h>
-#include <stdlib.h>
 #include "keygen/KeyGen.h"
+#include "TestUtil.h"
+#include <string.h>
+#include <CppUTest/TestHarness.h>
 
-TestSuite(MemoryTest);
+TEST_GROUP(MemoryTest)
+{
+};
 
-Test(MemoryTest, testCleanUp)
+TEST(MemoryTest, testCleanUp)
 {
     const size_t size = 1000 * sizeof(UByte);
-    UByte* buffer = malloc(size);
+    UByte* buffer = allocate(size);
     UByte expected[size];
-
     memset(expected, 0, size);
 
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
-    cr_assert_eq(KG_ERR_SUCCESS, rtn);
+    CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 
     keygen_cleanBuffer(buffer, size);
-    cr_assert_arrays_eq(expected, buffer, size);
+    MEMCMP_EQUAL(expected, buffer, size);
 
     free(buffer);
 }
 
-Test(MemoryTest, testCleanUpBorderCheck)
+TEST(MemoryTest, cleanUpBorderCheck)
 {
     const size_t size = 1000 * sizeof(UByte);
     const size_t allocSize = size + 4;
-    UByte* allocBuffer = malloc(allocSize);
+    UByte* allocBuffer = allocate(allocSize);
     UByte* buffer = allocBuffer + 2;
     UByte expected[allocSize];
 
@@ -56,35 +58,34 @@ Test(MemoryTest, testCleanUpBorderCheck)
     expected[allocSize - 1] = 0xFE;
 
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
-    cr_assert_eq(KG_ERR_SUCCESS, rtn);
+    CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 
     keygen_cleanBuffer(buffer, size);
-    cr_assert_arrays_eq(expected + 2, buffer, size);
-    cr_assert_eq(0xCA, expected[0]);
-    cr_assert_eq(0xFE, expected[1]);
-    cr_assert_eq(0xCA, expected[allocSize - 2]);
-    cr_assert_eq(0xFE, expected[allocSize - 1]);
+    MEMCMP_EQUAL(expected + 2, buffer, size);
+    CHECK_EQUAL(0xCA, expected[0]);
+    CHECK_EQUAL(0xFE, expected[1]);
+    CHECK_EQUAL(0xCA, expected[allocSize - 2]);
+    CHECK_EQUAL(0xFE, expected[allocSize - 1]);
 
     free(allocBuffer);
 }
 
-Test(MemoryTest, testOverlength)
+TEST(MemoryTest, overlength)
 {
     const size_t overLength =  1000000 * sizeof(UByte);
 
-    UByte* buffer = malloc(overLength * sizeof(UByte));
+    UByte* buffer = allocate(overLength * sizeof(UByte));
     KeyGenError rtn = keygen_createKey(buffer, overLength, ASCII);
-
-    cr_assert_eq(KG_ERR_SUCCESS, rtn);
+    CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 
     keygen_cleanAndFreeBuffer(buffer, overLength);
 }
 
-Test(MemoryTest, testOverAndUnderflow)
+TEST(MemoryTest, overAndUnderflow)
 {
     const size_t size = 1000 * sizeof(UByte);
     const size_t allocSize = size + 4;
-    UByte* allocBuffer = malloc(allocSize);
+    UByte* allocBuffer = allocate(allocSize);
     UByte* buffer = allocBuffer + 2;
 
     allocBuffer[0] = 0xCA;
@@ -93,19 +94,20 @@ Test(MemoryTest, testOverAndUnderflow)
     allocBuffer[allocSize - 1] = 0xFE;
 
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
-    cr_assert_eq(KG_ERR_SUCCESS, rtn);
+    CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 
-    cr_assert_eq(0xCA, allocBuffer[0]);
-    cr_assert_eq(0XFE, allocBuffer[1]);
-    cr_assert_eq(0xCA, allocBuffer[allocSize - 2]);
-    cr_assert_eq(0xFE, allocBuffer[allocSize - 1]);
+    CHECK_EQUAL(0xCA, allocBuffer[0]);
+    CHECK_EQUAL(0XFE, allocBuffer[1]);
+    CHECK_EQUAL(0xCA, allocBuffer[allocSize - 2]);
+    CHECK_EQUAL(0xFE, allocBuffer[allocSize - 1]);
 
     keygen_cleanBuffer(buffer, size);
 
-    cr_assert_eq(0xCA, allocBuffer[0]);
-    cr_assert_eq(0XFE, allocBuffer[1]);
-    cr_assert_eq(0xCA, allocBuffer[allocSize - 2]);
-    cr_assert_eq(0xFE, allocBuffer[allocSize - 1]);
+    CHECK_EQUAL(0xCA, allocBuffer[0]);
+    CHECK_EQUAL(0XFE, allocBuffer[1]);
+    CHECK_EQUAL(0xCA, allocBuffer[allocSize - 2]);
+    CHECK_EQUAL(0xFE, allocBuffer[allocSize - 1]);
 
     free(allocBuffer);
 }
+
