@@ -25,12 +25,14 @@ endmacro()
 
 
 list(APPEND TEST_LIB ${OPENSSL_LIBRARIES})
+list(APPEND MOCK_LIB ${CppUTestExt_LIBRARY})
 
 _add_test(ArgumentTest ArgumentTest.cpp TEST_LIB)
 _add_test(FormatTest FormatTest.cpp TEST_LIB)
 _add_test(MemoryTest MemoryTest.cpp TEST_LIB)
 _add_test(DataTest DataTest.cpp TEST_LIB)
 _add_test(OptionsTest OptionsTest.cpp TEST_LIB)
+_add_test(MockedTest MockedTest.cpp MOCK_LIB)
 
 set(TEST_FLAGS -c)
 
@@ -43,6 +45,7 @@ add_custom_target(unittest ArgumentTest ${TEST_FLAGS}
                         COMMAND MemoryTest ${TEST_FLAGS}
                         COMMAND DataTest ${TEST_FLAGS}
                         COMMAND OptionsTest ${TEST_FLAGS}
+                        COMMAND MockedTest ${TEST_FLAGS}
                         COMMENT "Running unittests\n\n"
                         VERBATIM
                         )
