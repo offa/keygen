@@ -42,7 +42,8 @@ static const struct option getoptOptions[] =
     { OPT_L_LENGTH, required_argument, 0, OPT_LENGTH },
     { OPT_L_SHORT, no_argument, 0, OPT_SHORT },
     { OPT_L_HELP, no_argument, 0, OPT_HELP },
-    { OPT_L_VERSION, no_argument, 0, OPT_VERSION }
+    { OPT_L_VERSION, no_argument, 0, OPT_VERSION },
+    { NULL, 0, 0, 0 }
 };
 
 

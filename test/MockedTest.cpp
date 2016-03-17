@@ -56,7 +56,9 @@ TEST_GROUP(MockedTest)
 
 TEST(MockedTest, returnErrorCodeOnFailedRandom)
 {
-    mock().expectOneCall("RAND_bytes").ignoreOtherParameters().andReturnValue(100);
+    mock().expectOneCall("RAND_bytes")
+            .ignoreOtherParameters()
+            .andReturnValue(100);
     enum { length = 10 };
     UByte buffer[length];
     KeyGenError rtn = keygen_createKey(buffer, length, ASCII);
