@@ -5,7 +5,7 @@ find_package(CppUTest REQUIRED)
 add_library(testmain OBJECT TestMain.cpp)
 target_include_directories(testmain PUBLIC
                             ${CppUTest_INCLUDE_DIR}
-                            ${CppUTestExt_INCLUDE_DIR}
+                            ${CppUTest_Ext_INCLUDE_DIR}
                             )
 
 macro(_add_test _NAME _SRC _LIBS)
@@ -14,10 +14,9 @@ macro(_add_test _NAME _SRC _LIBS)
 
     target_include_directories(${_NAME} PUBLIC
                                 ${CppUTest_INCLUDE_DIR}
-                                ${CppUTestExt_INCLUDE_DIR}
+                                ${CppUTest_Ext_INCLUDE_DIR}
                                 )
     target_link_libraries(${_NAME} ${CppUTest_LIBRARY}
-                                ${CppUTestExt_LIBRARY}
                                 keygen-lib
                                 ${${_LIBS}}
                                 )
@@ -25,7 +24,7 @@ endmacro()
 
 
 list(APPEND TEST_LIB ${OPENSSL_LIBRARIES})
-list(APPEND MOCK_LIB ${CppUTestExt_LIBRARY})
+list(APPEND MOCK_LIB ${CppUTest_Ext_LIBRARY})
 
 _add_test(ArgumentTest ArgumentTest.cpp TEST_LIB)
 _add_test(FormatTest FormatTest.cpp TEST_LIB)

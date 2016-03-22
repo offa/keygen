@@ -12,22 +12,22 @@ find_library(CppUTest_LIBRARY NAMES CppUTest libCppUTest
                                         ${PKG_CppUTest_LIBRARY_DIRS}
                                         "${CppUTest_DIR}/lib"
                                 )
-find_library(CppUTestExt_LIBRARY NAMES CppUTestExt libCppUTestExt
+find_library(CppUTest_Ext_LIBRARY NAMES CppUTest_Ext libCppUTest_Ext
                                 HINTS ${PKG_CppUTest_LIBDIR}
                                         ${PKG_CppUTest_LIBRARY_DIRS}
                                         "${CppUTest_DIR}/lib"
                                 )
 
 
-set(CppUTest_LIBRARIES ${CppUTest_LIBRARY} ${CppUTestExt_LIBRARY})
+set(CppUTest_LIBRARIES ${CppUTest_LIBRARY} ${CppUTest_Ext_LIBRARY})
 set(CppUTest_INCLUDE_DIRS ${CppUTest_INCLUDE_DIR})
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(CppUTest DEFAULT_MSG
                                         CppUTest_LIBRARY
-                                        CppUTestExt_LIBRARY
+                                        CppUTest_Ext_LIBRARY
                                         CppUTest_INCLUDE_DIR
                                         )
 
-mark_as_advanced(CppUTest_INCLUDE_DIR CppUTest_LIBRARY CppUTestExt_LIBRARY)
+mark_as_advanced(CppUTest_INCLUDE_DIR CppUTest_LIBRARY CppUTest_Ext_LIBRARY)
 
