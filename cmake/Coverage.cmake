@@ -5,7 +5,7 @@ if( ${COVERAGE} )
 
     # Find Lcov tools
     find_program(LCOV lcov DOC "LCov")
-    find_program(LCOV_GENHTML genhtml DOC "LCov GenHtml")
+    find_program(LCOV_GENHTML genhtml DOC "LCov GenHtml" HINTS ${LCOV}/..)
 
     if( NOT LCOV OR NOT LCOV_GENHTML )
         message(SEND_ERROR "LCov tools not found")
