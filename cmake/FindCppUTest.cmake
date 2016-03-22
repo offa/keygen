@@ -12,7 +12,7 @@ find_library(CppUTest_LIBRARY NAMES CppUTest libCppUTest
                                         ${PKG_CppUTest_LIBRARY_DIRS}
                                         "${CppUTest_DIR}/lib"
                                 )
-find_library(CppUTest_Ext_LIBRARY NAMES CppUTest_Ext libCppUTest_Ext
+find_library(CppUTest_Ext_LIBRARY NAMES CppUTestExt libCppUTestExt
                                 HINTS ${PKG_CppUTest_LIBDIR}
                                         ${PKG_CppUTest_LIBRARY_DIRS}
                                         "${CppUTest_DIR}/lib"
