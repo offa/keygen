@@ -31,7 +31,7 @@ endif()
 include(Coverage)
 include(Doxygen)
 
-add_definitions(-Wall -Wextra -Werror -pedantic)
+add_definitions(-Wall -Wextra -Werror -pedantic -Wshadow)
 add_definitions(-DKEYGEN_VERSION="${PROJECT_VERSION}")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 

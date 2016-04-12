@@ -54,29 +54,29 @@ TEST_GROUP(FormatTest)
         return false;
     }
 
-    bool testFormat(const UByte* buffer, size_t size, enum Format format)
+    bool testFormat(const UByte* inBuffer, size_t inBufferSize, enum Format format)
     {
-        for( size_t i = 0; i < size; ++i )
+        for( size_t i = 0; i < inBufferSize; ++i )
         {
             switch( format )
             {
                 case ASCII:
-                    CHECK_FALSE(buffer[i] <= ' ' || buffer[i] > '~');
+                    CHECK_FALSE(inBuffer[i] <= ' ' || inBuffer[i] > '~');
                     return true;
                 case ASCII_BLANKS:
-                    CHECK_FALSE(buffer[i] < ' ' || buffer[i] > '~');
+                    CHECK_FALSE(inBuffer[i] < ' ' || inBuffer[i] > '~');
                     return true;
                 case ASCII_REDUCED:
-                    CHECK_TRUE(isIn(ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH, buffer[i]));
+                    CHECK_TRUE(isIn(ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH, inBuffer[i]));
                     return true;
                 case ALPHA_NUMERIC:
-                    CHECK_TRUE(isalnum(buffer[i]))
+                    CHECK_TRUE(isalnum(inBuffer[i]))
                     return true;
                 default:
                     break;
             }
         }
-        
+
         return false;
     }
 
