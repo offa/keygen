@@ -12,7 +12,7 @@ script:
     - mkdir build && cd build
     - cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DUNITTEST_VERBOSE=ON ..
     - make all
-    - ctest
+    - make unittest
 
 addons:
     apt:
