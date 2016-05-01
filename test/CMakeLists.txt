@@ -1,6 +1,7 @@
 message(STATUS "Building Unit Tests ${UNITTEST}")
 
 find_package(CppUTest REQUIRED)
+add_definitions(-DCPPUTEST_LONG_LONG_DISABLED)
 
 add_library(testmain OBJECT TestMain.cpp)
 target_include_directories(testmain PUBLIC
