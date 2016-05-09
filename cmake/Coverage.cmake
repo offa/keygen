@@ -48,7 +48,7 @@ if( ${COVERAGE} )
                                     --no-external
 
                                     COMMAND ${LCOV}
-                                    --remove ${COV_FILE} "test/*"
+                                    --remove ${COV_FILE} "*/test/*"
                                     --output-file ${COV_FILE}
 
                                     COMMAND ${LCOV_GENHTML} --legend ${COV_FILE}
