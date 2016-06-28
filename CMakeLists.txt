@@ -19,8 +19,8 @@ find_package(PkgConfig REQUIRED)
 pkg_search_module(OPENSSL REQUIRED openssl)
 
 if( OPENSSL_FOUND )
-	include_directories(${OPENSSL_INCLUDE_DIRS})
-	message(STATUS "Using OpenSSL ${OPENSSL_VERSION}")
+    include_directories(SYSTEM ${OPENSSL_INCLUDE_DIRS})
+    message(STATUS "Using OpenSSL ${OPENSSL_VERSION}")
 endif()
 
 if( UNITTEST )

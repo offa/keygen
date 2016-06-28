@@ -3,7 +3,7 @@ message(STATUS "Building Unit Tests ${UNITTEST}")
 find_package(CppUTest REQUIRED)
 
 add_library(testmain OBJECT TestMain.cpp)
-target_include_directories(testmain PUBLIC
+target_include_directories(testmain SYSTEM PUBLIC
                             ${CppUTest_INCLUDE_DIR}
                             ${CppUTest_Ext_INCLUDE_DIR}
                             )
@@ -12,7 +12,7 @@ macro(_add_test _NAME _SRC _LIBS)
     add_executable(${_NAME} ${_SRC} $<TARGET_OBJECTS:testmain>)
     add_test(NAME ${_NAME} COMMAND ${_NAME})
 
-    target_include_directories(${_NAME} PUBLIC
+    target_include_directories(${_NAME} SYSTEM PUBLIC
                                 ${CppUTest_INCLUDE_DIR}
                                 ${CppUTest_Ext_INCLUDE_DIR}
                                 )
