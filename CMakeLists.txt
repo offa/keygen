@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 3.0)
 
 project(keygen)
 set(PROJECT_VERSION 0.3.1)
@@ -31,8 +31,13 @@ endif()
 include(Coverage)
 include(Doxygen)
 
-add_definitions(-Wall -Wextra -Werror -pedantic -Wshadow)
-add_definitions(-DKEYGEN_VERSION="${PROJECT_VERSION}")
+add_definitions(-Wall
+                -Wextra
+                -Werror
+                -pedantic
+                -Wshadow
+                -DKEYGEN_VERSION="${PROJECT_VERSION}"
+                )
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 
 subdirs(src)
