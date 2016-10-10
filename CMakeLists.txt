@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 project(keygen)
-set(PROJECT_VERSION 0.3.0)
+set(PROJECT_VERSION 0.3.1)
 
 option(UNITTEST "Builds unit tests" ON)
 option(UNITTEST_VERBOSE "Verbose unit test output" OFF)
