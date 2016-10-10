@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/offa/keygen.svg?branch=master)](https://travis-ci.org/offa/keygen)
 [![GitHub release](https://img.shields.io/github/release/offa/keygen.svg)](https://github.com/offa/keygen/releases)
 [![License](https://img.shields.io/badge/license-GPLv3-yellow.svg)](LICENSE)
-![C](https://img.shields.io/badge/c-99-green.svg)
+![C](https://img.shields.io/badge/c-11-green.svg)
 
 KeyGen is a generator for keys and passwords. It's usable as standalone application and library.
 
@@ -12,9 +12,9 @@ The cryptography behind is provided by *OpenSSL*.
 ## Requirements
 
  - [**OpenSSL**](https://www.openssl.org/)
- - [**CMake**](http://www.cmake.org/) - for building
- - [**Doxygen**](http://doxygen.nl/) - for documentation *(Optional)*
- - [**CppUTest**](https://github.com/cpputest/cpputest) - for testing *(Optional; requires C++ Compiler)*
+ - [**CMake**](http://www.cmake.org/)
+ - [**Doxygen**](http://doxygen.nl/) — *(Optional)*
+ - [**CppUTest**](https://github.com/cpputest/cpputest) — *(Optional; requires C++ Compiler)*
 
 ## Building
 
