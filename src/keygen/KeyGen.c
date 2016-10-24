@@ -24,7 +24,6 @@
  */
 
 #include "keygen/KeyGen.h"
-
 #include <string.h>
 #include <stdbool.h>
 #include <assert.h>
@@ -96,7 +95,7 @@ const size_t ASCII_LENGTH = sizeof(ASCII_CHARS);
  * @param fmtChars      Format char's
  * @param fmtLength     Format char's length
  */
-static void transformBuffer(UByte* buffer, const size_t length,
+static void transformBuffer(uint8_t* buffer, const size_t length,
                             const char* fmtChars, const size_t fmtLength)
 {
     assert(buffer != NULL);
@@ -121,7 +120,7 @@ static void transformBuffer(UByte* buffer, const size_t length,
  * @return              Returns <code>ERR_LIB_NONE</code> on success or an
  *                      error code
  */
-static int getRandomBytes(UByte* buffer, size_t length)
+static int getRandomBytes(uint8_t* buffer, size_t length)
 {
     const int rtn = RAND_bytes(buffer, length);
 
@@ -139,7 +138,7 @@ static int getRandomBytes(UByte* buffer, size_t length)
     return rtn;
 }
 
-KeyGenError keygen_createKey(UByte* buffer, const size_t length, enum Format format)
+KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format format)
 {
     if( buffer == NULL || length < KEY_MIN_LENGTH )
     {
@@ -147,7 +146,7 @@ KeyGenError keygen_createKey(UByte* buffer, const size_t length, enum Format for
     }
 
     KeyGenError rtn = KG_ERR_UNKNOWN;
-    UByte* random = malloc(length * sizeof(UByte));
+    uint8_t* random = malloc(length * sizeof(uint8_t));
 
     if( random == NULL )
     {
@@ -196,7 +195,7 @@ KeyGenError keygen_createKey(UByte* buffer, const size_t length, enum Format for
     return rtn;
 }
 
-void keygen_cleanBuffer(UByte* buffer, size_t length)
+void keygen_cleanBuffer(uint8_t* buffer, size_t length)
 {
     if( buffer != NULL && length > 0 )
     {
@@ -204,7 +203,7 @@ void keygen_cleanBuffer(UByte* buffer, size_t length)
     }
 }
 
-void keygen_cleanAndFreeBuffer(UByte* buffer, size_t length)
+void keygen_cleanAndFreeBuffer(uint8_t* buffer, size_t length)
 {
     keygen_cleanBuffer(buffer, length);
     free(buffer);

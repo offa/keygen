@@ -101,7 +101,7 @@ void printHelp()
     printHelpOption(OPT_L_VERSION, OPT_VERSION, NULL, "Shows version informations and license.");
 }
 
-void printKey(const UByte* key, struct CLOptions options)
+void printKey(const uint8_t* key, struct CLOptions options)
 {
     if( options.shortOutput == true )
     {
@@ -153,7 +153,7 @@ int generateKey(const struct CLOptions options)
         return KG_RTN_ERR_KEY_TO_SHORT;
     }
 
-    UByte* buffer = malloc(length * sizeof(UByte) + 1);
+    uint8_t* buffer = malloc(length * sizeof(uint8_t) + 1);
     memset(buffer, 0, length+1);
 
     KeyGenError err = keygen_createKey(buffer, length, options.keyFormat);

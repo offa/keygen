@@ -97,7 +97,7 @@ Key of 4048 length, stored in a file:
 
 ```c
 const int KEY_LENGTH = 100000; // Key length
-UByte* buffer = malloc(KEY_LENGTH * sizeof(UByte)); // allocate buffer
+uint8_t* buffer = malloc(KEY_LENGTH * sizeof(uint8_t)); // allocate buffer
 
 if( buffer == NULL )
 {

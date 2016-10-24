@@ -29,9 +29,9 @@ TEST_GROUP(MemoryTest)
 
 TEST(MemoryTest, testCleanUp)
 {
-    const size_t size = 1000 * sizeof(UByte);
-    UByte* buffer = allocate(size);
-    UByte expected[size];
+    const size_t size = 1000 * sizeof(uint8_t);
+    uint8_t* buffer = allocate(size);
+    uint8_t expected[size];
     memset(expected, 0, size);
 
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
@@ -45,11 +45,11 @@ TEST(MemoryTest, testCleanUp)
 
 TEST(MemoryTest, cleanUpBorderCheck)
 {
-    const size_t size = 1000 * sizeof(UByte);
+    const size_t size = 1000 * sizeof(uint8_t);
     const size_t allocSize = size + 4;
-    UByte* allocBuffer = allocate(allocSize);
-    UByte* buffer = allocBuffer + 2;
-    UByte expected[allocSize];
+    uint8_t* allocBuffer = allocate(allocSize);
+    uint8_t* buffer = allocBuffer + 2;
+    uint8_t expected[allocSize];
 
     memset(expected, 0, allocSize);
     expected[0] = 0xCA;
@@ -72,9 +72,9 @@ TEST(MemoryTest, cleanUpBorderCheck)
 
 TEST(MemoryTest, overlength)
 {
-    const size_t overLength =  1000000 * sizeof(UByte);
+    const size_t overLength =  1000000 * sizeof(uint8_t);
 
-    UByte* buffer = allocate(overLength * sizeof(UByte));
+    uint8_t* buffer = allocate(overLength * sizeof(uint8_t));
     KeyGenError rtn = keygen_createKey(buffer, overLength, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 
@@ -83,10 +83,10 @@ TEST(MemoryTest, overlength)
 
 TEST(MemoryTest, overAndUnderflow)
 {
-    const size_t size = 1000 * sizeof(UByte);
+    const size_t size = 1000 * sizeof(uint8_t);
     const size_t allocSize = size + 4;
-    UByte* allocBuffer = allocate(allocSize);
-    UByte* buffer = allocBuffer + 2;
+    uint8_t* allocBuffer = allocate(allocSize);
+    uint8_t* buffer = allocBuffer + 2;
 
     allocBuffer[0] = 0xCA;
     allocBuffer[1] = 0xFE;

@@ -31,13 +31,13 @@ TEST_GROUP(ArgumentTest)
         keygen_cleanAndFreeBuffer(buffer, size);
     }
 
-    UByte* buffer;
+    uint8_t* buffer;
     size_t size;
 };
 
 TEST(ArgumentTest, toShortLengthRejected)
 {
-    size = 7 * sizeof(UByte);
+    size = 7 * sizeof(uint8_t);
     buffer = allocate(size);
 
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
@@ -46,9 +46,9 @@ TEST(ArgumentTest, toShortLengthRejected)
 
 TEST(ArgumentTest, toShortLengthDoesntChangeBuffer)
 {
-    size = 7 * sizeof(UByte);
+    size = 7 * sizeof(uint8_t);
     buffer = allocate(size);
-    UByte* expected = allocate(size);
+    uint8_t* expected = allocate(size);
 
     memset(expected, 0, size);
     memset(buffer, 0, size);
@@ -62,7 +62,7 @@ TEST(ArgumentTest, toShortLengthDoesntChangeBuffer)
 
 TEST(ArgumentTest, allowedSizeGeneratesKey8Byte)
 {
-    size = 8 * sizeof(UByte);
+    size = 8 * sizeof(uint8_t);
     buffer = allocate(size);
 
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
@@ -71,7 +71,7 @@ TEST(ArgumentTest, allowedSizeGeneratesKey8Byte)
 
 TEST(ArgumentTest, allowedSizeGeneratesKey1200Byte)
 {
-    size = 1200 * sizeof(UByte);
+    size = 1200 * sizeof(uint8_t);
     buffer = allocate(size);
 
     KeyGenError rtn = keygen_createKey(buffer, size, ASCII);

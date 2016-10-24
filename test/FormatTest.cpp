@@ -32,7 +32,7 @@ TEST_GROUP(FormatTest)
 {
     void setup()
     {
-        size = 2000 * sizeof(UByte);
+        size = 2000 * sizeof(uint8_t);
         buffer = allocate(size);
     }
 
@@ -54,7 +54,7 @@ TEST_GROUP(FormatTest)
         return false;
     }
 
-    bool testFormat(const UByte* inBuffer, size_t inBufferSize, enum Format format)
+    bool testFormat(const uint8_t* inBuffer, size_t inBufferSize, enum Format format)
     {
         for( size_t i = 0; i < inBufferSize; ++i )
         {
@@ -81,7 +81,7 @@ TEST_GROUP(FormatTest)
     }
 
     size_t size;
-    UByte* buffer;
+    uint8_t* buffer;
 };
 
 TEST(FormatTest, formatAscii)

@@ -23,9 +23,9 @@
 
 #include <stdlib.h>
 
-inline UByte* allocate(size_t allocateSize)
+inline uint8_t* allocate(size_t allocateSize)
 {
-    return static_cast<UByte*>(malloc(allocateSize));
+    return static_cast<uint8_t*>(malloc(allocateSize));
 }
 
 #endif /* TESTUTIL_H */

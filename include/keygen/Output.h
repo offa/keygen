@@ -26,25 +26,25 @@
  */
 
 #ifndef OUTPUT_H
-#define	OUTPUT_H
+#define OUTPUT_H
 
 #include "keygen/Options.h"
 #include "keygen/KeyGen.h"
 
 
-#ifdef	__cplusplus
+#ifdef  __cplusplus
 extern "C"
 {
 #endif
-    
+
     enum
     {
         KG_RTN_ERR_ERROR = 1,       ///< General error.
         KG_RTN_ERR_KEY_TO_SHORT = 2 ///< Error indicating a to short key.
     };
-    
 
-    
+
+
     /**
      * Shows help information.
      */
@@ -56,7 +56,7 @@ extern "C"
      * @param key       Key
      * @param options   Options to use for printing
      */
-    void printKey(const UByte* key, struct CLOptions options);
+    void printKey(const uint8_t* key, struct CLOptions options);
 
     /**
      * Shows version informations and license.
@@ -86,9 +86,9 @@ extern "C"
      */
     const char* errorMessage(KeyGenError error);
 
-#ifdef	__cplusplus
+#ifdef  __cplusplus
 }
 #endif
 
-#endif	/* CLOUTPUT_H */
+#endif  /* CLOUTPUT_H */
 

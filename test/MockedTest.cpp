@@ -41,16 +41,16 @@ TEST_GROUP(MockedTest)
         FILE* unused = freopen("NUL", "a", stderr);
         (void) unused;
     }
-    
+
     void teardown()
     {
         mock().checkExpectations();
         mock().clear();
-        
+
         fflush(stderr);
         dup2(origStdErr, STDERR_FILENO);
     }
-    
+
     int origStdErr;
 };
 
@@ -60,7 +60,7 @@ TEST(MockedTest, returnErrorCodeOnFailedRandom)
             .ignoreOtherParameters()
             .andReturnValue(100);
     enum { length = 10 };
-    UByte buffer[length];
+    uint8_t buffer[length];
     KeyGenError rtn = keygen_createKey(buffer, length, ASCII);
     CHECK_EQUAL(KG_ERR_SECURITY, rtn);
 }
