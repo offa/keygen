@@ -105,7 +105,6 @@ static void transformBuffer(UByte* buffer, const size_t length,
     for( size_t i=0; i<length; ++i )
     {
         const size_t pos = buffer[i] % fmtLength;
-
         buffer[i] = fmtChars[pos];
     }
 }
@@ -124,7 +123,7 @@ static void transformBuffer(UByte* buffer, const size_t length,
  */
 static int getRandomBytes(UByte* buffer, size_t length)
 {
-    int rtn = RAND_bytes(buffer, length);
+    const int rtn = RAND_bytes(buffer, length);
 
     if( rtn != ERR_LIB_NONE )
     {
@@ -155,7 +154,7 @@ KeyGenError keygen_createKey(UByte* buffer, const size_t length, enum Format for
         return KG_ERR_MEMORY;
     }
 
-    int err = getRandomBytes(random, length);
+    const int err = getRandomBytes(random, length);
 
     if( err == ERR_LIB_NONE )
     {
