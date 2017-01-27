@@ -27,7 +27,7 @@ _add_test(FormatTest FormatTest.cpp TEST_LIB)
 _add_test(MemoryTest MemoryTest.cpp TEST_LIB)
 _add_test(DataTest DataTest.cpp TEST_LIB)
 _add_test(OptionsTest OptionsTest.cpp TEST_LIB)
-target_sources(OptionsTest PUBLIC $<TARGET_OBJECTS:keygen-options>)
+target_sources(OptionsTest PRIVATE $<TARGET_OBJECTS:keygen-options>)
 _add_test(MockedTest MockedTest.cpp MOCK_LIB)
 
 set(TEST_FLAGS -c)
