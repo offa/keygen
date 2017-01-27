@@ -9,7 +9,7 @@ target_include_directories(testmain SYSTEM PUBLIC
                             )
 
 macro(_add_test _NAME _SRC _LIBS)
-    add_executable(${_NAME} ${_SRC})
+    add_executable(${_NAME} ${_SRC} $<TARGET_OBJECTS:keygen-cl>)
     add_test(NAME ${_NAME} COMMAND ${_NAME})
     target_link_libraries(${_NAME} testmain
                                 keygen-lib
