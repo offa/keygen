@@ -36,8 +36,8 @@ add_definitions(-Wall
                 -Werror
                 -pedantic
                 -Wshadow
-                -DKEYGEN_VERSION="${PROJECT_VERSION}"
                 )
+
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11")
 
 subdirs(src)
