@@ -138,14 +138,18 @@ static int getRandomBytes(uint8_t* buffer, size_t length)
     return rtn;
 }
 
+static inline bool checkPreconditions(const uint8_t* buffer, size_t length)
+{
+    return ( buffer != NULL ) && ( length >= KEY_MIN_LENGTH );
+}
+
 KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format format)
 {
-    if( buffer == NULL || length < KEY_MIN_LENGTH )
+    if( checkPreconditions(buffer, length) == false )
     {
         return KG_ERR_ILL_ARGUMENT;
     }
 
-    KeyGenError rtn = KG_ERR_UNKNOWN;
     uint8_t* random = malloc(length * sizeof(uint8_t));
 
     if( random == NULL )
@@ -153,6 +157,7 @@ KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format f
         return KG_ERR_MEMORY;
     }
 
+    KeyGenError rtn = KG_ERR_UNKNOWN;
     const int err = getRandomBytes(random, length);
 
     if( err == ERR_LIB_NONE )
