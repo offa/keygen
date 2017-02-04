@@ -21,7 +21,7 @@ script:
     - cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DUNITTEST_VERBOSE=ON ..
     - make all
     - make unittest
-    - valgrind --tool=memcheck --track-origins=yes src/bin/keygen -sl 5000 1> /dev/null
+    - valgrind --tool=memcheck --track-origins=yes --error-exitcode=1 src/bin/keygen -sl 5000 1> /dev/null
 
 before_install:
     - script/ci_install.sh
