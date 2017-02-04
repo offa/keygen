@@ -3,6 +3,11 @@ language: c
 dist: trusty
 sudo: required
 
+addons:
+  apt:
+    packages:
+        - valgrind
+
 compiler:
     - gcc
     - clang
