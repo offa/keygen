@@ -22,6 +22,7 @@ script:
     - make all
     - make unittest
     - make memcheck
+    - make memcheck-test
 
 before_install:
     - script/ci_install.sh
