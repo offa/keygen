@@ -3,7 +3,6 @@
    Memcheck:Value8
    fun:transformBuffer
    fun:keygen_createKey
-   fun:generateKey
-   fun:main
+   ...
 }
 

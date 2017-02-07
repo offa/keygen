@@ -12,7 +12,7 @@ target_link_libraries(keygen keygen-options keygen-output keygen-lib)
 
 
 if( VALGRIND )
-    add_custom_target(memcheck valgrind ${VALGRIND_MEMCHECK_FLAGS}
+    add_custom_target(memcheck ${VALGRIND} ${VALGRIND_MEMCHECK_FLAGS}
                         $<TARGET_FILE:keygen> -sl 6000 1> /dev/null
                         COMMENT "Memchecking executable\n\n"
                         VERBATIM
