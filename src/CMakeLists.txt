@@ -10,3 +10,11 @@ set_target_properties(keygen PROPERTIES RUNTIME_OUTPUT_NAME "keygen"
                                         )
 target_link_libraries(keygen keygen-options keygen-output keygen-lib)
 
+
+# TODO: Search and check Valgrind
+set(VALGRIND_MEMCHECK_FLAGS --tool=memcheck --track-origins=yes --error-exitcode=1)
+add_custom_target(memcheck valgrind ${VALGRIND_MEMCHECK_FLAGS} $<TARGET_FILE:keygen> -sl 6000 1> /dev/null
+                    COMMENT "Memchecking executable\n\n"
+                    VERBATIM
+                    )
+
