@@ -12,8 +12,7 @@
    match-leak-kinds: reachable
    ...
    fun:ERR_get_state
-   fun:ERR_get_error
-   fun:getRandomBytes
+   ...
    fun:keygen_createKey
    ...
    fun:PlatformSpecificSetJmpImplementation
