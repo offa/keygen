@@ -6,6 +6,7 @@ if( VALGRIND )
                                 --track-origins=yes
                                 --leak-check=full
                                 --error-exitcode=1
+                                --show-leak-kinds=all
                                 --suppressions=${CMAKE_SOURCE_DIR}/cmake/valgrind.suppressions
                                 )
     message(STATUS "Valgrind found")
