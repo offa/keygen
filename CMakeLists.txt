@@ -30,6 +30,7 @@ endif()
 
 include(Coverage)
 include(Doxygen)
+include(Memcheck)
 
 add_definitions(-Wall
                 -Wextra
