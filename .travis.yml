@@ -19,7 +19,7 @@ matrix:
             - llvm-toolchain-precise-3.7
             - llvm-toolchain-precise-3.6
             - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-3.9 main'
-            - sourceline: 'george-edison55/cmake-3.x'
+            - sourceline: 'ppa:george-edison55/cmake-3.x'
               key_url: 'http://apt.llvm.org/llvm-snapshot.gpg.key'
     - env: CXX=g++-5 CC=gcc-5
       addons:
