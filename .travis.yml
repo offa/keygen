@@ -11,12 +11,14 @@ matrix:
           packages:
             - g++-6
             - valgrind
+            - cmake
           sources: &sources
             - ubuntu-toolchain-r-test
             - llvm-toolchain-precise
             - llvm-toolchain-precise-3.8
             - llvm-toolchain-precise-3.7
             - llvm-toolchain-precise-3.6
+            - george-edison55/cmake-3.x
             - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-3.9 main'
               key_url: 'http://apt.llvm.org/llvm-snapshot.gpg.key'
     - env: CXX=g++-5 CC=gcc-5
@@ -25,6 +27,7 @@ matrix:
           packages:
             - g++-5
             - valgrind
+            - cmake
           sources: *sources
     - env: CXX=g++-4.9 CC=gcc-4.9
       addons:
@@ -32,6 +35,7 @@ matrix:
           packages:
             - g++-4.9
             - valgrind
+            - cmake
           sources: *sources
     - env: CXX=g++-4.8 CC=gcc-4.8
       addons:
@@ -39,6 +43,7 @@ matrix:
           packages:
             - g++-4.8
             - valgrind
+            - cmake
           sources: *sources
     - env: CXX=clang++-3.9 CC=clang-3.9
       addons:
@@ -47,6 +52,7 @@ matrix:
             - clang-3.9
             - libc++-dev
             - valgrind
+            - cmake
           sources: *sources
     - env: CXX=clang++-3.8 CC=clang-3.8
       addons:
@@ -55,6 +61,7 @@ matrix:
             - clang-3.8
             - libc++-dev
             - valgrind
+            - cmake
           sources: *sources
     - env: CXX=clang++-3.7 CC=clang-3.7
       addons:
@@ -63,6 +70,7 @@ matrix:
             - clang-3.7
             - libc++-dev
             - valgrind
+            - cmake
           sources: *sources
     - env: CXX=clang++-3.6 CC=clang-3.6
       addons:
@@ -71,6 +79,7 @@ matrix:
             - clang-3.6
             - libc++-dev
             - valgrind
+            - cmake
           sources: *sources
 
 
