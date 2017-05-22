@@ -5,11 +5,11 @@ sudo: required
 
 matrix:
     include:
-    - env: CXX=g++-6 CC=gcc-6
+    - env: CXX=g++-7 CC=gcc-7
       addons:
         apt:
           packages:
-            - g++-6
+            - g++-7
             - valgrind
           sources: &sources
             - ubuntu-toolchain-r-test
@@ -17,7 +17,15 @@ matrix:
             - llvm-toolchain-precise-3.9
             - llvm-toolchain-precise-3.8
             - llvm-toolchain-precise-3.7
-            - llvm-toolchain-precise-3.6
+            - sourceline: 'deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-4.0 main'
+              key_url: 'http://apt.llvm.org/llvm-snapshot.gpg.key'
+    - env: CXX=g++-6 CC=gcc-6
+      addons:
+        apt:
+          packages:
+            - g++-6
+            - valgrind
+          sources: *sources
     - env: CXX=g++-5 CC=gcc-5
       addons:
         apt:
