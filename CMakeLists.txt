@@ -22,11 +22,6 @@ if( OPENSSL_FOUND )
     message(STATUS "Using OpenSSL ${OPENSSL_VERSION}")
 endif()
 
-if( UNITTEST )
-    enable_testing()
-    subdirs(test)
-endif()
-
 include(Coverage)
 include(Doxygen)
 include(Memcheck)
@@ -41,4 +36,10 @@ add_definitions(-Wall
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11")
 
 subdirs(src)
+
+
+if( UNITTEST )
+    enable_testing()
+    subdirs(test)
+endif()
 
