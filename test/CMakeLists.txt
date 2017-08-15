@@ -8,15 +8,15 @@ target_include_directories(testmain SYSTEM PUBLIC
                             ${CppUTest_Ext_INCLUDE_DIR}
                             )
 
-macro(_add_test _NAME _SRC _LIBS)
-    add_executable(${_NAME} ${_SRC})
-    add_test(NAME ${_NAME} COMMAND ${_NAME})
-    target_link_libraries(${_NAME} testmain
+function(_add_test name src libs)
+    add_executable(${name} ${src})
+    add_test(NAME ${name} COMMAND ${name})
+    target_link_libraries(${name} testmain
                                 keygen-lib
                                 ${CppUTest_LIBRARY}
-                                ${${_LIBS}}
+                                ${${libs}}
                                 )
-endmacro()
+endfunction()
 
 
 list(APPEND TEST_LIB ${OPENSSL_LIBRARIES})
