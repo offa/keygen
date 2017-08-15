@@ -14,13 +14,14 @@ function(add_test_suite name src libs)
     target_link_libraries(${name} testmain
                                 keygen-lib
                                 ${CppUTest_LIBRARY}
+                                ${CppUTest_Ext_LIBRARY}
                                 ${${libs}}
                                 )
 endfunction()
 
 
 list(APPEND TEST_LIB ${OPENSSL_LIBRARIES})
-list(APPEND MOCK_LIB ${CppUTest_Ext_LIBRARY})
+set(MOCK_LIB)
 
 add_test_suite(ArgumentTest ArgumentTest.cpp TEST_LIB)
 add_test_suite(FormatTest FormatTest.cpp TEST_LIB)
