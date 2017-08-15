@@ -21,7 +21,7 @@ endfunction()
 
 
 list(APPEND TEST_LIB ${OPENSSL_LIBRARIES})
-set(MOCK_LIB)
+set(NO_LIB)
 
 add_test_suite(ArgumentTest ArgumentTest.cpp TEST_LIB)
 add_test_suite(FormatTest FormatTest.cpp TEST_LIB)
@@ -29,7 +29,7 @@ add_test_suite(MemoryTest MemoryTest.cpp TEST_LIB)
 add_test_suite(DataTest DataTest.cpp TEST_LIB)
 add_test_suite(OptionsTest OptionsTest.cpp TEST_LIB)
 target_link_libraries(OptionsTest keygen-options)
-add_test_suite(MockedTest MockedTest.cpp MOCK_LIB)
+add_test_suite(MockedTest MockedTest.cpp NO_LIB)
 
 set(TEST_FLAGS -c)
 
