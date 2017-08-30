@@ -26,12 +26,12 @@ include(Coverage)
 include(Doxygen)
 include(Memcheck)
 
-add_definitions(-Wall
-                -Wextra
-                -Werror
-                -pedantic
-                -Wshadow
-                )
+add_compile_options(-Wall
+                    -Wextra
+                    -Werror
+                    -pedantic
+                    -Wshadow
+                    )
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11")
 
