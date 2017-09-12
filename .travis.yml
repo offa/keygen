@@ -37,6 +37,7 @@ matrix:
           packages:
             - clang-5.0
             - libc++-dev
+            - libc++abi-dev
             - valgrind
           sources: *sources
     - env: CXX=clang++-4.0 CC=clang-4.0
@@ -45,6 +46,7 @@ matrix:
           packages:
             - clang-4.0
             - libc++-dev
+            - libc++abi-dev
             - valgrind
           sources: *sources
     - env: CXX=clang++-3.9 CC=clang-3.9
@@ -53,6 +55,7 @@ matrix:
           packages:
             - clang-3.9
             - libc++-dev
+            - libc++abi-dev
             - valgrind
           sources: *sources
 
