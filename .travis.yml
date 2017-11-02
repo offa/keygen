@@ -60,6 +60,9 @@ matrix:
           sources: *sources
 
 
+install:
+    - script/ci_install_deps.sh
+
 script:
     - if [[ "$CXX" == clang* ]]; then export CXXFLAGS="-stdlib=libc++"; fi
     - mkdir build && cd build
@@ -68,7 +71,4 @@ script:
     - make unittest
     - make memcheck
     - make memcheck-test
-
-before_install:
-    - script/ci_install.sh
 
