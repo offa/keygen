@@ -21,7 +21,7 @@ function(add_test_suite name src libs)
 endfunction()
 
 
-list(APPEND TEST_LIB ${OPENSSL_LIBRARIES})
+list(APPEND TEST_LIB OpenSSL::SSL)
 set(NO_LIB)
 
 add_test_suite(ArgumentTest ArgumentTest.cpp TEST_LIB)

@@ -12,12 +12,9 @@ message(STATUS "~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~")
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 
-
-find_package(PkgConfig REQUIRED)
-pkg_search_module(OPENSSL REQUIRED openssl)
+find_package(OpenSSL REQUIRED)
 
 if( OPENSSL_FOUND )
-    include_directories(SYSTEM ${OPENSSL_INCLUDE_DIRS})
     message(STATUS "Using OpenSSL ${OPENSSL_VERSION}")
 endif()
 
