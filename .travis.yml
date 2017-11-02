@@ -61,6 +61,7 @@ matrix:
 
 
 install:
+    - script/ci_install.sh
     - script/ci_install_deps.sh
 
 script:
