@@ -11,7 +11,6 @@ message(STATUS "~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~")
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-include_directories("include")
 
 
 find_package(PkgConfig REQUIRED)
@@ -33,7 +32,11 @@ add_compile_options(-Wall
                     -Wshadow
                     )
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11")
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_EXTENSIONS OFF)
+
+include_directories("include")
 
 subdirs(src)
 
