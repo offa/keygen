@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.8.2)
 
 project(keygen VERSION 0.3.4)
 
