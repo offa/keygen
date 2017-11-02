@@ -3,6 +3,15 @@ language: generic
 dist: trusty
 sudo: required
 
+env:
+  global:
+    - DEPENDENCY_DIR="${TRAVIS_BUILD_DIR}/dependencies"
+
+cache:
+  directories:
+    - ${DEPENDENCY_DIR}
+
+
 matrix:
     include:
     - env: CXX=g++-7 CC=gcc-7
