@@ -9,27 +9,41 @@ target_link_libraries(testmain INTERFACE ${CppUTest_LIBRARY}
                                         ${CppUTest_Ext_LIBRARY}
                                         )
 
-function(add_test_suite name src libs)
-    add_executable(${name} ${src})
-    add_test(NAME ${name} COMMAND ${name})
+function(add_test_suite name)
+    add_test(${name} ${name})
     target_link_libraries(${name} PRIVATE
                                 testmain
-                                keygen-lib
-                                ${${libs}}
                                 )
 endfunction()
 
 
-list(APPEND TEST_LIB OpenSSL::SSL)
-set(NO_LIB)
+list(APPEND OpenSSL::SSL)
 
-add_test_suite(ArgumentTest ArgumentTest.cpp TEST_LIB)
-add_test_suite(FormatTest FormatTest.cpp TEST_LIB)
-add_test_suite(MemoryTest MemoryTest.cpp TEST_LIB)
-add_test_suite(DataTest DataTest.cpp TEST_LIB)
-add_test_suite(OptionsTest OptionsTest.cpp TEST_LIB)
-target_link_libraries(OptionsTest PRIVATE keygen-options)
-add_test_suite(MockedTest MockedTest.cpp NO_LIB)
+add_executable(ArgumentTest ArgumentTest.cpp)
+target_link_libraries(ArgumentTest PRIVATE keygen-lib)
+add_test_suite(ArgumentTest)
+
+add_executable(FormatTest FormatTest.cpp)
+target_link_libraries(FormatTest PRIVATE keygen-lib)
+add_test_suite(FormatTest)
+
+add_executable(MemoryTest MemoryTest.cpp)
+target_link_libraries(MemoryTest PRIVATE keygen-lib)
+add_test_suite(MemoryTest)
+
+add_executable(DataTest DataTest.cpp)
+target_link_libraries(DataTest PRIVATE keygen-lib)
+add_test_suite(DataTest)
+
+add_executable(OptionsTest OptionsTest.cpp)
+target_link_libraries(OptionsTest PRIVATE keygen-lib keygen-options)
+add_test_suite(OptionsTest)
+
+add_executable(MockedTest MockedTest.cpp)
+target_link_libraries(MockedTest PRIVATE keygen-lib)
+add_test_suite(MockedTest)
+
+
 
 set(TEST_FLAGS -c)
 
