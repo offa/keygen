@@ -13,10 +13,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 
 find_package(OpenSSL REQUIRED)
-
-if( OPENSSL_FOUND )
-    message(STATUS "Using OpenSSL ${OPENSSL_VERSION}")
-endif()
+message(STATUS "Using OpenSSL ${OPENSSL_VERSION}")
 
 include(Coverage)
 include(Doxygen)
@@ -34,7 +31,6 @@ set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
 include_directories("include")
-
 add_subdirectory(src)
 
 
