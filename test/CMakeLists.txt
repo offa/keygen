@@ -1,5 +1,3 @@
-message(STATUS "Building Unit Tests ${UNITTEST}")
-
 find_package(CppUTest REQUIRED)
 
 add_library(testmain TestMain.cpp)
