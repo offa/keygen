@@ -1,4 +1,4 @@
-subdirs("keygen")
+add_subdirectory("keygen")
 
 add_library(keygen-options Options.c)
 add_library(keygen-output Output.c)

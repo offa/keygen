@@ -38,11 +38,11 @@ set(CMAKE_C_EXTENSIONS OFF)
 
 include_directories("include")
 
-subdirs(src)
+add_subdirectory(src)
 
 
 if( UNITTEST )
     enable_testing()
-    subdirs(test)
+    add_subdirectory(test)
 endif()
 
