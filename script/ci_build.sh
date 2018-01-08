@@ -10,6 +10,7 @@ do
     case "${arg}" in
         -valgrind)
             VALGRIND=true
+            SANITIZER=false
             ;;
     esac
 done
