@@ -17,10 +17,11 @@ matrix:
     - env: COMPILER=gcc-6
     - env: COMPILER=clang-5
     - env: COMPILER=clang-4
+    - env: COMPILER=gcc-7 BUILD_OPT="-valgrind"
 
 
 before_install:
   - docker pull ${DOCKER_IMG}/${COMPILER}:latest
 
 script:
-  - docker run -v ${PWD}:/mnt -it ${DOCKER_IMG}/${COMPILER} /bin/bash -c "cd /mnt; script/ci_build.sh"
+  - docker run -v ${PWD}:/mnt -it ${DOCKER_IMG}/${COMPILER} /bin/bash -c "cd /mnt; script/ci_build.sh ${BUILD_OPT}"
