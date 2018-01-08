@@ -9,7 +9,7 @@ for arg in "$@"
 do
     case "${arg}" in
         -valgrind)
-            USE_VALGRIND=true
+            VALGRIND=true
             ;;
     esac
 done
