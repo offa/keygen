@@ -13,8 +13,8 @@ mkdir build && cd build
 
 cmake -DCMAKE_BUILD_TYPE=Debug \
         -DUNITTEST_VERBOSE=ON \
-        -SANITIZER_ASAN=ON \
-        -SANITIZER_UBSAN=ON \
+        -DSANITIZER_ASAN=ON \
+        -DSANITIZER_UBSAN=ON \
         ..
 make all
 make unittest
