@@ -11,8 +11,10 @@ fi
 
 mkdir build && cd build
 
-cmake -DCMAKE_BUILD_TYPE=Release -DUNITTEST_VERBOSE=ON ..
+cmake -DCMAKE_BUILD_TYPE=Debug \
+        -DUNITTEST_VERBOSE=ON \
+        -SANITIZER_ASAN=ON \
+        -SANITIZER_UBSAN=ON \
+        ..
 make all
 make unittest
-make memcheck
-make memcheck-test
