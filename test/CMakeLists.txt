@@ -12,7 +12,7 @@ target_link_libraries(testmain INTERFACE ${CppUTest_LIBRARY}
 
 function(add_test_suite name)
     add_test(${name} ${name})
-    target_link_libraries(${name} PRIVATE testmain)
+    target_link_libraries(${name} PRIVATE testmain build-libs)
 endfunction()
 
 

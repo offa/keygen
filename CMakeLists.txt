@@ -12,15 +12,24 @@ message(STATUS "Building Unit Tests : ${UNITTEST}")
 option(COVERAGE "Enables source code coverage" OFF)
 message(STATUS "Test coverage : ${COVERAGE}")
 
+option(SANITIZER_ASAN "Enable ASan" OFF)
+message(STATUS "ASan : " ${SANITIZER_ASAN})
+
+option(SANITIZER_UBSAN "Enable UBSan" OFF)
+message(STATUS "UBSan : " ${SANITIZER_UBSAN})
+
+
 option(DOXYFILE "Generates the Doxyfile for Doxygen documentation" ON)
 message(STATUS "Doxyfile : ${DOXYFILE}")
 
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+include(Sanitizer)
 
 find_package(OpenSSL REQUIRED)
 message(STATUS "Using OpenSSL ${OPENSSL_VERSION}")
+
 
 if( COVERAGE )
     include(Coverage)
