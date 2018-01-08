@@ -19,7 +19,7 @@ option(SANITIZER_UBSAN "Enable UBSan" OFF)
 message(STATUS "UBSan : " ${SANITIZER_UBSAN})
 
 
-option(DOXYFILE "Generates the Doxyfile for Doxygen documentation" ON)
+option(DOXYFILE "Generates the Doxyfile for Doxygen documentation" OFF)
 message(STATUS "Doxyfile : ${DOXYFILE}")
 
 
