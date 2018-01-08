@@ -18,11 +18,11 @@
  * along with KeyGen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <CppUTest/TestHarness.h>
-#include <CppUTestExt/MockSupport.h>
 #include "keygen/KeyGen.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <CppUTest/TestHarness.h>
+#include <CppUTestExt/MockSupport.h>
 
 extern "C" int RAND_bytes(unsigned char* buf, int num)
 {
