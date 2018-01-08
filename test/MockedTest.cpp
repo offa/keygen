@@ -61,6 +61,6 @@ TEST(MockedTest, returnErrorCodeOnFailedRandom)
             .andReturnValue(100);
     enum { length = 10 };
     uint8_t buffer[length];
-    KeyGenError rtn = keygen_createKey(buffer, length, ASCII);
+    const KeyGenError rtn = keygen_createKey(buffer, length, ASCII);
     CHECK_EQUAL(KG_ERR_SECURITY, rtn);
 }

@@ -49,9 +49,9 @@ static char name[] = "OptionsTest";
 TEST(OptionsTest, testNoArgsReturnsHelpAndExit)
 {
     char* argv[] = {name};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(true, result.showHelp);
     CHECK_EQUAL(true, result.exit);
@@ -63,7 +63,7 @@ TEST(OptionsTest, testFormatArgumentAscii)
     char* argv[] = {name, param};
     int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(ASCII, result.keyFormat);
@@ -73,9 +73,9 @@ TEST(OptionsTest, testFormatArgumentAsciiLong)
 {
     char param[] = "--ascii";
     char* argv[] = {name, param};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(ASCII, result.keyFormat);
@@ -85,9 +85,9 @@ TEST(OptionsTest, testFormatArgumentAsciiReduced)
 {
     char param[] = "-r";
     char* argv[] = {name, param};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(ASCII_REDUCED, result.keyFormat);
@@ -97,9 +97,9 @@ TEST(OptionsTest, testFormatArgumentAsciiReducedLong)
 {
     char param[] = "--ascii-reduced";
     char* argv[] = {name, param};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(ASCII_REDUCED, result.keyFormat);
@@ -109,9 +109,9 @@ TEST(OptionsTest, testFormatArgumentAsciiBlank)
 {
     char param[] = "-w";
     char* argv[] = {name, param};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(ASCII_BLANKS, result.keyFormat);
@@ -121,9 +121,9 @@ TEST(OptionsTest, testFormatArgumentAsciiBlankLong)
 {
     char param[] = "--ascii-blank";
     char* argv[] = {name, param};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(ASCII_BLANKS, result.keyFormat);
@@ -133,9 +133,9 @@ TEST(OptionsTest, testFormatArgumentAlphaNumeric)
 {
     char param[] = "-p";
     char* argv[] = {name, param};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(ALPHA_NUMERIC, result.keyFormat);
@@ -145,9 +145,9 @@ TEST(OptionsTest, testFormatArgumentAlphaNumericLong)
 {
     char param[] = "--alphanum";
     char* argv[] = {name, param};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(ALPHA_NUMERIC, result.keyFormat);
@@ -158,9 +158,9 @@ TEST(OptionsTest, testLength)
     char param[] = "-l";
     char value[] = "10";
     char* argv[] = {name, param, value};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(10, result.keyLength);
@@ -171,9 +171,9 @@ TEST(OptionsTest, testLengthLong)
     char param[] = "--length";
     char value[] = "10";
     char* argv[] = {name, param, value};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(10, result.keyLength);
@@ -183,9 +183,9 @@ TEST(OptionsTest, testFormatArgumentShort)
 {
     char param[] = "-s";
     char* argv[] = {name, param};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(true, result.shortOutput);
@@ -195,9 +195,9 @@ TEST(OptionsTest, testFormatArgumentShortLong)
 {
     char param[] = "--short";
     char* argv[] = {name, param};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(true, result.shortOutput);
@@ -207,9 +207,9 @@ TEST(OptionsTest, testShowHelp)
 {
     char param[] = "-h";
     char* argv[] = {name, param};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(true, result.showHelp);
@@ -220,9 +220,9 @@ TEST(OptionsTest, testShowHelpLong)
 {
     char param[] = "--help";
     char* argv[] = {name, param};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(true, result.showHelp);
@@ -233,9 +233,9 @@ TEST(OptionsTest, testShowVersion)
 {
     char param[] = "-v";
     char* argv[] = {name, param};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(true, result.showVersion);
@@ -246,9 +246,9 @@ TEST(OptionsTest, testShowVersionLong)
 {
     char param[] = "--version";
     char* argv[] = {name, param};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(true, result.valid);
     CHECK_EQUAL(true, result.showVersion);
@@ -259,9 +259,9 @@ TEST(OptionsTest, testInvalidOptionSetsInvalidAndExit)
 {
     char param[] = "-q";
     char* argv[] = {name, param};
-    int argc = sizeof(argv) / sizeof(char*);
+    const int argc = sizeof(argv) / sizeof(char*);
 
-    struct CLOptions result = parseOptions(argc, argv);
+    const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(false, result.valid);
     CHECK_EQUAL(true, result.exit);

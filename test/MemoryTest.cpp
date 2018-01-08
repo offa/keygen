@@ -34,7 +34,7 @@ TEST(MemoryTest, testCleanUp)
     uint8_t expected[size];
     memset(expected, 0, size);
 
-    KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
+    const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 
     keygen_cleanBuffer(buffer, size);
@@ -57,7 +57,7 @@ TEST(MemoryTest, cleanUpBorderCheck)
     expected[allocSize - 2] = 0xCA;
     expected[allocSize - 1] = 0xFE;
 
-    KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
+    const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 
     keygen_cleanBuffer(buffer, size);
@@ -75,7 +75,7 @@ TEST(MemoryTest, overlength)
     const size_t overLength =  1000000 * sizeof(uint8_t);
 
     uint8_t* buffer = allocate(overLength * sizeof(uint8_t));
-    KeyGenError rtn = keygen_createKey(buffer, overLength, ASCII);
+    const KeyGenError rtn = keygen_createKey(buffer, overLength, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 
     keygen_cleanAndFreeBuffer(buffer, overLength);
@@ -93,7 +93,7 @@ TEST(MemoryTest, overAndUnderflow)
     allocBuffer[allocSize - 2] = 0xCA;
     allocBuffer[allocSize - 1] = 0xFE;
 
-    KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
+    const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 
     CHECK_EQUAL(0xCA, allocBuffer[0]);

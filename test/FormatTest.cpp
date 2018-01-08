@@ -86,40 +86,40 @@ TEST_GROUP(FormatTest)
 
 TEST(FormatTest, formatAscii)
 {
-    const enum Format format = ASCII;
-    KeyGenError rtn = keygen_createKey(buffer, size, format);
+    const Format format = ASCII;
+    const KeyGenError rtn = keygen_createKey(buffer, size, format);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
     CHECK_EQUAL(true, testFormat(buffer, size, format));
 }
 
 TEST(FormatTest, formatAsciiBlanks)
 {
-    const enum Format format = ASCII_BLANKS;
-    KeyGenError rtn = keygen_createKey(buffer, size, format);
+    const Format format = ASCII_BLANKS;
+    const KeyGenError rtn = keygen_createKey(buffer, size, format);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
     CHECK_EQUAL(true, testFormat(buffer, size, format));
 }
 
 TEST(FormatTest, formatAsciiReduced)
 {
-    const enum Format format = ASCII_REDUCED;
-    KeyGenError rtn = keygen_createKey(buffer, size, format);
+    const Format format = ASCII_REDUCED;
+    const KeyGenError rtn = keygen_createKey(buffer, size, format);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
     CHECK_EQUAL(true, testFormat(buffer, size, format));
 }
 
 TEST(FormatTest, formatAlphaNumeric)
 {
-    const enum Format format = ALPHA_NUMERIC;
-    KeyGenError rtn = keygen_createKey(buffer, size, format);
+    const Format format = ALPHA_NUMERIC;
+    const KeyGenError rtn = keygen_createKey(buffer, size, format);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
     CHECK_EQUAL(true, testFormat(buffer, size, format));
 }
 
 TEST(FormatTest, formatIllegal)
 {
-    const enum Format format = (Format) 99;
-    KeyGenError rtn = keygen_createKey(buffer, size, format);
+    const Format format = (Format) 99;
+    const KeyGenError rtn = keygen_createKey(buffer, size, format);
     CHECK_EQUAL(KG_ERR_ILL_ARGUMENT, rtn);
 }
 
