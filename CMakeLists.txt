@@ -36,17 +36,8 @@ if( COVERAGE )
 endif()
 
 include(Memcheck)
+include(CompilerOptions)
 
-add_compile_options(-Wall
-                    -Wextra
-                    -Werror
-                    -pedantic
-                    -Wshadow
-                    )
-
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_C_STANDARD_REQUIRED ON)
-set(CMAKE_C_EXTENSIONS OFF)
 
 include_directories("include")
 add_subdirectory(src)
