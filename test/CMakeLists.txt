@@ -1,3 +1,5 @@
+enable_cpp_options()
+
 find_package(CppUTest REQUIRED)
 
 add_library(testmain TestMain.cpp)

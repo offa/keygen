@@ -1,3 +1,5 @@
+enable_c_options()
+
 add_subdirectory("keygen")
 
 add_library(keygen-options Options.c)
