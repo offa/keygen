@@ -24,13 +24,13 @@
 
 TEST_GROUP(OptionsTest)
 {
-    void setup()
+    void setup() override
     {
         optind = 0;
         origStdErr = disableStdErr();
     }
 
-    void teardown()
+    void teardown() override
     {
         enableStdErr(origStdErr);
     }

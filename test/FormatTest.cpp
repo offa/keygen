@@ -30,18 +30,18 @@ extern const size_t ASCII_REDUCED_LENGTH;
 
 TEST_GROUP(FormatTest)
 {
-    void setup()
+    void setup() override
     {
         size = 2000 * sizeof(uint8_t);
         buffer = allocate(size);
     }
 
-    void teardown()
+    void teardown() override
     {
         keygen_cleanAndFreeBuffer(buffer, size);
     }
 
-    bool isIn(const char allowedChars[], size_t allowedCharsSize, char testFor)
+    bool isIn(const char allowedChars[], size_t allowedCharsSize, char testFor) const
     {
         for( size_t i=0; i<allowedCharsSize; ++i )
         {
@@ -54,7 +54,7 @@ TEST_GROUP(FormatTest)
         return false;
     }
 
-    bool testFormat(const uint8_t* inBuffer, size_t inBufferSize, enum Format format)
+    bool testFormat(const uint8_t* inBuffer, size_t inBufferSize, enum Format format) const
     {
         for( size_t i = 0; i < inBufferSize; ++i )
         {

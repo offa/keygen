@@ -36,12 +36,12 @@ extern "C" int RAND_bytes(unsigned char* buf, int num)
 
 TEST_GROUP(MockedTest)
 {
-    void setup()
+    void setup() override
     {
         origStdErr = disableStdErr();
     }
 
-    void teardown()
+    void teardown() override
     {
         mock().checkExpectations();
         mock().clear();
