@@ -27,13 +27,13 @@
 
 TEST_GROUP(MemoryTest)
 {
-    std::vector<std::uint8_t> createGuardedBuffer(std::size_t size) const
+    std::vector<std::uint8_t> createGuardedBuffer(std::size_t n) const
     {
-        std::vector<std::uint8_t> buffer(size, 0x00);
+        std::vector<std::uint8_t> buffer(n, 0x00);
         buffer[0] = 0xCA;
         buffer[1] = 0xFE;
-        buffer[size - 2] = 0xCA;
-        buffer[size - 1] = 0xFE;
+        buffer[n - 2] = 0xCA;
+        buffer[n - 1] = 0xFE;
         return buffer;
     }
 
