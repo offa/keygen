@@ -18,10 +18,10 @@
  * along with KeyGen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <CppUTest/TestHarness.h>
-#include <string.h>
 #include "keygen/KeyGen.h"
-#include "TestUtil.h"
+#include <array>
+#include <algorithm>
+#include <CppUTest/TestHarness.h>
 
 extern const char ALPHANUMERIC_CHARS[];
 extern const size_t ALPHANUMERIC_LENGTH;
@@ -30,96 +30,77 @@ extern const size_t ASCII_REDUCED_LENGTH;
 
 TEST_GROUP(FormatTest)
 {
-    void setup() override
-    {
-        size = 2000 * sizeof(uint8_t);
-        buffer = allocate(size);
-    }
 
-    void teardown() override
+    template<class Container>
+    void testFormat(const Container& buffer, Format format) const
     {
-        keygen_cleanAndFreeBuffer(buffer, size);
-    }
-
-    bool isIn(const char allowedChars[], size_t allowedCharsSize, char testFor) const
-    {
-        for( size_t i=0; i<allowedCharsSize; ++i )
-        {
-            if( strchr(allowedChars, testFor) != NULL )
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    bool testFormat(const uint8_t* inBuffer, size_t inBufferSize, enum Format format) const
-    {
-        for( size_t i = 0; i < inBufferSize; ++i )
+        std::for_each(buffer.cbegin(), buffer.cend(), [format](const auto& c)
         {
             switch( format )
             {
                 case ASCII:
-                    CHECK_FALSE(inBuffer[i] <= ' ' || inBuffer[i] > '~');
+                    CHECK_FALSE(c <= ' ' || c > '~');
                     return true;
                 case ASCII_BLANKS:
-                    CHECK_FALSE(inBuffer[i] < ' ' || inBuffer[i] > '~');
+                    CHECK_FALSE(c < ' ' || c > '~');
                     return true;
                 case ASCII_REDUCED:
-                    CHECK_TRUE(isIn(ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH, inBuffer[i]));
+                    CHECK_TRUE(std::find(ASCII_REDUCED_CHARS, std::next(ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH), c));
                     return true;
                 case ALPHA_NUMERIC:
-                    CHECK_TRUE(isalnum(inBuffer[i]))
+                    CHECK_TRUE(std::isalnum(c))
                     return true;
                 default:
-                    break;
+                    FAIL("Invalid format");
+                    return false;
             }
-        }
-
-        return false;
+        });
     }
 
-    size_t size;
-    uint8_t* buffer;
+    static constexpr std::size_t size{1000};
 };
 
 TEST(FormatTest, formatAscii)
 {
     constexpr Format format = ASCII;
-    const KeyGenError rtn = keygen_createKey(buffer, size, format);
+    std::array<std::uint8_t, size> buffer;
+    const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), format);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
-    CHECK_EQUAL(true, testFormat(buffer, size, format));
+    testFormat(buffer, format);
 }
 
 TEST(FormatTest, formatAsciiBlanks)
 {
     constexpr Format format = ASCII_BLANKS;
-    const KeyGenError rtn = keygen_createKey(buffer, size, format);
+    std::array<std::uint8_t, size> buffer;
+    const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), format);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
-    CHECK_EQUAL(true, testFormat(buffer, size, format));
+    testFormat(buffer, format);
 }
 
 TEST(FormatTest, formatAsciiReduced)
 {
     constexpr Format format = ASCII_REDUCED;
-    const KeyGenError rtn = keygen_createKey(buffer, size, format);
+    std::array<std::uint8_t, size> buffer;
+    const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), format);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
-    CHECK_EQUAL(true, testFormat(buffer, size, format));
+    testFormat(buffer, format);
 }
 
 TEST(FormatTest, formatAlphaNumeric)
 {
     constexpr Format format = ALPHA_NUMERIC;
-    const KeyGenError rtn = keygen_createKey(buffer, size, format);
+    std::array<std::uint8_t, size> buffer;
+    const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), format);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
-    CHECK_EQUAL(true, testFormat(buffer, size, format));
+    testFormat(buffer, format);
 }
 
 TEST(FormatTest, formatIllegal)
 {
     constexpr Format format = static_cast<Format>(99);
-    const KeyGenError rtn = keygen_createKey(buffer, size, format);
+    std::array<std::uint8_t, size> buffer;
+    const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), format);
     CHECK_EQUAL(KG_ERR_ILL_ARGUMENT, rtn);
 }
 
