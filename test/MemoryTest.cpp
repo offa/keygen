@@ -43,17 +43,14 @@ TEST_GROUP(MemoryTest)
 
 TEST(MemoryTest, testCleanUp)
 {
-    uint8_t* buffer = allocate(size);
-    uint8_t expected[size];
-    memset(expected, 0, size);
+    std::vector<std::uint8_t> buffer(size);
+    std::vector<std::uint8_t> expected(size, 0x00);
 
-    const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
+    const KeyGenError rtn = keygen_createKey(buffer.data(), size, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 
-    keygen_cleanBuffer(buffer, size);
-    MEMCMP_EQUAL(expected, buffer, size);
-
-    free(buffer);
+    keygen_cleanBuffer(buffer.data(), size);
+    MEMCMP_EQUAL(expected.data(), buffer.data(), size);
 }
 
 TEST(MemoryTest, cleanUpBorderCheck)
