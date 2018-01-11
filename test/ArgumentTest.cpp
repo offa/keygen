@@ -40,7 +40,7 @@ TEST(ArgumentTest, toShortLengthRejected)
     size = 7 * sizeof(uint8_t);
     buffer = allocate(size);
 
-    KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
+    const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
     CHECK_EQUAL(KG_ERR_ILL_ARGUMENT, rtn);
 }
 
@@ -53,7 +53,7 @@ TEST(ArgumentTest, toShortLengthDoesntChangeBuffer)
     memset(expected, 0, size);
     memset(buffer, 0, size);
 
-    KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
+    const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
     CHECK_EQUAL(KG_ERR_ILL_ARGUMENT, rtn);
     MEMCMP_EQUAL(expected, buffer, size);
 
@@ -65,7 +65,7 @@ TEST(ArgumentTest, allowedSizeGeneratesKey8Byte)
     size = 8 * sizeof(uint8_t);
     buffer = allocate(size);
 
-    KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
+    const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 }
 
@@ -74,7 +74,7 @@ TEST(ArgumentTest, allowedSizeGeneratesKey1200Byte)
     size = 1200 * sizeof(uint8_t);
     buffer = allocate(size);
 
-    KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
+    const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 }
 
