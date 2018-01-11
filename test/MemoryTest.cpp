@@ -80,7 +80,7 @@ TEST(MemoryTest, cleanUpBorderCheck)
 
 TEST(MemoryTest, overlength)
 {
-    constexpr std::size_t overLength{1000000};
+    constexpr std::size_t overLength{2048};
     std::array<std::uint8_t, overLength> buffer;
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), overLength, ASCII);
