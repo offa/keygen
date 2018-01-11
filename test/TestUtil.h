@@ -28,6 +28,7 @@
 /**
  * @deprecated
  */
+[[deprecated]]
 inline uint8_t* allocate(size_t allocateSize)
 {
     return static_cast<uint8_t*>(malloc(allocateSize));
