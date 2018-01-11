@@ -25,11 +25,11 @@
 
 TEST_GROUP(MemoryTest)
 {
+    static constexpr std::size_t size{1000};
 };
 
 TEST(MemoryTest, testCleanUp)
 {
-    const size_t size = 1000 * sizeof(uint8_t);
     uint8_t* buffer = allocate(size);
     uint8_t expected[size];
     memset(expected, 0, size);
@@ -45,7 +45,6 @@ TEST(MemoryTest, testCleanUp)
 
 TEST(MemoryTest, cleanUpBorderCheck)
 {
-    const size_t size = 1000 * sizeof(uint8_t);
     const size_t allocSize = size + 4;
     uint8_t* allocBuffer = allocate(allocSize);
     uint8_t* buffer = allocBuffer + 2;
@@ -83,7 +82,6 @@ TEST(MemoryTest, overlength)
 
 TEST(MemoryTest, overAndUnderflow)
 {
-    const size_t size = 1000 * sizeof(uint8_t);
     const size_t allocSize = size + 4;
     uint8_t* allocBuffer = allocate(allocSize);
     uint8_t* buffer = allocBuffer + 2;
