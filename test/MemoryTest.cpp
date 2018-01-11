@@ -26,6 +26,7 @@
 TEST_GROUP(MemoryTest)
 {
     static constexpr std::size_t size{1000};
+    static constexpr std::size_t guardedSized{size + 4};
 };
 
 TEST(MemoryTest, testCleanUp)
@@ -45,16 +46,15 @@ TEST(MemoryTest, testCleanUp)
 
 TEST(MemoryTest, cleanUpBorderCheck)
 {
-    const size_t allocSize = size + 4;
-    uint8_t* allocBuffer = allocate(allocSize);
+    uint8_t* allocBuffer = allocate(guardedSized);
     uint8_t* buffer = allocBuffer + 2;
-    uint8_t expected[allocSize];
+    uint8_t expected[guardedSized];
 
-    memset(expected, 0, allocSize);
+    memset(expected, 0, guardedSized);
     expected[0] = 0xCA;
     expected[1] = 0xFE;
-    expected[allocSize - 2] = 0xCA;
-    expected[allocSize - 1] = 0xFE;
+    expected[guardedSized - 2] = 0xCA;
+    expected[guardedSized - 1] = 0xFE;
 
     const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
@@ -63,8 +63,8 @@ TEST(MemoryTest, cleanUpBorderCheck)
     MEMCMP_EQUAL(expected + 2, buffer, size);
     CHECK_EQUAL(0xCA, expected[0]);
     CHECK_EQUAL(0xFE, expected[1]);
-    CHECK_EQUAL(0xCA, expected[allocSize - 2]);
-    CHECK_EQUAL(0xFE, expected[allocSize - 1]);
+    CHECK_EQUAL(0xCA, expected[guardedSized - 2]);
+    CHECK_EQUAL(0xFE, expected[guardedSized - 1]);
 
     free(allocBuffer);
 }
@@ -82,29 +82,28 @@ TEST(MemoryTest, overlength)
 
 TEST(MemoryTest, overAndUnderflow)
 {
-    const size_t allocSize = size + 4;
-    uint8_t* allocBuffer = allocate(allocSize);
+    uint8_t* allocBuffer = allocate(guardedSized);
     uint8_t* buffer = allocBuffer + 2;
 
     allocBuffer[0] = 0xCA;
     allocBuffer[1] = 0xFE;
-    allocBuffer[allocSize - 2] = 0xCA;
-    allocBuffer[allocSize - 1] = 0xFE;
+    allocBuffer[guardedSized - 2] = 0xCA;
+    allocBuffer[guardedSized - 1] = 0xFE;
 
     const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 
     CHECK_EQUAL(0xCA, allocBuffer[0]);
     CHECK_EQUAL(0XFE, allocBuffer[1]);
-    CHECK_EQUAL(0xCA, allocBuffer[allocSize - 2]);
-    CHECK_EQUAL(0xFE, allocBuffer[allocSize - 1]);
+    CHECK_EQUAL(0xCA, allocBuffer[guardedSized - 2]);
+    CHECK_EQUAL(0xFE, allocBuffer[guardedSized - 1]);
 
     keygen_cleanBuffer(buffer, size);
 
     CHECK_EQUAL(0xCA, allocBuffer[0]);
     CHECK_EQUAL(0XFE, allocBuffer[1]);
-    CHECK_EQUAL(0xCA, allocBuffer[allocSize - 2]);
-    CHECK_EQUAL(0xFE, allocBuffer[allocSize - 1]);
+    CHECK_EQUAL(0xCA, allocBuffer[guardedSized - 2]);
+    CHECK_EQUAL(0xFE, allocBuffer[guardedSized - 1]);
 
     free(allocBuffer);
 }
