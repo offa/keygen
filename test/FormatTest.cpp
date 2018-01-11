@@ -86,7 +86,7 @@ TEST_GROUP(FormatTest)
 
 TEST(FormatTest, formatAscii)
 {
-    const Format format = ASCII;
+    constexpr Format format = ASCII;
     const KeyGenError rtn = keygen_createKey(buffer, size, format);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
     CHECK_EQUAL(true, testFormat(buffer, size, format));
@@ -94,7 +94,7 @@ TEST(FormatTest, formatAscii)
 
 TEST(FormatTest, formatAsciiBlanks)
 {
-    const Format format = ASCII_BLANKS;
+    constexpr Format format = ASCII_BLANKS;
     const KeyGenError rtn = keygen_createKey(buffer, size, format);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
     CHECK_EQUAL(true, testFormat(buffer, size, format));
@@ -102,7 +102,7 @@ TEST(FormatTest, formatAsciiBlanks)
 
 TEST(FormatTest, formatAsciiReduced)
 {
-    const Format format = ASCII_REDUCED;
+    constexpr Format format = ASCII_REDUCED;
     const KeyGenError rtn = keygen_createKey(buffer, size, format);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
     CHECK_EQUAL(true, testFormat(buffer, size, format));
@@ -110,7 +110,7 @@ TEST(FormatTest, formatAsciiReduced)
 
 TEST(FormatTest, formatAlphaNumeric)
 {
-    const Format format = ALPHA_NUMERIC;
+    constexpr Format format = ALPHA_NUMERIC;
     const KeyGenError rtn = keygen_createKey(buffer, size, format);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
     CHECK_EQUAL(true, testFormat(buffer, size, format));
@@ -118,7 +118,7 @@ TEST(FormatTest, formatAlphaNumeric)
 
 TEST(FormatTest, formatIllegal)
 {
-    const Format format = static_cast<Format>(99);
+    constexpr Format format = static_cast<Format>(99);
     const KeyGenError rtn = keygen_createKey(buffer, size, format);
     CHECK_EQUAL(KG_ERR_ILL_ARGUMENT, rtn);
 }
