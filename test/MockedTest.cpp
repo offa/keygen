@@ -21,6 +21,7 @@
 #include "keygen/KeyGen.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <array>
 #include <CppUTest/TestHarness.h>
 #include <CppUTestExt/MockSupport.h>
 
@@ -36,10 +37,7 @@ TEST_GROUP(MockedTest)
 {
     void setup()
     {
-        fflush(stderr);
-        origStdErr = dup(STDERR_FILENO);
-        FILE* unused = freopen("NUL", "a", stderr);
-        (void) unused;
+        disableStdErr();
     }
 
     void teardown()
@@ -47,9 +45,22 @@ TEST_GROUP(MockedTest)
         mock().checkExpectations();
         mock().clear();
 
+        enableStdErr();
+    }
+
+    void disableStdErr()
+    {
+        fflush(stderr);
+        origStdErr = dup(STDERR_FILENO);
+        freopen("NUL", "a", stderr);
+    }
+
+    void enableStdErr()
+    {
         fflush(stderr);
         dup2(origStdErr, STDERR_FILENO);
     }
+
 
     int origStdErr;
 };
@@ -59,8 +70,8 @@ TEST(MockedTest, returnErrorCodeOnFailedRandom)
     mock().expectOneCall("RAND_bytes")
             .ignoreOtherParameters()
             .andReturnValue(100);
-    enum { length = 10 };
-    uint8_t buffer[length];
-    const KeyGenError rtn = keygen_createKey(buffer, length, ASCII);
+    std::array<std::uint8_t, 10> buffer;
+
+    const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
     CHECK_EQUAL(KG_ERR_SECURITY, rtn);
 }
