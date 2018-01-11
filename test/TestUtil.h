@@ -22,10 +22,26 @@
 #define TESTUTIL_H
 
 #include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
 
 inline uint8_t* allocate(size_t allocateSize)
 {
     return static_cast<uint8_t*>(malloc(allocateSize));
+}
+
+inline int disableStdErr()
+{
+    fflush(stderr);
+    const int origStdErr = dup(STDERR_FILENO);
+    freopen("NUL", "a", stderr);
+    return origStdErr;
+}
+
+inline void enableStdErr(int origStdErr)
+{
+    fflush(stderr);
+    dup2(origStdErr, STDERR_FILENO);
 }
 
 #endif /* TESTUTIL_H */

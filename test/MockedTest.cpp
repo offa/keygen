@@ -22,6 +22,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <array>
+#include "TestUtil.h"
 #include <CppUTest/TestHarness.h>
 #include <CppUTestExt/MockSupport.h>
 
@@ -37,7 +38,7 @@ TEST_GROUP(MockedTest)
 {
     void setup()
     {
-        disableStdErr();
+        origStdErr = disableStdErr();
     }
 
     void teardown()
@@ -45,22 +46,8 @@ TEST_GROUP(MockedTest)
         mock().checkExpectations();
         mock().clear();
 
-        enableStdErr();
+        enableStdErr(origStdErr);
     }
-
-    void disableStdErr()
-    {
-        fflush(stderr);
-        origStdErr = dup(STDERR_FILENO);
-        freopen("NUL", "a", stderr);
-    }
-
-    void enableStdErr()
-    {
-        fflush(stderr);
-        dup2(origStdErr, STDERR_FILENO);
-    }
-
 
     int origStdErr;
 };

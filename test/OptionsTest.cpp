@@ -18,28 +18,21 @@
  * along with KeyGen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <CppUTest/TestHarness.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
 #include "keygen/Options.h"
+#include "TestUtil.h"
+#include <CppUTest/TestHarness.h>
 
 TEST_GROUP(OptionsTest)
 {
     void setup()
     {
         optind = 0;
-
-        fflush(stderr);
-        origStdErr = dup(STDERR_FILENO);
-        FILE* unused = freopen("NUL", "a", stderr);
-        (void) unused;
+        origStdErr = disableStdErr();
     }
 
     void teardown()
     {
-        fflush(stderr);
-        dup2(origStdErr, STDERR_FILENO);
+        enableStdErr(origStdErr);
     }
 
     int origStdErr;
