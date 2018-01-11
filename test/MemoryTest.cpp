@@ -77,7 +77,7 @@ TEST(MemoryTest, overlength)
     const KeyGenError rtn = keygen_createKey(buffer, overLength, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 
-    keygen_cleanAndFreeBuffer(buffer, overLength);
+    free(buffer);
 }
 
 TEST(MemoryTest, overAndUnderflow)
