@@ -18,9 +18,9 @@
  * along with KeyGen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <CppUTest/TestHarness.h>
 #include "keygen/KeyGen.h"
-#include <string.h>
+#include <string>
+#include <CppUTest/TestHarness.h>
 
 extern const char ALPHANUMERIC_CHARS[];
 extern const size_t ALPHANUMERIC_LENGTH;
@@ -45,13 +45,13 @@ TEST(DataTest, formatCharsLength)
 
 TEST(DataTest, formatChars)
 {
-    const char* charsAsciiReduced = "!#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]_abcdefghijklmnopqrstuvwxyz{}~";
-    const char* charsAsciiBlanks = " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-    const char* charsAscii = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-    const char* charsAlphaNum = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    const std::string asciiReduced{"!#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]_abcdefghijklmnopqrstuvwxyz{}~"};
+    const std::string asciiBlanks{" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"};
+    const std::string ascii{"!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"};
+    const std::string alphaNum{"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"};
 
-    MEMCMP_EQUAL(charsAscii, ASCII_CHARS, ASCII_LENGTH);
-    MEMCMP_EQUAL(charsAsciiBlanks, ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
-    MEMCMP_EQUAL(charsAsciiReduced, ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH);
-    MEMCMP_EQUAL(charsAlphaNum, ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);
+    MEMCMP_EQUAL(ascii.data(), ASCII_CHARS, ASCII_LENGTH);
+    MEMCMP_EQUAL(asciiBlanks.data(), ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
+    MEMCMP_EQUAL(asciiReduced.data(), ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH);
+    MEMCMP_EQUAL(alphaNum.data(), ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);
 }
