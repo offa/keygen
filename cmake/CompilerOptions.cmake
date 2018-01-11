@@ -6,8 +6,8 @@ set(COMMON_OPTIONS
         -Wshadow
         )
 
-set(C_OPTIONS )
-set(CPP_OPTIONS
+set(C_OPTIONS ${COMMON_OPTIONS})
+set(CPP_OPTIONS ${COMMON_OPTIONS}
         -Wold-style-cast
         )
 
