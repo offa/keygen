@@ -50,8 +50,8 @@ TEST(DataTest, formatChars)
     const std::string ascii{"!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"};
     const std::string alphaNum{"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"};
 
-    MEMCMP_EQUAL(ascii.data(), ASCII_CHARS, ASCII_LENGTH);
-    MEMCMP_EQUAL(asciiBlanks.data(), ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
-    MEMCMP_EQUAL(asciiReduced.data(), ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH);
-    MEMCMP_EQUAL(alphaNum.data(), ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);
+    STRNCMP_EQUAL(ascii.data(), ASCII_CHARS, ASCII_LENGTH);
+    STRNCMP_EQUAL(asciiBlanks.data(), ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
+    STRNCMP_EQUAL(asciiReduced.data(), ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH);
+    STRNCMP_EQUAL(alphaNum.data(), ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);
 }
