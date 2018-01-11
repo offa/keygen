@@ -27,17 +27,10 @@ TEST_GROUP(OptionsTest)
     void setup() override
     {
         optind = 0;
-        origStdErr = disableStdErr();
     }
-
-    void teardown() override
-    {
-        enableStdErr(origStdErr);
-    }
-
-    int origStdErr;
 };
 static char name[] = "OptionsTest";
+
 
 TEST(OptionsTest, testNoArgsReturnsHelpAndExit)
 {
@@ -254,6 +247,7 @@ TEST(OptionsTest, testInvalidOptionSetsInvalidAndExit)
     char* argv[] = {name, param};
     const int argc = sizeof(argv) / sizeof(char*);
 
+    test::DisableStdErr d;
     const CLOptions result = parseOptions(argc, argv);
 
     CHECK_EQUAL(false, result.valid);

@@ -36,20 +36,11 @@ extern "C" int RAND_bytes(unsigned char* buf, int num)
 
 TEST_GROUP(MockedTest)
 {
-    void setup() override
-    {
-        origStdErr = disableStdErr();
-    }
-
     void teardown() override
     {
         mock().checkExpectations();
         mock().clear();
-
-        enableStdErr(origStdErr);
     }
-
-    int origStdErr;
 };
 
 TEST(MockedTest, returnErrorCodeOnFailedRandom)
@@ -59,6 +50,7 @@ TEST(MockedTest, returnErrorCodeOnFailedRandom)
             .andReturnValue(100);
     std::array<std::uint8_t, 10> buffer;
 
+    const test::DisableStdErr d;
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
     CHECK_EQUAL(KG_ERR_SECURITY, rtn);
 }
