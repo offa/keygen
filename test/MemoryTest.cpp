@@ -20,16 +20,18 @@
 
 #include "keygen/KeyGen.h"
 #include "TestUtil.h"
-#include <vector>
+#include <array>
 #include <iterator>
 #include <string.h>
 #include <CppUTest/TestHarness.h>
 
 TEST_GROUP(MemoryTest)
 {
-    std::vector<std::uint8_t> createGuardedBuffer(std::size_t n) const
+    template<std::size_t n>
+    std::array<std::uint8_t, n> createGuardedBuffer() const
     {
-        std::vector<std::uint8_t> buffer(n, 0x00);
+        std::array<std::uint8_t, n> buffer;
+        buffer.fill(0x00);
         buffer[0] = 0xCA;
         buffer[1] = 0xFE;
         buffer[n - 2] = 0xCA;
@@ -52,8 +54,9 @@ TEST_GROUP(MemoryTest)
 
 TEST(MemoryTest, testCleanUp)
 {
-    std::vector<std::uint8_t> buffer(size);
-    std::vector<std::uint8_t> expected(size, 0x00);
+    std::array<std::uint8_t, size> buffer;
+    std::array<std::uint8_t, size> expected;
+    expected.fill(0x00);
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), size, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
@@ -64,8 +67,8 @@ TEST(MemoryTest, testCleanUp)
 
 TEST(MemoryTest, cleanUpBorderCheck)
 {
-    const auto expected = createGuardedBuffer(guardedSize);
-    auto buffer = createGuardedBuffer(guardedSize);
+    const auto expected = createGuardedBuffer<guardedSize>();
+    auto buffer = createGuardedBuffer<guardedSize>();
     auto startOfData = std::next(buffer.begin(), 2);
 
     const KeyGenError rtn = keygen_createKey(&(*startOfData), size, ASCII);
@@ -78,7 +81,7 @@ TEST(MemoryTest, cleanUpBorderCheck)
 TEST(MemoryTest, overlength)
 {
     constexpr std::size_t overLength{1000000};
-    std::vector<std::uint8_t> buffer(overLength);
+    std::array<std::uint8_t, overLength> buffer;
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), overLength, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
@@ -86,7 +89,7 @@ TEST(MemoryTest, overlength)
 
 TEST(MemoryTest, overAndUnderflow)
 {
-    auto buffer = createGuardedBuffer(guardedSize);
+    auto buffer = createGuardedBuffer<guardedSize>();
     auto startOfData = std::next(buffer.begin(), 2);
 
     const KeyGenError rtn = keygen_createKey(&(*startOfData), size, ASCII);
