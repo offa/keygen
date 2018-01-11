@@ -68,40 +68,31 @@ TEST(MemoryTest, cleanUpBorderCheck)
 
 TEST(MemoryTest, overlength)
 {
-    const size_t overLength =  1000000 * sizeof(uint8_t);
+    constexpr std::size_t overLength{1000000};
+    std::vector<std::uint8_t> buffer(overLength);
 
-    uint8_t* buffer = allocate(overLength * sizeof(uint8_t));
-    const KeyGenError rtn = keygen_createKey(buffer, overLength, ASCII);
+    const KeyGenError rtn = keygen_createKey(buffer.data(), overLength, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
-
-    free(buffer);
 }
 
 TEST(MemoryTest, overAndUnderflow)
 {
-    uint8_t* allocBuffer = allocate(guardedSize);
-    uint8_t* buffer = allocBuffer + 2;
+    auto buffer = createGuardedBuffer(guardedSize);
+    auto startOfData = std::next(buffer.begin(), 2);
 
-    allocBuffer[0] = 0xCA;
-    allocBuffer[1] = 0xFE;
-    allocBuffer[guardedSize - 2] = 0xCA;
-    allocBuffer[guardedSize - 1] = 0xFE;
-
-    const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
+    const KeyGenError rtn = keygen_createKey(&(*startOfData), size, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 
-    CHECK_EQUAL(0xCA, allocBuffer[0]);
-    CHECK_EQUAL(0XFE, allocBuffer[1]);
-    CHECK_EQUAL(0xCA, allocBuffer[guardedSize - 2]);
-    CHECK_EQUAL(0xFE, allocBuffer[guardedSize - 1]);
+    CHECK_EQUAL(0xCA, buffer[0]);
+    CHECK_EQUAL(0XFE, buffer[1]);
+    CHECK_EQUAL(0xCA, buffer[guardedSize - 2]);
+    CHECK_EQUAL(0xFE, buffer[guardedSize - 1]);
 
-    keygen_cleanBuffer(buffer, size);
+    keygen_cleanBuffer(&(*startOfData), size);
 
-    CHECK_EQUAL(0xCA, allocBuffer[0]);
-    CHECK_EQUAL(0XFE, allocBuffer[1]);
-    CHECK_EQUAL(0xCA, allocBuffer[guardedSize - 2]);
-    CHECK_EQUAL(0xFE, allocBuffer[guardedSize - 1]);
-
-    free(allocBuffer);
+    CHECK_EQUAL(0xCA, buffer[0]);
+    CHECK_EQUAL(0XFE, buffer[1]);
+    CHECK_EQUAL(0xCA, buffer[guardedSize - 2]);
+    CHECK_EQUAL(0xFE, buffer[guardedSize - 1]);
 }
 
