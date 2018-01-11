@@ -25,18 +25,33 @@
 #include <stdio.h>
 #include <unistd.h>
 
-inline int disableStdErr()
+namespace test
 {
-    fflush(stderr);
-    const int origStdErr = dup(STDERR_FILENO);
-    freopen("NUL", "a", stderr);
-    return origStdErr;
-}
+    class DisableStdErr
+    {
+    public:
 
-inline void enableStdErr(int origStdErr)
-{
-    fflush(stderr);
-    dup2(origStdErr, STDERR_FILENO);
+        DisableStdErr() : m_stdErrHandle(dup(STDERR_FILENO))
+        {
+            fflush(stderr);
+            freopen("NUL", "a", stderr);
+        }
+
+        DisableStdErr(const DisableStdErr&) = delete;
+
+        ~DisableStdErr()
+        {
+            fflush(stderr);
+            dup2(m_stdErrHandle, STDERR_FILENO);
+        }
+
+        DisableStdErr& operator=(const DisableStdErr&) = delete;
+
+
+    private:
+
+        const int m_stdErrHandle;
+    };
 }
 
 #endif /* TESTUTIL_H */
