@@ -19,62 +19,44 @@
  */
 
 #include <CppUTest/TestHarness.h>
-#include <string.h>
+#include <array>
 #include "keygen/KeyGen.h"
-#include "TestUtil.h"
-
 
 TEST_GROUP(ArgumentTest)
 {
-    void teardown()
-    {
-        keygen_cleanAndFreeBuffer(buffer, size);
-    }
-
-    uint8_t* buffer;
-    size_t size;
 };
 
 TEST(ArgumentTest, toShortLengthRejected)
 {
-    size = 7 * sizeof(uint8_t);
-    buffer = allocate(size);
+    std::array<std::uint8_t, 7> buffer;
 
-    const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
+    const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
     CHECK_EQUAL(KG_ERR_ILL_ARGUMENT, rtn);
 }
 
 TEST(ArgumentTest, toShortLengthDoesntChangeBuffer)
 {
-    size = 7 * sizeof(uint8_t);
-    buffer = allocate(size);
-    uint8_t* expected = allocate(size);
+    std::array<std::uint8_t, 7> buffer{{0}};
+    const std::array<std::uint8_t, 7> expected{{0}};
 
-    memset(expected, 0, size);
-    memset(buffer, 0, size);
-
-    const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
+    const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
     CHECK_EQUAL(KG_ERR_ILL_ARGUMENT, rtn);
-    MEMCMP_EQUAL(expected, buffer, size);
-
-    free(expected);
+    MEMCMP_EQUAL(expected.data(), buffer.data(), expected.size());
 }
 
 TEST(ArgumentTest, allowedSizeGeneratesKey8Byte)
 {
-    size = 8 * sizeof(uint8_t);
-    buffer = allocate(size);
+    std::array<std::uint8_t, 8> buffer;
 
-    const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
+    const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 }
 
 TEST(ArgumentTest, allowedSizeGeneratesKey1200Byte)
 {
-    size = 1200 * sizeof(uint8_t);
-    buffer = allocate(size);
+    std::array<std::uint8_t, 1200> buffer;
 
-    const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
+    const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 }
 
