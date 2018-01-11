@@ -55,21 +55,15 @@ TEST(MemoryTest, testCleanUp)
 
 TEST(MemoryTest, cleanUpBorderCheck)
 {
-    uint8_t* allocBuffer = allocate(guardedSize);
-    uint8_t* buffer = allocBuffer + 2;
     const auto expected = createGuardedBuffer(guardedSize);
+    auto buffer = createGuardedBuffer(guardedSize);
+    auto startOfData = std::next(buffer.begin(), 2);
 
-    const KeyGenError rtn = keygen_createKey(buffer, size, ASCII);
+    const KeyGenError rtn = keygen_createKey(&(*startOfData), size, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 
-    keygen_cleanBuffer(buffer, size);
-    MEMCMP_EQUAL(&(expected[2]), buffer, size);
-    CHECK_EQUAL(0xCA, expected[0]);
-    CHECK_EQUAL(0xFE, expected[1]);
-    CHECK_EQUAL(0xCA, expected[guardedSize - 2]);
-    CHECK_EQUAL(0xFE, expected[guardedSize - 1]);
-
-    free(allocBuffer);
+    keygen_cleanBuffer(&(*startOfData), size);
+    MEMCMP_EQUAL(expected.data(), buffer.data(), guardedSize);
 }
 
 TEST(MemoryTest, overlength)
