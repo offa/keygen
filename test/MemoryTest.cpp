@@ -37,6 +37,15 @@ TEST_GROUP(MemoryTest)
         return buffer;
     }
 
+    template<class Container>
+    void checkGuards(const Container& buffer) const
+    {
+        CHECK_EQUAL(0xCA, buffer[0]);
+        CHECK_EQUAL(0XFE, buffer[1]);
+        CHECK_EQUAL(0xCA, buffer[guardedSize - 2]);
+        CHECK_EQUAL(0xFE, buffer[guardedSize - 1]);
+    }
+
     static constexpr std::size_t size{1000};
     static constexpr std::size_t guardedSize{size + 4};
 };
@@ -83,16 +92,8 @@ TEST(MemoryTest, overAndUnderflow)
     const KeyGenError rtn = keygen_createKey(&(*startOfData), size, ASCII);
     CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
 
-    CHECK_EQUAL(0xCA, buffer[0]);
-    CHECK_EQUAL(0XFE, buffer[1]);
-    CHECK_EQUAL(0xCA, buffer[guardedSize - 2]);
-    CHECK_EQUAL(0xFE, buffer[guardedSize - 1]);
-
+    checkGuards(buffer);
     keygen_cleanBuffer(&(*startOfData), size);
-
-    CHECK_EQUAL(0xCA, buffer[0]);
-    CHECK_EQUAL(0XFE, buffer[1]);
-    CHECK_EQUAL(0xCA, buffer[guardedSize - 2]);
-    CHECK_EQUAL(0xFE, buffer[guardedSize - 1]);
+    checkGuards(buffer);
 }
 
