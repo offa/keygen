@@ -118,7 +118,7 @@ TEST(FormatTest, formatAlphaNumeric)
 
 TEST(FormatTest, formatIllegal)
 {
-    const Format format = (Format) 99;
+    const Format format = static_cast<Format>(99);
     const KeyGenError rtn = keygen_createKey(buffer, size, format);
     CHECK_EQUAL(KG_ERR_ILL_ARGUMENT, rtn);
 }
