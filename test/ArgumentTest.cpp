@@ -18,9 +18,9 @@
  * along with KeyGen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <CppUTest/TestHarness.h>
-#include <array>
 #include "keygen/KeyGen.h"
+#include <array>
+#include <CppUTest/TestHarness.h>
 
 TEST_GROUP(ArgumentTest)
 {
