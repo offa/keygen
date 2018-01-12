@@ -26,7 +26,7 @@
  */
 
 #ifndef OPTIONS_H
-#define	OPTIONS_H
+#define OPTIONS_H
 
 #include <getopt.h>
 #include <stdbool.h>
@@ -34,7 +34,7 @@
 #include "keygen/KeyGen.h"
 
 
-#ifdef	__cplusplus
+#ifdef __cplusplus
 extern "C"
 {
 #endif
@@ -84,9 +84,9 @@ extern "C"
     struct CLOptions parseOptions(int argc, char** argv);
 
 
-#ifdef	__cplusplus
+#ifdef __cplusplus
 }
 #endif
 
-#endif	/* CLOPTIONS_H */
+#endif /* CLOPTIONS_H */
 
