@@ -35,7 +35,7 @@ static char name[] = "OptionsTest";
 TEST(OptionsTest, testNoArgsReturnsHelpAndExit)
 {
     char* argv[] = {name};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{1};
 
     const CLOptions result = parseOptions(argc, argv);
     CHECK_EQUAL(true, result.valid);
@@ -47,7 +47,7 @@ TEST(OptionsTest, testFormatArgumentAscii)
 {
     char param[] = "-a";
     char* argv[] = {name, param};
-    int argc = sizeof(argv) / sizeof(char*);
+    int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -59,7 +59,7 @@ TEST(OptionsTest, testFormatArgumentAsciiLong)
 {
     char param[] = "--ascii";
     char* argv[] = {name, param};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -71,7 +71,7 @@ TEST(OptionsTest, testFormatArgumentAsciiReduced)
 {
     char param[] = "-r";
     char* argv[] = {name, param};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -83,7 +83,7 @@ TEST(OptionsTest, testFormatArgumentAsciiReducedLong)
 {
     char param[] = "--ascii-reduced";
     char* argv[] = {name, param};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -95,7 +95,7 @@ TEST(OptionsTest, testFormatArgumentAsciiBlank)
 {
     char param[] = "-w";
     char* argv[] = {name, param};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -107,7 +107,7 @@ TEST(OptionsTest, testFormatArgumentAsciiBlankLong)
 {
     char param[] = "--ascii-blank";
     char* argv[] = {name, param};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -119,7 +119,7 @@ TEST(OptionsTest, testFormatArgumentAlphaNumeric)
 {
     char param[] = "-p";
     char* argv[] = {name, param};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -131,7 +131,7 @@ TEST(OptionsTest, testFormatArgumentAlphaNumericLong)
 {
     char param[] = "--alphanum";
     char* argv[] = {name, param};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -144,7 +144,7 @@ TEST(OptionsTest, testLength)
     char param[] = "-l";
     char value[] = "10";
     char* argv[] = {name, param, value};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{3};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -157,7 +157,7 @@ TEST(OptionsTest, testLengthLong)
     char param[] = "--length";
     char value[] = "10";
     char* argv[] = {name, param, value};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{3};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -169,7 +169,7 @@ TEST(OptionsTest, testFormatArgumentShort)
 {
     char param[] = "-s";
     char* argv[] = {name, param};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -181,7 +181,7 @@ TEST(OptionsTest, testFormatArgumentShortLong)
 {
     char param[] = "--short";
     char* argv[] = {name, param};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -193,7 +193,7 @@ TEST(OptionsTest, testShowHelp)
 {
     char param[] = "-h";
     char* argv[] = {name, param};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -206,7 +206,7 @@ TEST(OptionsTest, testShowHelpLong)
 {
     char param[] = "--help";
     char* argv[] = {name, param};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -219,7 +219,7 @@ TEST(OptionsTest, testShowVersion)
 {
     char param[] = "-v";
     char* argv[] = {name, param};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -232,7 +232,7 @@ TEST(OptionsTest, testShowVersionLong)
 {
     char param[] = "--version";
     char* argv[] = {name, param};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
@@ -245,7 +245,7 @@ TEST(OptionsTest, testInvalidOptionSetsInvalidAndExit)
 {
     char param[] = "-q";
     char* argv[] = {name, param};
-    const int argc = sizeof(argv) / sizeof(char*);
+    const int argc{2};
 
     test::DisableStdErr d;
     const CLOptions result = parseOptions(argc, argv);
