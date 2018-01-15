@@ -3,11 +3,14 @@ enable_cpp_options()
 add_library(Catch INTERFACE)
 target_include_directories(Catch INTERFACE "catch")
 
+add_library(Trompeloeil INTERFACE)
+target_include_directories(Trompeloeil INTERFACE "trompeloeil")
+
 
 find_package(CppUTest REQUIRED)
 
 add_library(testmain TestMain.cpp)
-target_link_libraries(testmain PUBLIC Catch)
+target_link_libraries(testmain PUBLIC Catch Trompeloeil)
 
 target_include_directories(testmain SYSTEM PUBLIC
                             ${CppUTest_INCLUDE_DIR}

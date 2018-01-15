@@ -23,34 +23,31 @@
 #include <unistd.h>
 #include <array>
 #include "TestUtil.h"
-#include <CppUTest/TestHarness.h>
-#include <CppUTestExt/MockSupport.h>
+#include "catch.hpp"
+#include <trompeloeil.hpp>
+
+namespace
+{
+    struct GeneratorMock
+    {
+        MAKE_MOCK2(randBytes, int(unsigned char*, int));
+    };
+
+    GeneratorMock m;
+}
 
 extern "C" int RAND_bytes(unsigned char* buf, int num)
 {
-    return mock().actualCall("RAND_bytes")
-            .withOutputParameter("buf", buf)
-            .withParameter("num", num)
-            .returnIntValue();
+    return m.randBytes(buf, num);
 }
 
-TEST_GROUP(MockedTest)
+TEST_CASE("returnErrorCodeOnFailedRandom", "[MockedTest]")
 {
-    void teardown() override
-    {
-        mock().checkExpectations();
-        mock().clear();
-    }
-};
-
-TEST(MockedTest, returnErrorCodeOnFailedRandom)
-{
-    mock().expectOneCall("RAND_bytes")
-            .ignoreOtherParameters()
-            .andReturnValue(100);
+    using trompeloeil::_;
     std::array<std::uint8_t, 10> buffer;
+    REQUIRE_CALL(m, randBytes(_, _)).RETURN(100);
 
     const test::DisableStdErr d;
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
-    CHECK_EQUAL(KG_ERR_SECURITY, rtn);
+    CHECK(rtn == KG_ERR_SECURITY);
 }
