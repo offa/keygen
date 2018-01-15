@@ -35,7 +35,6 @@ fi
 mkdir build && cd build
 
 cmake -DCMAKE_BUILD_TYPE=Debug \
-        -DUNITTEST_VERBOSE=ON \
         ${BUILD_FLAGS} \
         ..
 make all
