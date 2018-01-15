@@ -12,10 +12,10 @@ option(COVERAGE "Enables source code coverage" OFF)
 message(STATUS "Test coverage : ${COVERAGE}")
 
 option(SANITIZER_ASAN "Enable ASan" OFF)
-message(STATUS "ASan : " ${SANITIZER_ASAN})
+message(STATUS "ASan : ${SANITIZER_ASAN}")
 
 option(SANITIZER_UBSAN "Enable UBSan" OFF)
-message(STATUS "UBSan : " ${SANITIZER_UBSAN})
+message(STATUS "UBSan : ${SANITIZER_UBSAN}")
 
 
 option(DOXYFILE "Generates the Doxyfile for Doxygen documentation" OFF)
