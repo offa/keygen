@@ -20,7 +20,9 @@
 
 #include "keygen/KeyGen.h"
 #include <string>
-#include <CppUTest/TestHarness.h>
+#include <catch.hpp>
+
+using namespace Catch::Matchers;
 
 extern const char ALPHANUMERIC_CHARS[];
 extern const size_t ALPHANUMERIC_LENGTH;
@@ -31,27 +33,23 @@ extern const size_t ASCII_BLANK_LENGTH;
 extern const char ASCII_CHARS[];
 extern const size_t ASCII_LENGTH;
 
-TEST_GROUP(DataTest)
+TEST_CASE("formatCharsLength", "[DataTest]")
 {
-};
-
-TEST(DataTest, formatCharsLength)
-{
-    CHECK_EQUAL(94u, ASCII_LENGTH);
-    CHECK_EQUAL(95u, ASCII_BLANK_LENGTH);
-    CHECK_EQUAL(88u, ASCII_REDUCED_LENGTH);
-    CHECK_EQUAL(62u, ALPHANUMERIC_LENGTH);
+    CHECK(94u == ASCII_LENGTH);
+    CHECK(95u == ASCII_BLANK_LENGTH);
+    CHECK(88u == ASCII_REDUCED_LENGTH);
+    CHECK(62u == ALPHANUMERIC_LENGTH);
 }
 
-TEST(DataTest, formatChars)
+TEST_CASE("formatChars", "[DataTest]")
 {
-    const std::string asciiReduced{"!#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]_abcdefghijklmnopqrstuvwxyz{}~"};
-    const std::string asciiBlanks{" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"};
     const std::string ascii{"!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"};
+    const std::string asciiBlanks{" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"};
+    const std::string asciiReduced{"!#$%&()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[]_abcdefghijklmnopqrstuvwxyz{}~"};
     const std::string alphaNum{"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"};
 
-    STRNCMP_EQUAL(ascii.data(), ASCII_CHARS, ASCII_LENGTH);
-    STRNCMP_EQUAL(asciiBlanks.data(), ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
-    STRNCMP_EQUAL(asciiReduced.data(), ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH);
-    STRNCMP_EQUAL(alphaNum.data(), ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);
+    CHECK_THAT(std::string(ASCII_CHARS, ASCII_LENGTH), Equals(ascii));
+    CHECK_THAT(std::string(ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH), Equals(asciiBlanks));
+    CHECK_THAT(std::string(ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH), Equals(asciiReduced));
+    CHECK_THAT(std::string(ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH), Equals(alphaNum));
 }
