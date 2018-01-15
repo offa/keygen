@@ -14,7 +14,6 @@ The cryptography behind is provided by *OpenSSL*.
  - [**OpenSSL**](https://www.openssl.org/)
  - [**CMake**](http://www.cmake.org/)
  - [**Doxygen**](http://doxygen.nl/) — *(Optional)*
- - [**CppUTest**](https://github.com/cpputest/cpputest) — *(Optional; requires C++ Compiler)*
 
 ## Building
 
