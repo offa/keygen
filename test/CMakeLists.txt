@@ -17,8 +17,6 @@ function(add_test_suite name)
 endfunction()
 
 
-list(APPEND OpenSSL::SSL)
-
 add_executable(ArgumentTest ArgumentTest.cpp)
 target_link_libraries(ArgumentTest PRIVATE keygen-lib)
 add_test_suite(ArgumentTest)
