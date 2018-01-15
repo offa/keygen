@@ -20,43 +20,41 @@
 
 #include "keygen/KeyGen.h"
 #include <array>
-#include <CppUTest/TestHarness.h>
+#include <catch.hpp>
 
-TEST_GROUP(ArgumentTest)
-{
-};
+using namespace Catch::Matchers;
 
-TEST(ArgumentTest, toShortLengthRejected)
+TEST_CASE("toShortLengthRejected", "[ArgumentTest]")
 {
     std::array<std::uint8_t, 7> buffer;
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
-    CHECK_EQUAL(KG_ERR_ILL_ARGUMENT, rtn);
+    CHECK(rtn == KG_ERR_ILL_ARGUMENT);
 }
 
-TEST(ArgumentTest, toShortLengthDoesntChangeBuffer)
+TEST_CASE("toShortLengthDoesntChangeBuffer", "[ArgumentTest]")
 {
     std::array<std::uint8_t, 7> buffer{{0}};
     const std::array<std::uint8_t, 7> expected{{0}};
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
-    CHECK_EQUAL(KG_ERR_ILL_ARGUMENT, rtn);
-    MEMCMP_EQUAL(expected.data(), buffer.data(), expected.size());
+    CHECK(rtn == KG_ERR_ILL_ARGUMENT);
+    CHECK(buffer == expected);
 }
 
-TEST(ArgumentTest, allowedSizeGeneratesKey8Byte)
+TEST_CASE("allowedSizeGeneratesKey8Byte", "[ArgumentTest]")
 {
     std::array<std::uint8_t, 8> buffer;
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
-    CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
+    CHECK(rtn == KG_ERR_SUCCESS);
 }
 
-TEST(ArgumentTest, allowedSizeGeneratesKey1200Byte)
+TEST_CASE("allowedSizeGeneratesKey1200Byte", "[ArgumentTest]")
 {
     std::array<std::uint8_t, 1200> buffer;
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
-    CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
+    CHECK(rtn == KG_ERR_SUCCESS);
 }
 
