@@ -27,6 +27,7 @@ using namespace Catch::Matchers;
 TEST_CASE("option evaluation", "[OptionsTest]")
 {
     optind = 0;
+    test::DisableStdErr d;
     static char name[] = "OptionsTest";
 
 
@@ -246,7 +247,6 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         char* argv[] = {name, param};
         const int argc{2};
 
-        test::DisableStdErr d;
         const CLOptions result = parseOptions(argc, argv);
 
         CHECK(result.valid == false);
