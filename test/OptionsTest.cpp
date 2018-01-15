@@ -20,127 +20,141 @@
 
 #include "keygen/Options.h"
 #include "TestUtil.h"
-#include <CppUTest/TestHarness.h>
+#include <catch.hpp>
 
-TEST_GROUP(OptionsTest)
+using namespace Catch::Matchers;
+
+namespace
 {
-    void setup() override
+    void reset()
     {
         optind = 0;
     }
-};
-static char name[] = "OptionsTest";
+
+    static char name[] = "OptionsTest";
+}
 
 
-TEST(OptionsTest, testNoArgsReturnsHelpAndExit)
+TEST_CASE("testNoArgsReturnsHelpAndExit", "[OptionsTest]")
 {
+    reset();
     char* argv[] = {name};
     const int argc{1};
 
     const CLOptions result = parseOptions(argc, argv);
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(true, result.showHelp);
-    CHECK_EQUAL(true, result.exit);
+
+    CHECK(result.valid == true);
+    CHECK(result.showHelp == true);
+    CHECK(result.exit == true);
 }
 
-TEST(OptionsTest, testFormatArgumentAscii)
+TEST_CASE("testFormatArgumentAscii", "[OptionsTest]")
 {
+    reset();
     char param[] = "-a";
     char* argv[] = {name, param};
     int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(ASCII, result.keyFormat);
+    CHECK(result.valid == true);
+    CHECK(result.keyFormat == ASCII);
 }
 
-TEST(OptionsTest, testFormatArgumentAsciiLong)
+TEST_CASE("testFormatArgumentAsciiLong", "[OptionsTest]")
 {
+    reset();
     char param[] = "--ascii";
     char* argv[] = {name, param};
     const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(ASCII, result.keyFormat);
+    CHECK(result.valid == true);
+    CHECK(result.keyFormat == ASCII);
 }
 
-TEST(OptionsTest, testFormatArgumentAsciiReduced)
+TEST_CASE("testFormatArgumentAsciiReduced", "[OptionsTest]")
 {
+    reset();
     char param[] = "-r";
     char* argv[] = {name, param};
     const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(ASCII_REDUCED, result.keyFormat);
+    CHECK(result.valid == true);
+    CHECK(result.keyFormat == ASCII_REDUCED);
 }
 
-TEST(OptionsTest, testFormatArgumentAsciiReducedLong)
+TEST_CASE("testFormatArgumentAsciiReducedLong", "[OptionsTest]")
 {
+    reset();
     char param[] = "--ascii-reduced";
     char* argv[] = {name, param};
     const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(ASCII_REDUCED, result.keyFormat);
+    CHECK(result.valid == true);
+    CHECK(result.keyFormat == ASCII_REDUCED);
 }
 
-TEST(OptionsTest, testFormatArgumentAsciiBlank)
+TEST_CASE("testFormatArgumentAsciiBlank", "[OptionsTest]")
 {
+    reset();
     char param[] = "-w";
     char* argv[] = {name, param};
     const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(ASCII_BLANKS, result.keyFormat);
+    CHECK(result.valid == true);
+    CHECK(result.keyFormat == ASCII_BLANKS);
 }
 
-TEST(OptionsTest, testFormatArgumentAsciiBlankLong)
+TEST_CASE("testFormatArgumentAsciiBlankLong", "[OptionsTest]")
 {
+    reset();
     char param[] = "--ascii-blank";
     char* argv[] = {name, param};
     const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(ASCII_BLANKS, result.keyFormat);
+    CHECK(result.valid == true);
+    CHECK(result.keyFormat == ASCII_BLANKS);
 }
 
-TEST(OptionsTest, testFormatArgumentAlphaNumeric)
+TEST_CASE("testFormatArgumentAlphaNumeric", "[OptionsTest]")
 {
+    reset();
     char param[] = "-p";
     char* argv[] = {name, param};
     const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(ALPHA_NUMERIC, result.keyFormat);
+    CHECK(result.valid == true);
+    CHECK(result.keyFormat == ALPHA_NUMERIC);
 }
 
-TEST(OptionsTest, testFormatArgumentAlphaNumericLong)
+TEST_CASE("testFormatArgumentAlphaNumericLong", "[OptionsTest]")
 {
+    reset();
     char param[] = "--alphanum";
     char* argv[] = {name, param};
     const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(ALPHA_NUMERIC, result.keyFormat);
+    CHECK(result.valid == true);
+    CHECK(result.keyFormat == ALPHA_NUMERIC);
 }
 
-TEST(OptionsTest, testLength)
+TEST_CASE("testLength", "[OptionsTest]")
 {
+    reset();
     char param[] = "-l";
     char value[] = "10";
     char* argv[] = {name, param, value};
@@ -148,12 +162,13 @@ TEST(OptionsTest, testLength)
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(10, result.keyLength);
+    CHECK(result.valid == true);
+    CHECK(result.keyLength == 10);
 }
 
-TEST(OptionsTest, testLengthLong)
+TEST_CASE("testLengthLong", "[OptionsTest]")
 {
+    reset();
     char param[] = "--length";
     char value[] = "10";
     char* argv[] = {name, param, value};
@@ -161,88 +176,95 @@ TEST(OptionsTest, testLengthLong)
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(10, result.keyLength);
+    CHECK(result.valid == true);
+    CHECK(result.keyLength == 10);
 }
 
-TEST(OptionsTest, testFormatArgumentShort)
+TEST_CASE("testFormatArgumentShort", "[OptionsTest]")
 {
+    reset();
     char param[] = "-s";
     char* argv[] = {name, param};
     const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(true, result.shortOutput);
+    CHECK(result.valid == true);
+    CHECK(result.shortOutput == true);
 }
 
-TEST(OptionsTest, testFormatArgumentShortLong)
+TEST_CASE("testFormatArgumentShortLong", "[OptionsTest]")
 {
+    reset();
     char param[] = "--short";
     char* argv[] = {name, param};
     const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(true, result.shortOutput);
+    CHECK(result.valid == true);
+    CHECK(result.shortOutput == true);
 }
 
-TEST(OptionsTest, testShowHelp)
+TEST_CASE("testShowHelp", "[OptionsTest]")
 {
+    reset();
     char param[] = "-h";
     char* argv[] = {name, param};
     const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(true, result.showHelp);
-    CHECK_EQUAL(true, result.exit);
+    CHECK(result.valid == true);
+    CHECK(result.showHelp == true);
+    CHECK(result.exit == true);
 }
 
-TEST(OptionsTest, testShowHelpLong)
+TEST_CASE("testShowHelpLong", "[OptionsTest]")
 {
+    reset();
     char param[] = "--help";
     char* argv[] = {name, param};
     const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(true, result.showHelp);
-    CHECK_EQUAL(true, result.exit);
+    CHECK(result.valid == true);
+    CHECK(result.showHelp == true);
+    CHECK(result.exit == true);
 }
 
-TEST(OptionsTest, testShowVersion)
+TEST_CASE("testShowVersion", "[OptionsTest]")
 {
+    reset();
     char param[] = "-v";
     char* argv[] = {name, param};
     const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(true, result.showVersion);
-    CHECK_EQUAL(true, result.exit);
+    CHECK(result.valid == true);
+    CHECK(result.showVersion == true);
+    CHECK(result.exit == true);
 }
 
-TEST(OptionsTest, testShowVersionLong)
+TEST_CASE("testShowVersionLong", "[OptionsTest]")
 {
+    reset();
     char param[] = "--version";
     char* argv[] = {name, param};
     const int argc{2};
 
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(true, result.valid);
-    CHECK_EQUAL(true, result.showVersion);
-    CHECK_EQUAL(true, result.exit);
+    CHECK(result.valid == true);
+    CHECK(result.showVersion == true);
+    CHECK(result.exit == true);
 }
 
-TEST(OptionsTest, testInvalidOptionSetsInvalidAndExit)
+TEST_CASE("testInvalidOptionSetsInvalidAndExit", "[OptionsTest]")
 {
+    reset();
     char param[] = "-q";
     char* argv[] = {name, param};
     const int argc{2};
@@ -250,6 +272,6 @@ TEST(OptionsTest, testInvalidOptionSetsInvalidAndExit)
     test::DisableStdErr d;
     const CLOptions result = parseOptions(argc, argv);
 
-    CHECK_EQUAL(false, result.valid);
-    CHECK_EQUAL(true, result.exit);
+    CHECK(result.valid == false);
+    CHECK(result.exit == true);
 }
