@@ -52,19 +52,19 @@ The application is used with commandline arguments. Run `keygen -h` to print the
 ```
  Usage: keygen [Options]
 
-  --ascii	-a :  Generates a key of ASCII characters, ranging from '!' to'~' (default)
-  --ascii-blank	-w :  Generates a key of ASCII characters, ranging from ' ' to'~';
+  --ascii   -a :  Generates a key of ASCII characters, ranging from '!' to'~' (default)
+  --ascii-blank -w :  Generates a key of ASCII characters, ranging from ' ' to'~';
                       same as --ascii, but includes blanks
-  --ascii-reduced	-r :  Generates a key of reduced ASCII
-  --alphanum	-p :  Generates a key of alphanumeric characters
-  --length <n>	-l <n> :  Generates a key of <n> bytes length
-  --short	-s :  Shows only the key
-  --help	-h :  Shows the help
-  --version	-v :  Shows version informations and license.
+  --ascii-reduced   -r :  Generates a key of reduced ASCII
+  --alphanum    -p :  Generates a key of alphanumeric characters
+  --length <n>  -l <n> :  Generates a key of <n> bytes length
+  --short   -s :  Shows only the key
+  --help    -h :  Shows the help
+  --version -v :  Shows version informations and license.
 ```
 
 **Note:** For generating, the `--length` / `-l` parameter is *always* necessary.
- 
+
 #### Examples
 
 Key of 24 length:
