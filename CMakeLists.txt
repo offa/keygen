@@ -6,7 +6,6 @@ message(STATUS "~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~")
 
 
 option(UNITTEST "Builds unit tests" ON)
-option(UNITTEST_VERBOSE "Verbose unit test output" OFF)
 message(STATUS "Building Unit Tests : ${UNITTEST}")
 
 option(COVERAGE "Enables source code coverage" OFF)
