@@ -56,9 +56,8 @@ namespace
 
 TEST_CASE("testCleanUp", "[MemoryTest]")
 {
-    std::array<std::uint8_t, size> buffer;
-    std::array<std::uint8_t, size> expected;
-    expected.fill(0x00);
+    std::array<std::uint8_t, size> buffer{{0}};
+    std::array<std::uint8_t, size> expected{{0}};
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), size, ASCII);
     CHECK(rtn == KG_ERR_SUCCESS);
@@ -83,7 +82,7 @@ TEST_CASE("cleanUpBorderCheck", "[MemoryTest]")
 TEST_CASE("overlength", "[MemoryTest]")
 {
     constexpr std::size_t overLength{2048};
-    std::array<std::uint8_t, overLength> buffer;
+    std::array<std::uint8_t, overLength> buffer{{0}};
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), overLength, ASCII);
     CHECK(rtn == KG_ERR_SUCCESS);
