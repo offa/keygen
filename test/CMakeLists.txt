@@ -6,19 +6,9 @@ target_include_directories(Catch INTERFACE "catch")
 add_library(Trompeloeil INTERFACE)
 target_include_directories(Trompeloeil INTERFACE "trompeloeil")
 
-
-find_package(CppUTest REQUIRED)
-
 add_library(testmain TestMain.cpp)
 target_link_libraries(testmain PUBLIC Catch Trompeloeil)
 
-target_include_directories(testmain SYSTEM PUBLIC
-                            ${CppUTest_INCLUDE_DIR}
-                            ${CppUTest_Ext_INCLUDE_DIR}
-                            )
-target_link_libraries(testmain INTERFACE ${CppUTest_LIBRARY}
-                                        ${CppUTest_Ext_LIBRARY}
-                                        )
 
 
 function(add_test_suite name)
