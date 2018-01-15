@@ -23,15 +23,19 @@
 #include <array>
 #include <iterator>
 #include <string.h>
-#include <CppUTest/TestHarness.h>
+#include <catch.hpp>
 
-TEST_GROUP(MemoryTest)
+using namespace Catch::Matchers;
+
+namespace
 {
+    static constexpr std::size_t size{1000};
+    static constexpr std::size_t guardedSize{size + 4};
+
     template<std::size_t n>
-    std::array<std::uint8_t, n> createGuardedBuffer() const
+    constexpr std::array<std::uint8_t, n> createGuardedBuffer()
     {
-        std::array<std::uint8_t, n> buffer;
-        buffer.fill(0x00);
+        std::array<std::uint8_t, n> buffer{{0}};
         buffer[0] = 0xCA;
         buffer[1] = 0xFE;
         buffer[n - 2] = 0xCA;
@@ -40,60 +44,58 @@ TEST_GROUP(MemoryTest)
     }
 
     template<class Container>
-    void checkGuards(const Container& buffer) const
+    void checkGuards(const Container& buffer)
     {
-        CHECK_EQUAL(0xCA, buffer[0]);
-        CHECK_EQUAL(0XFE, buffer[1]);
-        CHECK_EQUAL(0xCA, buffer[guardedSize - 2]);
-        CHECK_EQUAL(0xFE, buffer[guardedSize - 1]);
+        CHECK(buffer[0] == 0xCA);
+        CHECK(buffer[1] == 0xFE);
+        CHECK(buffer[guardedSize - 2] == 0xCA);
+        CHECK(buffer[guardedSize - 1] == 0xFE);
     }
 
-    static constexpr std::size_t size{1000};
-    static constexpr std::size_t guardedSize{size + 4};
-};
+}
 
-TEST(MemoryTest, testCleanUp)
+TEST_CASE("testCleanUp", "[MemoryTest]")
 {
     std::array<std::uint8_t, size> buffer;
     std::array<std::uint8_t, size> expected;
     expected.fill(0x00);
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), size, ASCII);
-    CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
+    CHECK(rtn == KG_ERR_SUCCESS);
 
     keygen_cleanBuffer(buffer.data(), size);
-    MEMCMP_EQUAL(expected.data(), buffer.data(), size);
+    CHECK(buffer == expected);
 }
 
-TEST(MemoryTest, cleanUpBorderCheck)
+TEST_CASE("cleanUpBorderCheck", "[MemoryTest]")
 {
     const auto expected = createGuardedBuffer<guardedSize>();
     auto buffer = createGuardedBuffer<guardedSize>();
     auto startOfData = std::next(buffer.begin(), 2);
 
     const KeyGenError rtn = keygen_createKey(&(*startOfData), size, ASCII);
-    CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
+    CHECK(rtn == KG_ERR_SUCCESS);
 
     keygen_cleanBuffer(&(*startOfData), size);
-    MEMCMP_EQUAL(expected.data(), buffer.data(), guardedSize);
+    CHECK(buffer == expected);
 }
 
-TEST(MemoryTest, overlength)
+TEST_CASE("overlength", "[MemoryTest]")
 {
     constexpr std::size_t overLength{2048};
     std::array<std::uint8_t, overLength> buffer;
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), overLength, ASCII);
-    CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
+    CHECK(rtn == KG_ERR_SUCCESS);
 }
 
-TEST(MemoryTest, overAndUnderflow)
+TEST_CASE("overAndUnderflow", "[MemoryTest]")
 {
     auto buffer = createGuardedBuffer<guardedSize>();
     auto startOfData = std::next(buffer.begin(), 2);
 
     const KeyGenError rtn = keygen_createKey(&(*startOfData), size, ASCII);
-    CHECK_EQUAL(KG_ERR_SUCCESS, rtn);
+    CHECK(rtn == KG_ERR_SUCCESS);
 
     checkGuards(buffer);
     keygen_cleanBuffer(&(*startOfData), size);
