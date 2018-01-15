@@ -19,11 +19,6 @@ done
 if [[ "${CXX}" == clang* ]]
 then
     export CXXFLAGS="-stdlib=libc++"
-
-    # Clang's sanitizer conflict with CppUTest's Leakdetection (see #18)
-    # Instead of ASan / UBSan, Valgrind is used later in the build
-    VALGRIND=true
-    SANITIZER=false
 fi
 
 if [[ "${SANITIZER}" == true ]]
