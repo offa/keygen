@@ -18,9 +18,5 @@
  * along with KeyGen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <CppUTest/CommandLineTestRunner.h>
-
-int main(int argc, char** argv)
-{
-    return RUN_ALL_TESTS(argc, argv);
-}
+#define CATCH_CONFIG_MAIN
+#include <catch.hpp>

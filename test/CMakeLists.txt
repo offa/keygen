@@ -1,8 +1,14 @@
 enable_cpp_options()
 
+add_library(Catch INTERFACE)
+target_include_directories(Catch INTERFACE "catch")
+
+
 find_package(CppUTest REQUIRED)
 
 add_library(testmain TestMain.cpp)
+target_link_libraries(testmain PUBLIC Catch)
+
 target_include_directories(testmain SYSTEM PUBLIC
                             ${CppUTest_INCLUDE_DIR}
                             ${CppUTest_Ext_INCLUDE_DIR}
@@ -45,12 +51,6 @@ target_link_libraries(MockedTest PRIVATE keygen-lib)
 add_test_suite(MockedTest)
 
 
-
-set(TEST_FLAGS -c)
-
-if( UNITTEST_VERBOSE )
-    set(TEST_FLAGS ${TEST_FLAGS} -v)
-endif()
 
 add_custom_target(unittest ArgumentTest ${TEST_FLAGS}
                         COMMAND FormatTest ${TEST_FLAGS}
