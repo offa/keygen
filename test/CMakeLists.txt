@@ -10,7 +10,7 @@ target_link_libraries(testmain PUBLIC Catch Trompeloeil)
 
 
 function(add_test_suite name)
-    add_cpp_library(${name} ${ARGN})
+    add_cpp_executable(${name} ${ARGN})
     add_test(${name} ${name})
     target_link_libraries(${name} PRIVATE testmain build-libs)
 endfunction()
@@ -36,12 +36,12 @@ target_link_libraries(MockedTest PRIVATE keygen-lib)
 
 
 
-add_custom_target(unittest ArgumentTest ${TEST_FLAGS}
-                        COMMAND FormatTest ${TEST_FLAGS}
-                        COMMAND MemoryTest ${TEST_FLAGS}
-                        COMMAND DataTest ${TEST_FLAGS}
-                        COMMAND OptionsTest ${TEST_FLAGS}
-                        COMMAND MockedTest ${TEST_FLAGS}
+add_custom_target(unittest ArgumentTest
+                        COMMAND FormatTest
+                        COMMAND MemoryTest
+                        COMMAND DataTest
+                        COMMAND OptionsTest
+                        COMMAND MockedTest
                         COMMENT "Running unittests\n\n"
                         VERBATIM
                         )
