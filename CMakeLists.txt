@@ -24,11 +24,9 @@ message(STATUS "Doxyfile : ${DOXYFILE}")
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-include(Sanitizer)
 
 find_package(OpenSSL REQUIRED)
 message(STATUS "Using OpenSSL ${OPENSSL_VERSION}")
-
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -39,6 +37,17 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(CompilerOptions)
+add_common_flags(
+        -Wall
+        -Wextra
+        -Werror
+        -pedantic
+        -Wshadow
+        )
+add_cpp_flags(-Wold-style-cast)
+
+
+include(Sanitizer)
 include(Memcheck)
 
 if( COVERAGE )
