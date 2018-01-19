@@ -18,6 +18,9 @@ target_link_libraries(keygen
                             build-libs
                         )
 
+if( COVERAGE )
+    target_link_libraries(keygen PRIVATE gcov)
+endif()
 
 if( VALGRIND )
     add_custom_target(memcheck ${VALGRIND} ${VALGRIND_MEMCHECK_FLAGS}
