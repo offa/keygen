@@ -1,12 +1,10 @@
-enable_cpp_options()
-
 add_library(Catch INTERFACE)
 target_include_directories(Catch INTERFACE "catch")
 
 add_library(Trompeloeil INTERFACE)
 target_include_directories(Trompeloeil INTERFACE "trompeloeil")
 
-add_library(testmain TestMain.cpp)
+add_cpp_library(testmain TestMain.cpp)
 target_link_libraries(testmain PUBLIC Catch Trompeloeil)
 
 
@@ -17,27 +15,27 @@ function(add_test_suite name)
 endfunction()
 
 
-add_executable(ArgumentTest ArgumentTest.cpp)
+add_cpp_executable(ArgumentTest ArgumentTest.cpp)
 target_link_libraries(ArgumentTest PRIVATE keygen-lib)
 add_test_suite(ArgumentTest)
 
-add_executable(FormatTest FormatTest.cpp)
+add_cpp_executable(FormatTest FormatTest.cpp)
 target_link_libraries(FormatTest PRIVATE keygen-lib)
 add_test_suite(FormatTest)
 
-add_executable(MemoryTest MemoryTest.cpp)
+add_cpp_executable(MemoryTest MemoryTest.cpp)
 target_link_libraries(MemoryTest PRIVATE keygen-lib)
 add_test_suite(MemoryTest)
 
-add_executable(DataTest DataTest.cpp)
+add_cpp_executable(DataTest DataTest.cpp)
 target_link_libraries(DataTest PRIVATE keygen-lib)
 add_test_suite(DataTest)
 
-add_executable(OptionsTest OptionsTest.cpp)
+add_cpp_executable(OptionsTest OptionsTest.cpp)
 target_link_libraries(OptionsTest PRIVATE keygen-lib keygen-options)
 add_test_suite(OptionsTest)
 
-add_executable(MockedTest MockedTest.cpp)
+add_cpp_executable(MockedTest MockedTest.cpp)
 target_link_libraries(MockedTest PRIVATE keygen-lib)
 add_test_suite(MockedTest)
 

@@ -1,4 +1,4 @@
-set(COMMON_OPTIONS
+set(COMMON_FLAGS
         -Wall
         -Wextra
         -Werror
@@ -6,8 +6,8 @@ set(COMMON_OPTIONS
         -Wshadow
         )
 
-set(C_OPTIONS ${COMMON_OPTIONS})
-set(CPP_OPTIONS ${COMMON_OPTIONS}
+set(C_FLAGS ${COMMON_FLAGS})
+set(CPP_FLAGS ${COMMON_FLAGS}
         -Wold-style-cast
         )
 
@@ -21,10 +21,25 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 
-function(enable_c_options)
-    add_compile_options(${C_OPTIONS})
+
+function(add_c_library name)
+    add_library(${name} ${ARGN})
+    target_compile_options(${name} PRIVATE ${C_FLAGS})
 endfunction()
 
-function(enable_cpp_options)
-    add_compile_options(${CPP_OPTIONS})
+function(add_c_executable name)
+    add_executable(${name} ${ARGN})
+    target_compile_options(${name} PRIVATE ${C_FLAGS})
 endfunction()
+
+
+function(add_cpp_library name)
+    add_library(${name} ${ARGN})
+    target_compile_options(${name} PRIVATE ${CPP_FLAGS})
+endfunction()
+
+function(add_cpp_executable name)
+    add_executable(${name} ${ARGN})
+    target_compile_options(${name} PRIVATE ${CPP_FLAGS})
+endfunction()
+
