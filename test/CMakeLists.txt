@@ -5,14 +5,14 @@ add_library(Trompeloeil INTERFACE)
 target_include_directories(Trompeloeil INTERFACE "trompeloeil")
 
 add_cpp_library(testmain TestMain.cpp)
-target_link_libraries(testmain PUBLIC Catch Trompeloeil)
+target_link_libraries(testmain PUBLIC Catch Trompeloeil build-libs)
 
 
 
 function(add_test_suite name)
     add_cpp_executable(${name} ${ARGN})
     add_test(${name} ${name})
-    target_link_libraries(${name} PRIVATE testmain build-libs)
+    target_link_libraries(${name} PRIVATE testmain)
 endfunction()
 
 
