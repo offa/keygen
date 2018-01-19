@@ -17,9 +17,7 @@ endif()
 
 
 # Compiler flags
-set(COV_FLAGS "-ftest-coverage -fprofile-arcs")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COV_FLAGS}")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${COV_FLAGS}")
+add_common_flags(-ftest-coverage -fprofile-arcs)
 
 
 set(INPUT_DIR "${CMAKE_SOURCE_DIR}")
