@@ -30,11 +30,6 @@ find_package(OpenSSL REQUIRED)
 message(STATUS "Using OpenSSL ${OPENSSL_VERSION}")
 
 
-if( COVERAGE )
-    include(Coverage)
-endif()
-
-
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
@@ -45,6 +40,10 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(CompilerOptions)
 include(Memcheck)
+
+if( COVERAGE )
+    include(Coverage)
+endif()
 
 
 include_directories("include")
