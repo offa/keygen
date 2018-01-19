@@ -10,34 +10,29 @@ target_link_libraries(testmain PUBLIC Catch Trompeloeil)
 
 
 function(add_test_suite name)
+    add_cpp_library(${name} ${ARGN})
     add_test(${name} ${name})
     target_link_libraries(${name} PRIVATE testmain build-libs)
 endfunction()
 
 
-add_cpp_executable(ArgumentTest ArgumentTest.cpp)
+add_test_suite(ArgumentTest ArgumentTest.cpp)
 target_link_libraries(ArgumentTest PRIVATE keygen-lib)
-add_test_suite(ArgumentTest)
 
-add_cpp_executable(FormatTest FormatTest.cpp)
+add_test_suite(FormatTest FormatTest.cpp)
 target_link_libraries(FormatTest PRIVATE keygen-lib)
-add_test_suite(FormatTest)
 
-add_cpp_executable(MemoryTest MemoryTest.cpp)
+add_test_suite(MemoryTest MemoryTest.cpp)
 target_link_libraries(MemoryTest PRIVATE keygen-lib)
-add_test_suite(MemoryTest)
 
-add_cpp_executable(DataTest DataTest.cpp)
+add_test_suite(DataTest DataTest.cpp)
 target_link_libraries(DataTest PRIVATE keygen-lib)
-add_test_suite(DataTest)
 
-add_cpp_executable(OptionsTest OptionsTest.cpp)
+add_test_suite(OptionsTest OptionsTest.cpp)
 target_link_libraries(OptionsTest PRIVATE keygen-lib keygen-options)
-add_test_suite(OptionsTest)
 
-add_cpp_executable(MockedTest MockedTest.cpp)
+add_test_suite(MockedTest MockedTest.cpp)
 target_link_libraries(MockedTest PRIVATE keygen-lib)
-add_test_suite(MockedTest)
 
 
 
