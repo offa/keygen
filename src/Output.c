@@ -124,7 +124,7 @@ void printVersion()
     printHead();
     printf("\n License :   GNU General Public License (GPL)\n");
     printf("   Keygen is program to generate key's and passwords."
-    "\n   Copyright (C) 2014-2016  offa"
+    "\n   Copyright (C) 2014-2018  offa"
     "\n"
     "\n   This program is free software: you can redistribute it and/or modify"
     "\n   it under the terms of the GNU General Public License as published by"
