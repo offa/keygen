@@ -19,7 +19,7 @@
  */
 
 /**
- * @file        KGOutput.c
+ * @file        Output.c
  * @author      offa
  */
 

@@ -19,7 +19,7 @@
  */
 
 /**
- * @file        KGOptions.c
+ * @file        Options.c
  * @author      offa
  */
 
