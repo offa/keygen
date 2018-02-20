@@ -18,8 +18,8 @@ option(SANITIZER_UBSAN "Enable UBSan" OFF)
 message(STATUS "UBSan : ${SANITIZER_UBSAN}")
 
 
-option(DOXYFILE "Generates the Doxyfile for Doxygen documentation" OFF)
-message(STATUS "Doxyfile : ${DOXYFILE}")
+option(DOXYGEN "Generate Doxygen documentation" OFF)
+message(STATUS "Doxygen : ${DOXYGEN}")
 
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -63,7 +63,7 @@ if( UNITTEST )
     add_subdirectory(test)
 endif()
 
-if( DOXYFILE )
+if( DOXYGEN )
     include(Doxygen)
 endif()
 
