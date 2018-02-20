@@ -34,6 +34,7 @@
 #define ERR_MSG_LENGTH              128
 
 
+/** Alphanumeric set */
 const char ALPHANUMERIC_CHARS[] =
 {
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
@@ -43,9 +44,11 @@ const char ALPHANUMERIC_CHARS[] =
     'y', 'z'
 };
 
+/** Number of alphanumeric chars */
 const size_t ALPHANUMERIC_LENGTH = sizeof(ALPHANUMERIC_CHARS);
 
 
+/** Reduced Ascii set */
 const char ASCII_REDUCED_CHARS[] =
 {
     '!', '#', '$', '%', '&', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1',
@@ -56,9 +59,11 @@ const char ASCII_REDUCED_CHARS[] =
     'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '}', '~'
 };
 
+/** Number of reduced Ascii chars */
 const size_t ASCII_REDUCED_LENGTH = sizeof(ASCII_REDUCED_CHARS);
 
 
+/** Ascii set including blank char */
 const char ASCII_BLANK_CHARS[] =
 {
     ' ', '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.',
@@ -70,9 +75,11 @@ const char ASCII_BLANK_CHARS[] =
     'z', '{', '|', '}', '~'
 };
 
+/** Number of Ascii chars including blank */
 const size_t ASCII_BLANK_LENGTH = sizeof(ASCII_BLANK_CHARS);
 
 
+/** Full Ascii chars */
 const char ASCII_CHARS[] =
 {
     '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/',
@@ -84,6 +91,7 @@ const char ASCII_CHARS[] =
     '{', '|', '}', '~'
 };
 
+/** Number of full Ascii chars */
 const size_t ASCII_LENGTH = sizeof(ASCII_CHARS);
 
 
