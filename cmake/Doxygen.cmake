@@ -6,6 +6,8 @@ set(DOXYGEN_RECURSIVE YES)
 set(DOXYGEN_GENERATE_HTML YES)
 set(DOXYGEN_GENERATE_MAN YES)
 
+set(DOXYGEN_JAVADOC_AUTOBRIEF YES)
+
 doxygen_add_docs(doc
                 "${PROJECT_SOURCE_DIR}/include"
                 "${PROJECT_SOURCE_DIR}/src"
