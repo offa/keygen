@@ -25,8 +25,7 @@
  * Contains functions to show informations and other output.
  */
 
-#ifndef OUTPUT_H
-#define OUTPUT_H
+#pragma once
 
 #include "keygen/Options.h"
 #include "keygen/KeyGen.h"
@@ -89,6 +88,4 @@ extern "C"
 #ifdef  __cplusplus
 }
 #endif
-
-#endif  /* CLOUTPUT_H */
 

@@ -18,8 +18,7 @@
  * along with KeyGen.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TESTUTIL_H
-#define TESTUTIL_H
+#pragma once
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -53,6 +52,4 @@ namespace test
         const int m_stdErrHandle;
     };
 }
-
-#endif /* TESTUTIL_H */
 

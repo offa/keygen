@@ -34,8 +34,7 @@
  * <a href=http://wiki.openssl.org/index.php/Main_Page/>OpenSSL Wiki</a>
  */
 
-#ifndef KEYGEN_H
-#define KEYGEN_H
+#pragma once
 
 #include <stdint.h>
 #include <stddef.h>
@@ -160,6 +159,4 @@ extern "C"
 #ifdef  __cplusplus
 }
 #endif
-
-#endif  /* KEYGEN_H */
 

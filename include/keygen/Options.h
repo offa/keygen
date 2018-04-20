@@ -25,8 +25,7 @@
  * Provides types and functions for options and settings.
  */
 
-#ifndef OPTIONS_H
-#define OPTIONS_H
+#pragma once
 
 #include <getopt.h>
 #include <stdbool.h>
@@ -87,6 +86,4 @@ extern "C"
 #ifdef __cplusplus
 }
 #endif
-
-#endif /* CLOPTIONS_H */
 
