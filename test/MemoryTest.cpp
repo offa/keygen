@@ -23,7 +23,7 @@
 #include <array>
 #include <iterator>
 #include <string.h>
-#include <catch.hpp>
+#include <catch2/catch.hpp>
 
 using namespace Catch::Matchers;
 

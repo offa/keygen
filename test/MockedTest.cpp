@@ -19,11 +19,11 @@
  */
 
 #include "keygen/KeyGen.h"
+#include "TestUtil.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <array>
-#include "TestUtil.h"
-#include "catch.hpp"
+#include <catch2/catch.hpp>
 #include <trompeloeil.hpp>
 
 namespace

@@ -20,7 +20,7 @@
 
 #include "keygen/KeyGen.h"
 #include <string>
-#include <catch.hpp>
+#include <catch2/catch.hpp>
 
 using namespace Catch::Matchers;
 

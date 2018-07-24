@@ -21,7 +21,7 @@
 #include "keygen/KeyGen.h"
 #include <array>
 #include <algorithm>
-#include <catch.hpp>
+#include <catch2/catch.hpp>
 
 using namespace Catch::Matchers;
 

@@ -20,7 +20,7 @@
 
 #include "keygen/Options.h"
 #include "TestUtil.h"
-#include <catch.hpp>
+#include <catch2/catch.hpp>
 
 using namespace Catch::Matchers;
 
