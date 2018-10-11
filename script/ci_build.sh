@@ -12,6 +12,9 @@ do
             VALGRIND=true
             SANITIZER=false
             ;;
+        -no-san)
+            SANITIZER=false
+            ;;
     esac
 done
 
