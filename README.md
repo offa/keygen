@@ -19,6 +19,7 @@ The cryptography behind is provided by *OpenSSL*.
 Building the library and application:
 
     mkdir build
+    cd build
     cmake ..
     make
 
