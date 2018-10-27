@@ -39,7 +39,7 @@ extern "C"
     enum
     {
         KG_RTN_ERR_ERROR = 1,       ///< General error.
-        KG_RTN_ERR_KEY_TO_SHORT = 2 ///< Error indicating a to short key.
+        KG_RTN_ERR_KEY_TO_SHORT = 2 ///< Error indicating a too short key.
     };
 
 
