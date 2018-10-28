@@ -19,6 +19,7 @@ matrix:
     - env: COMPILER=clang-6
     - env: COMPILER=clang-5
     - env: COMPILER=gcc-8 BUILD_OPT="-valgrind"
+    - env: COMPILER=gcc-8 BUILD_OPT="-flawfinder"
 
 
 before_install:

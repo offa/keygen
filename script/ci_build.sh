@@ -4,6 +4,7 @@ set -ex
 
 VALGRIND=false
 SANITIZER=true
+FLAWFINDER_ANALYSIS=false
 
 for arg in "$@"
 do
@@ -15,8 +16,21 @@ do
         -no-san)
             SANITIZER=false
             ;;
+        -flawfinder)
+            FLAWFINDER_ANALYSIS=true
+            ;;
     esac
 done
+
+
+if [[ "${FLAWFINDER_ANALYSIS}" == true ]]
+then
+    apt-get install -y flawfinder
+
+    flawfinder --version
+    flawfinder src include
+    exit 0
+fi
 
 
 if [[ "${CXX}" == clang* ]]
