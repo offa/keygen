@@ -158,15 +158,15 @@ KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format f
         return KG_ERR_ILL_ARGUMENT;
     }
 
-    uint8_t* random = malloc(length * sizeof(uint8_t));
+    uint8_t* tmpBuffer = malloc(length * sizeof(uint8_t));
 
-    if( random == NULL )
+    if( tmpBuffer == NULL )
     {
         return KG_ERR_MEMORY;
     }
 
     KeyGenError rtn = KG_ERR_UNKNOWN;
-    const int err = getRandomBytes(random, length);
+    const int err = getRandomBytes(tmpBuffer, length);
 
     if( err == ERR_LIB_NONE )
     {
@@ -175,16 +175,16 @@ KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format f
         switch(format)
         {
             case ASCII:
-                transformBuffer(random, length, ASCII_CHARS, ASCII_LENGTH);
+                transformBuffer(tmpBuffer, length, ASCII_CHARS, ASCII_LENGTH);
                 break;
             case ASCII_BLANKS:
-                transformBuffer(random, length, ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
+                transformBuffer(tmpBuffer, length, ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
                 break;
             case ASCII_REDUCED:
-                transformBuffer(random, length, ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH);
+                transformBuffer(tmpBuffer, length, ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH);
                 break;
             case ALPHA_NUMERIC:
-                transformBuffer(random, length, ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);
+                transformBuffer(tmpBuffer, length, ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);
                 break;
             default:
                 rtn = KG_ERR_ILL_ARGUMENT;
@@ -194,7 +194,7 @@ KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format f
 
         if( error == false )
         {
-            memcpy(buffer, random, length);
+            memcpy(buffer, tmpBuffer, length);
             rtn = KG_ERR_SUCCESS;
         }
     }
@@ -203,7 +203,7 @@ KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format f
         rtn = KG_ERR_SECURITY;
     }
 
-    keygen_cleanAndFreeBuffer(random, length);
+    keygen_cleanAndFreeBuffer(tmpBuffer, length);
 
     return rtn;
 }
