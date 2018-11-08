@@ -26,30 +26,36 @@
 
 namespace test
 {
-    class DisableStdErr
+    template<int streamFd>
+    class DisableStream
     {
     public:
 
-        DisableStdErr() : streamHandle(dup(STDERR_FILENO))
+        explicit DisableStream(FILE* handle) : fileDescriptor(dup(streamFd)), fileHandle(handle)
         {
-            fflush(stderr);
-            freopen("NUL", "a", stderr);
+            fflush(fileHandle);
+            freopen("NUL", "a", fileHandle);
         }
 
-        DisableStdErr(const DisableStdErr&) = delete;
+        DisableStream(const DisableStream&) = delete;
 
-        ~DisableStdErr()
+        ~DisableStream()
         {
-            fflush(stderr);
-            dup2(streamHandle, STDERR_FILENO);
+            fflush(fileHandle);
+            dup2(fileDescriptor, streamFd);
         }
 
-        DisableStdErr& operator=(const DisableStdErr&) = delete;
+        DisableStream& operator=(const DisableStream&) = delete;
 
 
     private:
 
-        const int streamHandle;
+        const int fileDescriptor;
+        FILE* fileHandle;
     };
+
+
+    using DisableStdout = DisableStream<STDOUT_FILENO>;
+    using DisableStderr = DisableStream<STDERR_FILENO>;
 }
 

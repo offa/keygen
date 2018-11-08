@@ -47,7 +47,7 @@ TEST_CASE("returnErrorCodeOnFailedRandom", "[MockedTest]")
     std::array<std::uint8_t, 10> buffer;
     REQUIRE_CALL(m, randBytes(_, _)).RETURN(100);
 
-    const test::DisableStdErr d;
+    const test::DisableStderr d{stderr};
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
     CHECK(rtn == KG_ERR_SECURITY);
 }

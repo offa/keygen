@@ -27,7 +27,7 @@ using namespace Catch::Matchers;
 TEST_CASE("option evaluation", "[OptionsTest]")
 {
     optind = 0;
-    test::DisableStdErr d;
+    test::DisableStderr d{stderr};
     static char name[] = "OptionsTest";
 
 
