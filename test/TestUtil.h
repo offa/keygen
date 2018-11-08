@@ -30,7 +30,7 @@ namespace test
     {
     public:
 
-        DisableStdErr() : m_stdErrHandle(dup(STDERR_FILENO))
+        DisableStdErr() : streamHandle(dup(STDERR_FILENO))
         {
             fflush(stderr);
             freopen("NUL", "a", stderr);
@@ -41,7 +41,7 @@ namespace test
         ~DisableStdErr()
         {
             fflush(stderr);
-            dup2(m_stdErrHandle, STDERR_FILENO);
+            dup2(streamHandle, STDERR_FILENO);
         }
 
         DisableStdErr& operator=(const DisableStdErr&) = delete;
@@ -49,7 +49,7 @@ namespace test
 
     private:
 
-        const int m_stdErrHandle;
+        const int streamHandle;
     };
 }
 
