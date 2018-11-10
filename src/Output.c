@@ -88,7 +88,7 @@ static inline void printHead()
 void printHelp()
 {
     printHead();
-    printf("\nGenerates key's and passwords.\n");
+    printf("\nGenerates keys and passwords.\n");
     printf("\n Usage: keygen [Options]\n\n");
 
     printHelpOption(OPT_L_ASCII, OPT_ASCII, NULL, "Generates a key of ASCII characters, ranging from '!'\n\t\t\tto'~' (default)");
