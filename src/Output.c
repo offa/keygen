@@ -150,7 +150,7 @@ int generateKey(const struct CLOptions options)
     {
         fprintf(stderr, "A keylength of %ld is too short! A minimum length of %d is required!\n", length, KEY_MIN_LENGTH);
 
-        return KG_RTN_ERR_KEY_TO_SHORT;
+        return KG_RTN_ERR_KEY_TOO_SHORT;
     }
 
     uint8_t* buffer = malloc(length * sizeof(uint8_t) + 1);
