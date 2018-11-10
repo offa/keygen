@@ -24,7 +24,7 @@
 
 using namespace Catch::Matchers;
 
-TEST_CASE("toShortLengthRejected", "[ArgumentTest]")
+TEST_CASE("tooShortLengthRejected", "[ArgumentTest]")
 {
     std::array<std::uint8_t, 7> buffer;
 
@@ -32,7 +32,7 @@ TEST_CASE("toShortLengthRejected", "[ArgumentTest]")
     CHECK(rtn == KG_ERR_ILL_ARGUMENT);
 }
 
-TEST_CASE("toShortLengthDoesntChangeBuffer", "[ArgumentTest]")
+TEST_CASE("tooShortLengthDoesntChangeBuffer", "[ArgumentTest]")
 {
     std::array<std::uint8_t, 7> buffer{{0}};
     const std::array<std::uint8_t, 7> expected{{0}};
