@@ -72,7 +72,7 @@ struct CLOptions parseOptions(int argc, char** argv)
         int c;
         int optionIndex;
 
-        while( ( c = getopt_long(argc, argv, GETOPT_CLI_STR, getoptOptions, &optionIndex) ) != -1 )
+        while( ( c = getopt_long(argc, argv, GETOPT_CLI_STR, getoptOptions, &optionIndex) ) != -1 ) // FlawFinder: ignore - getopt_long()
         {
             switch( c )
             {

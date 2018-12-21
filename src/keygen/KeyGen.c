@@ -135,7 +135,7 @@ static int getRandomBytes(uint8_t* buffer, size_t length)
     if( rtn != ERR_LIB_NONE )
     {
         const unsigned long error = ERR_get_error();
-        char errBuffer[ERR_MSG_LENGTH + 1];
+        char errBuffer[ERR_MSG_LENGTH + 1]; // FlawFinder: ignore - Handled by ERR_error_string_n()
 
         ERR_error_string_n(error, errBuffer, ERR_MSG_LENGTH);
         fprintf(stderr, "%s", errBuffer);
@@ -194,7 +194,7 @@ KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format f
 
         if( error == false )
         {
-            memcpy(buffer, tmpBuffer, length);
+            memcpy(buffer, tmpBuffer, length); // FlawFinder: ignore - size is same as input
             rtn = KG_ERR_SUCCESS;
         }
     }
