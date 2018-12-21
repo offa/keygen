@@ -26,10 +26,8 @@ done
 if [[ "${FLAWFINDER_ANALYSIS}" == true ]]
 then
     apt-get install -y flawfinder
-
-    flawfinder --version
     flawfinder src include
-    exit 0
+    exit
 fi
 
 
