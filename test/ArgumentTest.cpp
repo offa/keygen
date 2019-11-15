@@ -26,7 +26,7 @@ using namespace Catch::Matchers;
 
 TEST_CASE("tooShortLengthRejected", "[ArgumentTest]")
 {
-    std::array<std::uint8_t, 7> buffer;
+    std::array<std::uint8_t, 7> buffer{{}};
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
     CHECK(rtn == KG_ERR_ILL_ARGUMENT);
@@ -34,8 +34,8 @@ TEST_CASE("tooShortLengthRejected", "[ArgumentTest]")
 
 TEST_CASE("tooShortLengthDoesntChangeBuffer", "[ArgumentTest]")
 {
-    std::array<std::uint8_t, 7> buffer{{0}};
-    const std::array<std::uint8_t, 7> expected{{0}};
+    std::array<std::uint8_t, 7> buffer{{}};
+    const std::array<std::uint8_t, 7> expected{{}};
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
     CHECK(rtn == KG_ERR_ILL_ARGUMENT);
@@ -44,7 +44,7 @@ TEST_CASE("tooShortLengthDoesntChangeBuffer", "[ArgumentTest]")
 
 TEST_CASE("allowedSizeGeneratesKey8Byte", "[ArgumentTest]")
 {
-    std::array<std::uint8_t, 8> buffer;
+    std::array<std::uint8_t, 8> buffer{{}};
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
     CHECK(rtn == KG_ERR_SUCCESS);
@@ -52,7 +52,7 @@ TEST_CASE("allowedSizeGeneratesKey8Byte", "[ArgumentTest]")
 
 TEST_CASE("allowedSizeGeneratesKey1200Byte", "[ArgumentTest]")
 {
-    std::array<std::uint8_t, 1200> buffer;
+    std::array<std::uint8_t, 1200> buffer{{}};
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
     CHECK(rtn == KG_ERR_SUCCESS);
