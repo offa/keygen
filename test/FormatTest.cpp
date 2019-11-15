@@ -59,7 +59,7 @@ namespace
         });
     }
 
-    static constexpr std::size_t size{1000};
+    inline constexpr std::size_t size{1000};
 }
 
 TEST_CASE("formatAscii", "[FormatTest]")
