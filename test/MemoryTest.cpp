@@ -29,8 +29,8 @@ using namespace Catch::Matchers;
 
 namespace
 {
-    static constexpr std::size_t size{1000};
-    static constexpr std::size_t guardedSize{size + 4};
+    inline constexpr std::size_t size{1000};
+    inline constexpr std::size_t guardedSize{size + 4};
 
     template<std::size_t n>
     constexpr std::array<std::uint8_t, n> createGuardedBuffer()
