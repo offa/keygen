@@ -65,7 +65,7 @@ namespace
 TEST_CASE("formatAscii", "[FormatTest]")
 {
     constexpr Format format = ASCII;
-    std::array<std::uint8_t, size> buffer;
+    std::array<std::uint8_t, size> buffer{{}};
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), format);
     CHECK(rtn == KG_ERR_SUCCESS);
     testFormat(buffer, format);
@@ -74,7 +74,7 @@ TEST_CASE("formatAscii", "[FormatTest]")
 TEST_CASE("formatAsciiBlanks", "[FormatTest]")
 {
     constexpr Format format = ASCII_BLANKS;
-    std::array<std::uint8_t, size> buffer;
+    std::array<std::uint8_t, size> buffer{{}};
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), format);
     CHECK(rtn == KG_ERR_SUCCESS);
     testFormat(buffer, format);
@@ -83,7 +83,7 @@ TEST_CASE("formatAsciiBlanks", "[FormatTest]")
 TEST_CASE("formatAsciiReduced", "[FormatTest]")
 {
     constexpr Format format = ASCII_REDUCED;
-    std::array<std::uint8_t, size> buffer;
+    std::array<std::uint8_t, size> buffer{{}};
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), format);
     CHECK(rtn == KG_ERR_SUCCESS);
     testFormat(buffer, format);
@@ -92,7 +92,7 @@ TEST_CASE("formatAsciiReduced", "[FormatTest]")
 TEST_CASE("formatAlphaNumeric", "[FormatTest]")
 {
     constexpr Format format = ALPHA_NUMERIC;
-    std::array<std::uint8_t, size> buffer;
+    std::array<std::uint8_t, size> buffer{{}};
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), format);
     CHECK(rtn == KG_ERR_SUCCESS);
     testFormat(buffer, format);
@@ -101,7 +101,7 @@ TEST_CASE("formatAlphaNumeric", "[FormatTest]")
 TEST_CASE("formatIllegal", "[FormatTest]")
 {
     constexpr Format format = static_cast<Format>(99);
-    std::array<std::uint8_t, size> buffer;
+    std::array<std::uint8_t, size> buffer{{}};
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), format);
     CHECK(rtn == KG_ERR_ILL_ARGUMENT);
 }
