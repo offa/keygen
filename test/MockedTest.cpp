@@ -24,7 +24,7 @@
 #include <unistd.h>
 #include <array>
 #include <catch2/catch.hpp>
-#include <trompeloeil.hpp>
+#include <catch2/trompeloeil.hpp>
 
 namespace
 {
