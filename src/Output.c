@@ -40,9 +40,9 @@
  * @param newLine   If <tt>true</tt> a new line is appended, if <tt>false</tt>
  *                  there's no linebreak added
  */
-static inline void printLine(char lc, unsigned int length, bool newLine)
+static inline void printLine(char lc, size_t length, bool newLine)
 {
-    for( unsigned int i=0; i<length; ++i )
+    for( size_t i=0; i<length; ++i )
     {
         printf("%c", lc);
     }
@@ -110,11 +110,12 @@ void printKey(const uint8_t* key, struct CLOptions options)
     }
     else
     {
+        const size_t lineLength = 10;
         printf("\n  Generated key:\n");
-        printLine('-', 10, true);
+        printLine('-', lineLength, true);
         printf("%s\n", key);
         fflush(stdout);
-        printLine('-', 10, true);
+        printLine('-',lineLength, true);
         printf("  Length : %ld\n\n", options.keyLength);
     }
 }
