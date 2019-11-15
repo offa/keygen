@@ -20,7 +20,7 @@
 
 #include "keygen/KeyGen.h"
 #include "TestUtil.h"
-#include <stdio.h>
+#include <cstdio>
 #include <unistd.h>
 #include <array>
 #include <catch2/catch.hpp>
