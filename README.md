@@ -23,7 +23,6 @@ Building the library and application:
     cmake ..
     make
 
-Furthermore there are build targets either application or library. Run `make <Target>` to build them.
 
 ## Testing
 
