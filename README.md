@@ -37,7 +37,7 @@ make        | < target >
 ----------- | -------------------------------
 `test`      | Runs ctest (same as `ctest`)
 `unittest`  | Builds and  runs all test
-`coverage`  | Coverage (requires lcov)
+`coverage`  | Coverage (requires [gcovr](https://github.com/gcovr/gcovr))
 
 ## Usage
 
