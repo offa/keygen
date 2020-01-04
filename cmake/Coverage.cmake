@@ -6,7 +6,7 @@ if( NOT GCOVR )
 endif()
 
 
-add_common_flags(-ftest-coverage -fprofile-arcs)
+add_common_flags(--coverage)
 
 set(COV_DIR "${CMAKE_BINARY_DIR}/coverage")
 
