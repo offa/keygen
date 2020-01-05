@@ -34,7 +34,7 @@ namespace test
         explicit DisableStream(FILE* handle) : fileDescriptor(dup(streamFd)), fileHandle(handle)
         {
             fflush(fileHandle);
-            freopen("NUL", "a", fileHandle);
+            [[maybe_unused]] const auto rtn = freopen("NUL", "a", fileHandle);
         }
 
         DisableStream(const DisableStream&) = delete;
