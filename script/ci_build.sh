@@ -5,6 +5,7 @@ set -ex
 VALGRIND=false
 SANITIZER=true
 FLAWFINDER_ANALYSIS=false
+BUILD_ARGS=("-DCMAKE_BUILD_TYPE=Release")
 
 for arg in "$@"
 do
@@ -38,16 +39,14 @@ fi
 
 if [[ "${SANITIZER}" == true ]]
 then
-    BUILD_FLAGS="-DSANITIZER_ASAN=ON -DSANITIZER_UBSAN=ON"
+    BUILD_ARGS+=("-DSANITIZER_ASAN=ON" "-DSANITIZER_UBSAN=ON")
 fi
 
 
-mkdir build && cd build
+mkdir -p build && cd build
 
-cmake -DCMAKE_BUILD_TYPE=Release \
-        ${BUILD_FLAGS} \
-        ..
-make all
+cmake "${BUILD_ARGS[@]}" ..
+make
 make unittest
 
 
