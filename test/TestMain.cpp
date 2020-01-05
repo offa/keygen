@@ -1,6 +1,6 @@
 /*
  * KeyGen is a key- and password generator.
- * Copyright (C) 2014-2019  offa
+ * Copyright (C) 2014-2020  offa
  *
  * This file is part of KeyGen.
  *
