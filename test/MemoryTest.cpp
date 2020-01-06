@@ -31,7 +31,7 @@ namespace
     inline constexpr std::size_t size{1000};
     inline constexpr std::size_t guardedSize{size + 4};
 
-    template<std::size_t n>
+    template <std::size_t n>
     constexpr std::array<std::uint8_t, n> createGuardedBuffer()
     {
         std::array<std::uint8_t, n> buffer{{0}};
@@ -42,7 +42,7 @@ namespace
         return buffer;
     }
 
-    template<class Container>
+    template <class Container>
     void checkGuards(const Container& buffer)
     {
         CHECK(buffer[0] == 0xCA);
@@ -99,4 +99,3 @@ TEST_CASE("overAndUnderflow", "[MemoryTest]")
     keygen_cleanBuffer(&(*startOfData), size);
     checkGuards(buffer);
 }
-

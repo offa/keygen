@@ -39,13 +39,13 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#ifdef  __cplusplus
+#ifdef __cplusplus
 extern "C"
 {
 #endif
 
 /** Minimum key length. */
-#define KEY_MIN_LENGTH          8
+#define KEY_MIN_LENGTH 8
 
 
     /**
@@ -53,10 +53,10 @@ extern "C"
      */
     enum Format
     {
-        ASCII,          ///< Ascii
-        ASCII_BLANKS,   ///< Ascii including blanks
-        ASCII_REDUCED,  ///< Ascii reduced
-        ALPHA_NUMERIC   ///< Alphanumeric
+        ASCII,         ///< Ascii
+        ASCII_BLANKS,  ///< Ascii including blanks
+        ASCII_REDUCED, ///< Ascii reduced
+        ALPHA_NUMERIC  ///< Alphanumeric
     };
 
     /**
@@ -64,14 +64,13 @@ extern "C"
      */
     typedef enum
     {
-        KG_ERR_SUCCESS = 0,    ///< Success / No error
-        KG_ERR_GENERAL,        ///< General error
-        KG_ERR_MEMORY,         ///< Memory error
-        KG_ERR_ILL_ARGUMENT,   ///< Illegal argument
-        KG_ERR_SECURITY,       ///< Security error
-        KG_ERR_UNKNOWN         ///< Unknown error
+        KG_ERR_SUCCESS = 0,  ///< Success / No error
+        KG_ERR_GENERAL,      ///< General error
+        KG_ERR_MEMORY,       ///< Memory error
+        KG_ERR_ILL_ARGUMENT, ///< Illegal argument
+        KG_ERR_SECURITY,     ///< Security error
+        KG_ERR_UNKNOWN       ///< Unknown error
     } KeyGenError;
-
 
 
     /**
@@ -156,7 +155,6 @@ extern "C"
      */
     void keygen_cleanAndFreeBuffer(uint8_t* buffer, size_t length);
 
-#ifdef  __cplusplus
+#ifdef __cplusplus
 }
 #endif
-

@@ -33,12 +33,11 @@ extern const size_t ASCII_REDUCED_LENGTH;
 namespace
 {
 
-    template<class Container>
+    template <class Container>
     void testFormat(const Container& buffer, Format format)
     {
-        std::for_each(buffer.cbegin(), buffer.cend(), [format](const auto& c)
-        {
-            switch( format )
+        std::for_each(buffer.cbegin(), buffer.cend(), [format](const auto& c) {
+            switch (format)
             {
                 case ASCII:
                     CHECK_FALSE(((c <= ' ') || (c > '~')));
@@ -105,4 +104,3 @@ TEST_CASE("formatIllegal", "[FormatTest]")
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), format);
     CHECK(rtn == KG_ERR_ILL_ARGUMENT);
 }
-

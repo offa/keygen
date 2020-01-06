@@ -38,23 +38,23 @@ extern "C"
 {
 #endif
 
-#define OPT_ASCII               'a' ///< Ascii format
-#define OPT_ASCII_BLANKS        'w' ///< Ascii format including blanks
-#define OPT_ASCII_REDUCED       'r' ///< Ascii reduced
-#define OPT_ALPHANUMERIC        'p' ///< Alphanumeric
-#define OPT_LENGTH              'l' ///< Keylength
-#define OPT_SHORT               's' ///< Reduced output
-#define OPT_HELP                'h' ///< Print help
-#define OPT_VERSION             'v' ///< Print version
+#define OPT_ASCII 'a'         ///< Ascii format
+#define OPT_ASCII_BLANKS 'w'  ///< Ascii format including blanks
+#define OPT_ASCII_REDUCED 'r' ///< Ascii reduced
+#define OPT_ALPHANUMERIC 'p'  ///< Alphanumeric
+#define OPT_LENGTH 'l'        ///< Keylength
+#define OPT_SHORT 's'         ///< Reduced output
+#define OPT_HELP 'h'          ///< Print help
+#define OPT_VERSION 'v'       ///< Print version
 
-#define OPT_L_ASCII             "ascii"     ///< Ascii format
-#define OPT_L_ASCII_BLANKS      "ascii-blank"   ///< Ascii format including blanks
-#define OPT_L_ASCII_REDUCED     "ascii-reduced" ///< Ascii reduced
-#define OPT_L_ALPHANUMERIC      "alphanum"  ///< Alphanumeric
-#define OPT_L_LENGTH            "length"    ///< Keylength
-#define OPT_L_SHORT             "short"     ///< Reduced output
-#define OPT_L_HELP              "help"      ///< Print help
-#define OPT_L_VERSION           "version"   ///< Print version
+#define OPT_L_ASCII "ascii"                 ///< Ascii format
+#define OPT_L_ASCII_BLANKS "ascii-blank"    ///< Ascii format including blanks
+#define OPT_L_ASCII_REDUCED "ascii-reduced" ///< Ascii reduced
+#define OPT_L_ALPHANUMERIC "alphanum"       ///< Alphanumeric
+#define OPT_L_LENGTH "length"               ///< Keylength
+#define OPT_L_SHORT "short"                 ///< Reduced output
+#define OPT_L_HELP "help"                   ///< Print help
+#define OPT_L_VERSION "version"             ///< Print version
 
 
     /**
@@ -62,15 +62,14 @@ extern "C"
      */
     struct CLOptions
     {
-        bool valid;     ///< Indicates whether the options are valid or not
-        bool exit;      ///< Exit after parsing
-        bool shortOutput;   ///< Reduced output (generated key only)
-        bool showHelp;  ///< Print the help
-        bool showVersion;   ///< Print the version
-        long keyLength;      ///< Keylength
-        enum Format keyFormat;  ///< Key format
+        bool valid;            ///< Indicates whether the options are valid or not
+        bool exit;             ///< Exit after parsing
+        bool shortOutput;      ///< Reduced output (generated key only)
+        bool showHelp;         ///< Print the help
+        bool showVersion;      ///< Print the version
+        long keyLength;        ///< Keylength
+        enum Format keyFormat; ///< Key format
     };
-
 
 
     /**
@@ -86,4 +85,3 @@ extern "C"
 #ifdef __cplusplus
 }
 #endif
-

@@ -26,12 +26,12 @@
 
 namespace test
 {
-    template<int streamFd>
+    template <int streamFd>
     class DisableStream
     {
     public:
-
-        explicit DisableStream(FILE* handle) : fileDescriptor(dup(streamFd)), fileHandle(handle)
+        explicit DisableStream(FILE* handle)
+            : fileDescriptor(dup(streamFd)), fileHandle(handle)
         {
             fflush(fileHandle);
             [[maybe_unused]] const auto rtn = freopen("NUL", "a", fileHandle);
@@ -49,7 +49,6 @@ namespace test
 
 
     private:
-
         const int fileDescriptor;
         FILE* fileHandle;
     };
@@ -58,4 +57,3 @@ namespace test
     using DisableStdout = DisableStream<STDOUT_FILENO>;
     using DisableStderr = DisableStream<STDERR_FILENO>;
 }
-

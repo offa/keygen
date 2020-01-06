@@ -57,4 +57,3 @@ TEST_CASE("allowedSizeGeneratesKey1200Byte", "[ArgumentTest]")
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
     CHECK(rtn == KG_ERR_SUCCESS);
 }
-

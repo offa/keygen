@@ -31,17 +31,16 @@
 #include "keygen/KeyGen.h"
 
 
-#ifdef  __cplusplus
+#ifdef __cplusplus
 extern "C"
 {
 #endif
 
     enum
     {
-        KG_RTN_ERR_ERROR = 1,       ///< General error.
+        KG_RTN_ERR_ERROR = 1,        ///< General error.
         KG_RTN_ERR_KEY_TOO_SHORT = 2 ///< Error indicating a too short key.
     };
-
 
 
     /**
@@ -85,7 +84,6 @@ extern "C"
      */
     const char* errorMessage(KeyGenError error);
 
-#ifdef  __cplusplus
+#ifdef __cplusplus
 }
 #endif
-
