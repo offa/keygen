@@ -48,6 +48,7 @@ add_cpp_flags(-Wold-style-cast)
 
 include(Sanitizer)
 include(Memcheck)
+include(ClangFormat)
 
 if( COVERAGE )
     include(Coverage)
