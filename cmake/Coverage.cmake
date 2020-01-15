@@ -6,7 +6,8 @@ if( NOT GCOVR )
 endif()
 
 
-add_common_flags(--coverage)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --coverage")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage")
 
 set(COV_DIR "${CMAKE_BINARY_DIR}/coverage")
 
