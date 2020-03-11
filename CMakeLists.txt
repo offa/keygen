@@ -41,6 +41,7 @@ add_common_flags(-Wall
                 -Wextra
                 -Werror
                 -pedantic
+                -pedantic-errors
                 -Wshadow
                 )
 add_cpp_flags(-Wold-style-cast)
@@ -67,4 +68,3 @@ endif()
 if( DOXYGEN )
     include(Doxygen)
 endif()
-
