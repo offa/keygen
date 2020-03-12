@@ -81,8 +81,9 @@ static inline void printHelpOption(const char* optLong, char optShort, const cha
  */
 static inline void printHead()
 {
-    const int n = printf(" KeyGen\tv" KEYGEN_VERSION "\n");
-    printLine('-', n, true);
+    const char* header = " KeyGen\tv" KEYGEN_VERSION "\n";
+    printf(header);
+    printLine('-', strlen(header), true);
 }
 
 void printHelp()
@@ -145,7 +146,7 @@ void printVersion()
 
 int generateKey(const struct CLOptions options)
 {
-    const long length = options.keyLength;
+    const size_t length = options.keyLength;
 
     if( length < KEY_MIN_LENGTH )
     {

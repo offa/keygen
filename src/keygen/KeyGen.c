@@ -112,7 +112,7 @@ static void transformBuffer(uint8_t* buffer, const size_t length,
     for( size_t i=0; i<length; ++i )
     {
         const size_t pos = buffer[i] % fmtLength;
-        buffer[i] = fmtChars[pos];
+        buffer[i] = (uint8_t) fmtChars[pos];
     }
 }
 

@@ -44,6 +44,8 @@ add_common_flags(-Wall
     -pedantic-errors
     -Wshadow
     -Wnull-dereference
+    -Wconversion
+    -Wsign-conversion
     )
 add_cpp_flags(-Wold-style-cast
     -Wold-style-cast

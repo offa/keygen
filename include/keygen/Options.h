@@ -67,7 +67,7 @@ extern "C"
         bool shortOutput;      ///< Reduced output (generated key only)
         bool showHelp;         ///< Print the help
         bool showVersion;      ///< Print the version
-        long keyLength;        ///< Keylength
+        size_t keyLength;        ///< Keylength
         enum Format keyFormat; ///< Key format
     };
 

@@ -56,7 +56,7 @@ struct CLOptions parseOptions(int argc, char** argv)
         .shortOutput = false,
         .showHelp = false,
         .showVersion = false,
-        .keyLength = -1,
+        .keyLength = 0,
         .keyFormat = ASCII
     };
 
@@ -94,7 +94,7 @@ struct CLOptions parseOptions(int argc, char** argv)
                     break;
                 case OPT_LENGTH:
                 {
-                    options.keyLength = strtol(optarg, (char**) NULL, 10);
+                    options.keyLength = (size_t) strtoull(optarg, (char**) NULL, 10);
                     options.valid &= true;
                 }
                     break;

@@ -46,7 +46,7 @@ namespace
                     CHECK_FALSE(((c < ' ') || (c > '~')));
                     break;
                 case ASCII_REDUCED:
-                    CHECK(std::find(ASCII_REDUCED_CHARS, std::next(ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH), c));
+                    CHECK(std::find(ASCII_REDUCED_CHARS, (ASCII_REDUCED_CHARS + ASCII_REDUCED_LENGTH), c));
                     break;
                 case ALPHA_NUMERIC:
                     CHECK(std::isalnum(c));
