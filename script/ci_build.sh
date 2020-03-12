@@ -26,8 +26,9 @@ done
 
 if [[ "${FLAWFINDER_ANALYSIS}" == true ]]
 then
-    pip install flawfinder
-    flawfinder src include
+    apt-get install -y --no-install-recommends python3-pip
+    pip3 install flawfinder
+    flawfinder --error-level=0 src include
     exit
 fi
 
