@@ -81,9 +81,9 @@ static inline void printHelpOption(const char* optLong, char optShort, const cha
  */
 static inline void printHead()
 {
-    const char* header = " KeyGen\tv" KEYGEN_VERSION "\n";
-    printf(header);
-    printLine('-', strlen(header), true);
+    const char* header = "KeyGen\tv" KEYGEN_VERSION;
+    printf(" %s\n", header);
+    printLine('-', strlen(header) + 2, true);
 }
 
 void printHelp()
