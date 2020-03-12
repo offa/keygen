@@ -38,13 +38,18 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(CompilerOptions)
 add_common_flags(-Wall
-                -Wextra
-                -Werror
-                -pedantic
-                -pedantic-errors
-                -Wshadow
-                )
-add_cpp_flags(-Wold-style-cast)
+    -Wextra
+    -Werror
+    -pedantic
+    -pedantic-errors
+    -Wshadow
+    -Wnull-dereference
+    )
+add_cpp_flags(-Wold-style-cast
+    -Wold-style-cast
+    -Wnon-virtual-dtor
+    -Woverloaded-virtual
+    )
 
 
 include(Sanitizer)
