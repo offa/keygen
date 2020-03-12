@@ -26,7 +26,7 @@ done
 
 if [[ "${FLAWFINDER_ANALYSIS}" == true ]]
 then
-    apt-get install -y flawfinder
+    pip install flawfinder
     flawfinder src include
     exit
 fi
