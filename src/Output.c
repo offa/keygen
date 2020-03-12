@@ -151,7 +151,6 @@ int generateKey(const struct CLOptions options)
     if( length < KEY_MIN_LENGTH )
     {
         fprintf(stderr, "A keylength of %ld is too short! A minimum length of %d is required!\n", length, KEY_MIN_LENGTH);
-
         return KG_RTN_ERR_KEY_TOO_SHORT;
     }
 
@@ -167,7 +166,7 @@ int generateKey(const struct CLOptions options)
     }
     else
     {
-        fprintf(stderr, "ERROR : %d\n", err);
+        fprintf(stderr, "ERROR (%d): %s\n", err, errorMessage(err));
         return KG_RTN_ERR_ERROR;
     }
 
