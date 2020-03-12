@@ -83,7 +83,7 @@ static inline void printHead()
 {
     const char* header = "KeyGen\tv" KEYGEN_VERSION "\0";
     printf(" %s\n", header);
-    printLine('-', strlen(header) + 2, true);
+    printLine('-', strlen(header) + 2, true); // FlawFinder: ignore - \0 termination is guaranteed
 }
 
 void printHelp()
