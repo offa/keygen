@@ -96,11 +96,3 @@ TEST_CASE("formatAlphaNumeric", "[FormatTest]")
     CHECK(rtn == KG_ERR_SUCCESS);
     testFormat(buffer, format);
 }
-
-TEST_CASE("formatIllegal", "[FormatTest]")
-{
-    constexpr Format format = static_cast<Format>(99);
-    std::array<std::uint8_t, size> buffer{{}};
-    const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), format);
-    CHECK(rtn == KG_ERR_ILL_ARGUMENT);
-}
