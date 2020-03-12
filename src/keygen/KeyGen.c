@@ -27,6 +27,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <limits.h>
 #include <openssl/rand.h>
 #include <openssl/err.h>
 
@@ -130,7 +131,8 @@ static void transformBuffer(uint8_t* buffer, const size_t length,
  */
 static int getRandomBytes(uint8_t* buffer, size_t length)
 {
-    const int rtn = RAND_bytes(buffer, length);
+    assert(length < INT_MAX);
+    const int rtn = RAND_bytes(buffer, (int) length);
 
     if( rtn != ERR_LIB_NONE )
     {
@@ -146,16 +148,27 @@ static int getRandomBytes(uint8_t* buffer, size_t length)
     return rtn;
 }
 
-static inline bool checkPreconditions(const uint8_t* buffer, size_t length)
+static inline KeyGenError checkPreconditions(const uint8_t* buffer, size_t length)
 {
-    return ( buffer != NULL ) && ( length >= KEY_MIN_LENGTH );
+    if( length > INT_MAX )
+    {
+        return KG_ERR_UNSUPPORTED;
+    }
+
+    if ( ( buffer == NULL ) || ( length < KEY_MIN_LENGTH ) )
+    {
+        return KG_ERR_ILL_ARGUMENT;
+    }
+    return KG_ERR_SUCCESS;
 }
 
 KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format format)
 {
-    if( checkPreconditions(buffer, length) == false )
+    const KeyGenError preconditionResult = checkPreconditions(buffer, length);
+
+    if( preconditionResult != KG_ERR_SUCCESS )
     {
-        return KG_ERR_ILL_ARGUMENT;
+        return preconditionResult;
     }
 
     uint8_t* tmpBuffer = malloc(length * sizeof(uint8_t));

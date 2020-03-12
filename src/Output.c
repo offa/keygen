@@ -168,7 +168,6 @@ int generateKey(const struct CLOptions options)
     else
     {
         fprintf(stderr, "ERROR : %d\n", err);
-
         return KG_RTN_ERR_ERROR;
     }
 
@@ -192,6 +191,8 @@ const char* errorMessage(KeyGenError error)
             return "Illegal argument error";
         case KG_ERR_SECURITY:
             return "Security error";
+        case KG_ERR_UNSUPPORTED:
+            return "Unsupported operation";
         case KG_ERR_UNKNOWN:
         default:
             return "Unknown";

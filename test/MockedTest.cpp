@@ -41,7 +41,7 @@ extern "C" int RAND_bytes(unsigned char* buf, int num)
     return m.randBytes(buf, num);
 }
 
-TEST_CASE("returnErrorCodeOnFailedRandom", "[MockedTest]")
+TEST_CASE("fail if generation of random bytes fails", "[MockedTest]")
 {
     using trompeloeil::_;
     std::array<std::uint8_t, 10> buffer{{}};
@@ -50,4 +50,15 @@ TEST_CASE("returnErrorCodeOnFailedRandom", "[MockedTest]")
     const test::DisableStderr d{stderr};
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
     CHECK(rtn == KG_ERR_SECURITY);
+}
+
+TEST_CASE("keysize exceeding int fails", "[MockedTest]")
+{
+    using trompeloeil::_;
+    REQUIRE_CALL(m, randBytes(_, _)).TIMES(0);
+
+    const test::DisableStderr d{stderr};
+    constexpr std::size_t greaterThanInt = static_cast<std::size_t>(std::numeric_limits<int>::max()) + 30;
+    const KeyGenError rtn = keygen_createKey(nullptr, greaterThanInt, ASCII);
+    CHECK(rtn == KG_ERR_UNSUPPORTED);
 }

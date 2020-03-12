@@ -69,6 +69,7 @@ extern "C"
         KG_ERR_MEMORY,       ///< Memory error
         KG_ERR_ILL_ARGUMENT, ///< Illegal argument
         KG_ERR_SECURITY,     ///< Security error
+        KG_ERR_UNSUPPORTED,  ///< Operation is unsupported
         KG_ERR_UNKNOWN       ///< Unknown error
     } KeyGenError;
 
