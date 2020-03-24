@@ -10,7 +10,7 @@ env:
     - DOCKER_IMG="registry.gitlab.com/offa/docker-images-ci/dist-keygen"
 
 
-matrix:
+jobs:
     include:
     - env: COMPILER=gcc-9
     - env: COMPILER=gcc-8
