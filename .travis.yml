@@ -21,8 +21,8 @@ jobs:
     - env: COMPILER=clang-9
     - env: COMPILER=clang-8
     - env: COMPILER=clang-7
-    - env: COMPILER=gcc-9 BUILD_OPT="-valgrind"
-    - env: COMPILER=gcc-9 BUILD_OPT="-flawfinder"
+    - env: COMPILER=gcc-10 BUILD_OPT="-valgrind"
+    - env: COMPILER=gcc-10 BUILD_OPT="-flawfinder"
 
 
 before_install:
