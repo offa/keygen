@@ -1,6 +1,6 @@
 # [KeyGen](https://github.com/offa/keygen)
 
-[![Build Status](https://travis-ci.org/offa/keygen.svg?branch=master)](https://travis-ci.org/offa/keygen)
+[![CI](https://github.com/offa/keygen/workflows/ci/badge.svg)](https://github.com/offa/keygen/actions)
 [![GitHub release](https://img.shields.io/github/release/offa/keygen.svg)](https://github.com/offa/keygen/releases)
 [![License](https://img.shields.io/badge/license-GPLv3-yellow.svg)](LICENSE)
 ![C](https://img.shields.io/badge/c-11-green.svg)
