@@ -130,10 +130,24 @@
 #include <regex>
 #include <mutex>
 #include <atomic>
+#include <array>
 #include <initializer_list>
 #include <type_traits>
 #include <utility>
 
+
+#ifndef TROMPELOEIL_CUSTOM_ATOMIC
+#include <atomic>
+namespace trompeloeil { using std::atomic; }
+#else
+#include <trompeloeil/custom_atomic.hpp>
+#endif
+
+#ifndef TROMPELOEIL_CUSTOM_UNIQUE_LOCK
+namespace trompeloeil { using std::unique_lock; }
+#else
+#include <trompeloeil/custom_unique_lock.hpp>
+#endif
 
 #ifdef TROMPELOEIL_SANITY_CHECKS
 #include <cassert>
@@ -341,6 +355,11 @@
   /**/
 
 #endif /* !(TROMPELOEIL_CPLUSPLUS == 201103L) */
+#if TROMPELOEIL_CPLUSPLUS > 201403L && (!TROMPELOEIL_GCC || TROMPELOEIL_GCC_VERSION >= 70000)
+#  define TROMPELOEIL_INLINE_VAR [[maybe_unused]] static inline
+#else
+#  define TROMPELOEIL_INLINE_VAR static
+#endif
 
 static constexpr bool trompeloeil_movable_mock = false;
 
@@ -393,6 +412,23 @@ namespace trompeloeil
 
   namespace detail
   {
+    template <typename T>
+    struct unwrap_type
+    {
+      using type = T;
+    };
+    template <typename T>
+    struct unwrap_type<std::reference_wrapper<T>>
+    {
+      using type = T&;
+    };
+    template <typename ... Ts>
+    std::tuple<typename unwrap_type<typename std::decay<Ts>::type>::type...>
+    make_tuple(Ts&& ... ts)
+    {
+      return { std::forward<Ts>(ts)... };
+    }
+
     /* Implement C++14 features using only C++11 entities. */
 
     /* <memory> */
@@ -500,7 +536,7 @@ namespace trompeloeil
       return old_value;
     }
 
-    /* integer_sequence and index_sequence implemenations are from
+    /* integer_sequence and index_sequence implementations are from
      *
      * Jonathan Wakely, "Compile-time integer sequences,"
      * ISO/IEC JTC1 SC22 WG21 N3658, 18 April 2013.
@@ -705,8 +741,10 @@ namespace trompeloeil
   using aligned_storage_for =
     typename std::aligned_storage<sizeof(T), alignof(T)>::type;
 
+#ifndef TROMPELOEIL_CUSTOM_RECURSIVE_MUTEX
+
   template <typename T = void>
-  std::unique_lock<std::recursive_mutex> get_lock()
+  unique_lock<std::recursive_mutex> get_lock()
   {
     // Ugly hack for lifetime of mutex. The statically allocated
     // recursive_mutex is intentionally leaked, to ensure that the
@@ -716,8 +754,30 @@ namespace trompeloeil
 
     static aligned_storage_for<std::recursive_mutex> buffer;
     static auto mutex = new (&buffer) std::recursive_mutex;
-    return std::unique_lock<std::recursive_mutex>{*mutex};
+    return unique_lock<std::recursive_mutex>{*mutex};
   }
+
+#else
+
+  class custom_recursive_mutex {
+  public:
+    virtual ~custom_recursive_mutex() = default;
+    virtual void lock() = 0;
+    virtual void unlock() = 0;
+  };
+
+  // User has to provide an own recursive mutex.
+  std::unique_ptr<custom_recursive_mutex> create_custom_recursive_mutex();
+
+  template <typename T = void>
+  unique_lock<custom_recursive_mutex> get_lock()
+  {
+    static std::unique_ptr<custom_recursive_mutex> mtx =
+        create_custom_recursive_mutex();
+    return unique_lock<custom_recursive_mutex>{*mtx};
+  }
+
+#endif
 
   template <size_t N, typename T>
   using conditional_tuple_element
@@ -1018,13 +1078,21 @@ namespace trompeloeil
 
   struct wildcard : public matcher
   {
-    template <typename T>
+    template <typename T
+#if TROMPELOEIL_GCC && TROMPELOEIL_GCC_VERSION >= 50000
+              ,detail::enable_if_t<!std::is_convertible<wildcard&, T>{}>* = nullptr
+#endif
+              >
     operator T&&()
     const;
 
-    template <typename T>
+    template <typename T
+#if TROMPELOEIL_GCC && TROMPELOEIL_GCC_VERSION >= 50000
+              ,detail::enable_if_t<!std::is_convertible<wildcard&, T>{}>* = nullptr
+#endif
+              >
     operator T&()
-    const volatile; // less preferred than T&& above
+    volatile const; // less preferred than T&& above
 
     template <typename T>
     constexpr
@@ -1048,8 +1116,7 @@ namespace trompeloeil
     }
   };
 
-  static constexpr wildcard const _{};
-
+  TROMPELOEIL_INLINE_VAR wildcard _{};
 
 template <typename T>
   using matcher_access = decltype(static_cast<matcher*>(std::declval<typename std::add_pointer<T>::type>()));
@@ -1131,11 +1198,11 @@ template <typename T>
 #if !TROMPELOEIL_CLANG
     template <
       typename T,
-      typename = detail::enable_if_t<!std::is_constructible<T, std::nullptr_t>::value>
+      typename = detail::enable_if_t<std::is_convertible<std::nullptr_t, T>::value>
     >
     operator T&&() const = delete;
 #endif
-#if TROMPELOEIL_GCC
+#if TROMPELOEIL_GCC || TROMPELOEIL_MSVC
 
     template <typename T, typename C, typename ... As>
     using memfunptr = T (C::*)(As...);
@@ -1166,7 +1233,7 @@ template <typename T>
   using is_null_comparable = is_equal_comparable<T, indirect_null>;
 #endif
 
-  template <typename T>
+  template <typename T, typename = decltype(std::declval<T const&>() == nullptr)>
   inline
   constexpr
   auto
@@ -1177,6 +1244,17 @@ template <typename T>
   -> decltype(t == nullptr)
   {
     return t == nullptr;
+  }
+  template <typename T, typename V>
+  inline
+  constexpr
+  bool
+  is_null(
+    T const &,
+    V)
+  noexcept
+  {
+    return false;
   }
 
   template <typename T>
@@ -1527,7 +1605,7 @@ template <typename T>
     list(const list&) = delete;
     list& operator=(list&&) noexcept;
     list& operator=(const list&) = delete;
-    ~list();
+    ~list() override;
     class iterator;
     iterator begin() const noexcept;
     iterator end() const noexcept;
@@ -1711,6 +1789,17 @@ template <typename T>
     const
     noexcept;
 
+    unsigned
+    cost(
+      sequence_matcher const *m)
+    const
+    noexcept;
+
+    void
+    retire_until(
+      sequence_matcher const* m)
+    noexcept;
+
     void
     add_last(
       sequence_matcher *m)
@@ -1739,18 +1828,23 @@ template <typename T>
     std::unique_ptr<sequence_type> obj;
   };
 
+  struct sequence_handler_base;
+
   class sequence_matcher : public list_elem<sequence_matcher>
   {
   public:
     using init_type = std::pair<char const*, sequence&>;
+
     sequence_matcher(
       char const *exp,
       location loc,
+      const sequence_handler_base& handler,
       init_type i)
     noexcept
     : seq_name(i.first)
     , exp_name(exp)
     , exp_loc(loc)
+    , sequence_handler(handler)
     , seq(*i.second)
     {
       auto lock = get_lock();
@@ -1775,11 +1869,31 @@ template <typename T>
       return seq.is_first(this);
     }
 
+    unsigned
+    cost()
+    const
+    noexcept
+    {
+      return seq.cost(this);
+    }
+
+    bool
+    is_satisfied()
+      const
+      noexcept;
+
     void
     retire()
     noexcept
     {
       this->unlink();
+    }
+
+    void
+    retire_predecessors()
+    noexcept
+    {
+      seq.retire_until(this);
     }
 
     void
@@ -1799,6 +1913,7 @@ template <typename T>
     char const *seq_name;
     char const *exp_name;
     location    exp_loc;
+    const sequence_handler_base& sequence_handler;
     sequence_type& seq;
   };
 
@@ -1819,6 +1934,40 @@ template <typename T>
   noexcept
   {
     return !matchers.empty() && &*matchers.begin() == m;
+  }
+
+  inline
+  unsigned
+  sequence_type::cost(
+    sequence_matcher const* m)
+  const
+  noexcept
+  {
+    unsigned sequence_cost = 0U;
+    for (auto& e : matchers)
+    {
+      if (&e == m) return sequence_cost;
+      if (!e.is_satisfied())
+      {
+        return ~0U;
+      }
+      ++sequence_cost;
+    }
+    return ~0U;
+  }
+
+  inline
+  void
+  sequence_type::retire_until(
+    sequence_matcher const* m)
+  noexcept
+  {
+    while (!matchers.empty())
+    {
+      auto first = &*matchers.begin();
+      if (first == m) return;
+      first->retire();
+    }
   }
 
   inline
@@ -2467,13 +2616,79 @@ template <typename T>
 
   struct sequence_handler_base
   {
+  private:
+    size_t min_calls{1};
+    size_t max_calls{1};
+    size_t call_count{0};
+  public:
+
     virtual
     ~sequence_handler_base()
     noexcept = default;
 
+    void
+      increment_call()
+      noexcept
+    {
+      ++call_count;
+    }
+    bool
+      is_satisfied()
+      const
+      noexcept
+    {
+      return call_count >= min_calls;
+    }
+
+    bool
+      is_saturated()
+      const
+      noexcept
+    {
+      return call_count == max_calls;
+    }
+
+    bool
+      is_forbidden()
+      const
+      noexcept
+    {
+      return max_calls == 0ULL;
+    }
+
+    void
+    set_limits(size_t L, size_t H)
+      noexcept
+    {
+      min_calls = L;
+      max_calls = H;
+    }
+
+    size_t
+    get_min_calls()
+      const
+      noexcept
+    {
+      return min_calls;
+    }
+
+    size_t
+      get_calls()
+      const
+      noexcept
+    {
+      return call_count;
+    }
+
     virtual
     void
       validate(severity s, char const *, location) = 0;
+
+    virtual
+    bool
+    can_be_called()
+    const
+    noexcept = 0;
 
     virtual
     bool
@@ -2482,22 +2697,52 @@ template <typename T>
       noexcept = 0;
 
     virtual
+    unsigned
+    order()
+    const
+    noexcept = 0;
+
+    virtual
     void
       retire()
       noexcept = 0;
+
+    virtual
+    void
+    retire_predecessors()
+    noexcept = 0;
+  protected:
+    sequence_handler_base() = default;
+    sequence_handler_base(const sequence_handler_base&) = default;
   };
+
+  inline
+  bool
+  sequence_matcher::is_satisfied()
+  const
+  noexcept
+  {
+    return sequence_handler.is_satisfied();
+  }
 
   template <size_t N>
   struct sequence_handler : public sequence_handler_base
   {
   public:
+    template <size_t M = N, typename detail::enable_if_t<M == 0>* = nullptr>
+    sequence_handler()
+      noexcept
+    {}
+
     template <typename ... S>
     sequence_handler(
+      const sequence_handler_base& base,
       char const *name,
       location loc,
       S&& ... s)
     noexcept
-      : matchers{{name, loc, std::forward<S>(s)}...}
+      : sequence_handler_base(base)
+      , matchers{{sequence_matcher{name, loc, *this, std::forward<S>(s)}...}}
     {
     }
 
@@ -2512,6 +2757,24 @@ template <typename T>
       {
         e.validate_match(s, match_name, loc);
       }
+    }
+
+    unsigned
+    order()
+    const
+    noexcept
+    override
+    {
+      unsigned highest_order = 0U;
+      for (auto& m : matchers)
+      {
+        auto cost = m.cost();
+        if (cost > highest_order)
+        {
+          highest_order = cost;
+        }
+      }
+      return highest_order;
     }
 
     bool
@@ -2530,6 +2793,15 @@ template <typename T>
       return true;
     }
 
+    bool
+    can_be_called()
+    const
+    noexcept
+    override
+    {
+      return order() != ~0U;
+    }
+
     void
     retire()
     noexcept
@@ -2540,8 +2812,23 @@ template <typename T>
         e.retire();
       }
     }
+
+    void
+    retire_predecessors()
+    noexcept
+      override
+    {
+      for (auto& e : matchers)
+      {
+        e.retire_predecessors();
+      }
+    }
   private:
-    sequence_matcher matchers[N];
+    // work around for MS STL ossue 942
+    // https://github.com/microsoft/STL/issues/942
+    detail::conditional_t<N == 0,
+                          std::vector<sequence_matcher>,
+                          std::array<sequence_matcher, N>> matchers;
   };
 
   struct lifetime_monitor;
@@ -2560,7 +2847,7 @@ template <typename T>
       : T(std::forward<U>(u)...)
     {}
 
-    ~deathwatched();
+    ~deathwatched() override;
 
     trompeloeil::lifetime_monitor*&
     trompeloeil_expect_death(
@@ -2629,7 +2916,7 @@ template <typename T>
     noexcept
     {
       died = true;
-      if (sequences) sequences->validate(severity::nonfatal, call_name, loc);
+      sequences->validate(severity::nonfatal, call_name, loc);
     }
 
     template <typename ... T>
@@ -2637,19 +2924,21 @@ template <typename T>
     set_sequence(
       T&& ... t)
     {
-      auto seq = new sequence_handler<sizeof...(T)>(invocation_name,
-                                                    loc,
-                                                    std::forward<T>(t)...);
-      sequences.reset(seq);
+      using handler = sequence_handler<sizeof...(T)>;
+      auto seq = detail::make_unique<handler>(*sequences,
+                                              invocation_name,
+                                              loc,
+                                              std::forward<T>(t)...);
+      sequences = std::move(seq);
     }
   private:
-    std::atomic<bool>  died{false};
+    atomic<bool>       died{false};
     lifetime_monitor *&object_monitor;
     location           loc;
     char const        *object_name;
     char const        *invocation_name;
     char const        *call_name;
-    std::unique_ptr<sequence_handler_base>  sequences;
+    std::unique_ptr<sequence_handler_base>  sequences = detail::make_unique<sequence_handler<0>>();
   };
 
   template <typename T>
@@ -2765,8 +3054,7 @@ template <typename T>
 
     call_matcher_base(call_matcher_base&&) = delete;
 
-    virtual
-    ~call_matcher_base() = default;
+    ~call_matcher_base() override = default;
 
     virtual
     void
@@ -2777,6 +3065,12 @@ template <typename T>
     matches(
       call_params_type_t<Sig> const&)
     const = 0;
+
+    virtual
+    unsigned
+    sequence_cost()
+    const
+    noexcept = 0;
 
     virtual
     bool
@@ -3063,17 +3357,20 @@ template <typename T>
   noexcept
   {
     call_matcher_base<Sig>* first_match = nullptr;
+    unsigned lowest_cost = ~0U;
     for (auto& i : list)
     {
       if (i.matches(p))
       {
-        if (i.first_in_sequence())
+        unsigned cost = i.sequence_cost();
+        if (cost == 0)
         {
           return &i;
         }
-        if (!first_match)
+        if (!first_match || cost < lowest_cost)
         {
           first_match = &i;
+          lowest_cost = cost;
         }
       }
     }
@@ -3207,8 +3504,7 @@ template <typename T>
       : id(n)
     {}
 
-    virtual
-    ~condition_base() = default;
+    ~condition_base() override = default;
 
     virtual
     bool
@@ -3256,8 +3552,7 @@ template <typename T>
   template <typename Sig>
   struct side_effect_base : public list_elem<side_effect_base<Sig>>
   {
-    virtual
-    ~side_effect_base() = default;
+    ~side_effect_base() override = default;
 
     virtual
     void
@@ -3290,7 +3585,7 @@ template <typename T>
     Action a;
   };
 
-  template <unsigned long long L, unsigned long long H = L>
+  template <size_t L, size_t H = L>
   struct multiplicity { };
 
   template <typename R, typename Parent>
@@ -3311,18 +3606,18 @@ template <typename T>
     static bool const side_effects = true;
   };
 
-  template <typename Parent, unsigned long long H>
+  template <typename Parent, size_t H>
   struct call_limit_injector : Parent
   {
-    static bool               const call_limit_set = true;
-    static unsigned long long const upper_call_limit = H;
+    static bool   const call_limit_set = true;
+    static size_t const upper_call_limit = H;
   };
 
   template <typename Parent>
-  struct call_limit_injector<Parent, 0ULL> : Parent
+  struct call_limit_injector<Parent, 0> : Parent
   {
-    static bool const call_limit_set = true;
-    static unsigned long long const upper_call_limit = 0ULL;
+    static bool   const call_limit_set = true;
+    static size_t const upper_call_limit = 0;
   };
 
   template <typename Parent>
@@ -3418,10 +3713,10 @@ template <typename T>
                     "Multiple RETURN does not make sense");
       static_assert(!throws || upper_call_limit == 0,
                     "THROW and RETURN does not make sense");
-      static_assert(upper_call_limit > 0ULL,
+      static_assert(upper_call_limit > 0,
                     "RETURN for forbidden call does not make sense");
 
-      constexpr bool valid = !is_illegal_type && matching_ret_type && is_first_return && !throws && upper_call_limit > 0ULL;
+      constexpr bool valid = !is_illegal_type && matching_ret_type && is_first_return && !throws && upper_call_limit > 0;
       using tag = std::integral_constant<bool, valid>;
       matcher->set_return(tag{}, std::forward<H>(h));
       return {matcher};
@@ -3490,8 +3785,8 @@ template <typename T>
       return {matcher};
     }
 
-    template <unsigned long long L,
-              unsigned long long H,
+    template <size_t L,
+              size_t H,
               bool               times_set = call_limit_set>
     call_modifier<Matcher, modifier_tag, call_limit_injector<Parent, H>>
     times(
@@ -3515,8 +3810,7 @@ template <typename T>
       static_assert(H > 0 || !sequence_set,
                     "IN_SEQUENCE and TIMES(0) does not make sense");
 
-      matcher->min_calls = L;
-      matcher->max_calls = H;
+      matcher->sequences->set_limits(L, H);
       return {matcher};
     }
 
@@ -3530,7 +3824,7 @@ template <typename T>
                     "Multiple IN_SEQUENCE does not make sense."
                     " You can list several sequence objects at once");
 
-      static_assert(upper_call_limit > 0ULL,
+      static_assert(upper_call_limit > 0,
                     "IN_SEQUENCE for forbidden call does not make sense");
 
       matcher->set_sequence(std::forward<T>(t)...);
@@ -3545,8 +3839,8 @@ template <typename T>
     const char* reason,
     char const        *name,
     std::string const &values,
-    unsigned long long min_calls,
-    unsigned long long call_count,
+    size_t min_calls,
+    size_t call_count,
     location           loc)
   {
     std::ostringstream os;
@@ -3588,7 +3882,7 @@ template <typename T>
   {
     using signature = Sig;
     using return_type = void;
-    static unsigned long long const upper_call_limit = 1;
+    static size_t const upper_call_limit = 1;
     static bool const throws = false;
     static bool const call_limit_set = false;
     static bool const sequence_set = false;
@@ -3631,7 +3925,7 @@ template <typename T>
       override
     {
       auto lock = get_lock();
-      return call_count >= min_calls;
+      return sequences->is_satisfied();
     }
 
     bool
@@ -3641,14 +3935,14 @@ template <typename T>
       override
     {
       auto lock = get_lock();
-      return call_count >= max_calls;
+      return sequences->is_saturated();
     }
     bool
     is_unfulfilled()
     const
     noexcept
     {
-      return !reported && this->is_linked() && call_count < min_calls;
+      return !reported && this->is_linked() && !sequences->is_satisfied();
     }
 
     void
@@ -3694,14 +3988,22 @@ template <typename T>
       return true;
     }
 
+    unsigned
+    sequence_cost()
+      const
+      noexcept
+      override
+    {
+      return sequences->order();
+    }
+
     bool
     first_in_sequence()
     const
     noexcept
     override
     {
-      auto saturated = call_count >= min_calls;
-      return saturated || !sequences || sequences->is_first();
+      return sequences->is_first();
     }
 
     return_of_t<Sig>
@@ -3720,23 +4022,25 @@ template <typename T>
       call_matcher_list<Sig> &saturated_list)
     override
     {
-      if (max_calls == 0)
+      if (sequences->is_forbidden())
       {
         reported = true;
         report_forbidden_call(name, loc, params_string(params));
       }
       auto lock = get_lock();
       {
-        if (call_count < min_calls && sequences)
+        if (!sequences->can_be_called())
         {
           sequences->validate(severity::fatal, name, loc);
         }
-        if (++call_count == min_calls && sequences)
+        sequences->increment_call();
+        if (sequences->is_satisfied())
+        {
+          sequences->retire_predecessors();
+        }
+        if (sequences->is_saturated())
         {
           sequences->retire();
-        }
-        if (call_count == max_calls)
-        {
           this->unlink();
           saturated_list.push_back(this);
         }
@@ -3788,8 +4092,8 @@ template <typename T>
         reason,
         name,
         params_string(val),
-        min_calls,
-        call_count,
+        sequences->get_min_calls(),
+        sequences->get_calls(),
         loc);
     }
 
@@ -3817,10 +4121,12 @@ template <typename T>
     set_sequence(
       T&& ... t)
     {
-      auto seq = new sequence_handler<sizeof...(T)>(name,
-                                                    loc,
-                                                    std::forward<T>(t)...);
-      sequences.reset(seq);
+      using handler = sequence_handler<sizeof...(T)>;
+      auto seq = detail::make_unique<handler>(*sequences,
+                                              name,
+                                              loc,
+                                              std::forward<T>(t)...);
+      sequences = std::move(seq);
     }
 
     template <typename T>
@@ -3845,10 +4151,7 @@ template <typename T>
     condition_list<Sig>                    conditions;
     side_effect_list<Sig>                  actions;
     std::unique_ptr<return_handler<Sig>>   return_handler_obj;
-    std::unique_ptr<sequence_handler_base> sequences;
-    unsigned long long                     call_count = 0;
-    std::atomic<unsigned long long>        min_calls{1};
-    std::atomic<unsigned long long>        max_calls{1};
+    std::unique_ptr<sequence_handler_base> sequences = detail::make_unique<sequence_handler<0>>();
     Value                                  val;
     bool                                   reported = false;
   };
@@ -3913,10 +4216,6 @@ template <typename T>
     {
       auto lock = get_lock();
       m.matcher->hook_last(obj.trompeloeil_matcher_list(static_cast<Tag*>(nullptr)));
-      if (m.matcher->min_calls == 0 && m.matcher->sequences)
-      {
-        m.matcher->sequences->retire();
-      }
 
       return std::unique_ptr<expectation>(m.matcher);
     }
@@ -3939,7 +4238,7 @@ template <typename T>
       using sigret = return_of_t<typename call::signature>;
       using ret = typename call::return_type;
       constexpr bool retmatch = std::is_same<ret, sigret>::value;
-      constexpr bool forbidden = call::upper_call_limit == 0ULL;
+      constexpr bool forbidden = call::upper_call_limit == 0;
       constexpr bool valid_return_type = call::throws || retmatch || forbidden;
       static_assert(valid_return_type, "RETURN missing for non-void function");
       auto tag = std::integral_constant<bool, valid_return_type>{};
@@ -4081,7 +4380,7 @@ template <typename T>
 
   template <typename ... U>
   struct param_helper {
-    using type = decltype(std::make_tuple(std::declval<U>()...));
+    using type = decltype(detail::make_tuple(std::declval<U>()...));
   };
 
   template <typename ... U>
@@ -4539,13 +4838,13 @@ template <typename T>
 
 // Accept only two arguments
 #define TROMPELOEIL_ALLOW_CALL_F(obj, func)                                    \
-  TROMPELOEIL_REQUIRE_CALL_T(obj, func, .TROMPELOEIL_TIMES(0, ~0ULL))
+  TROMPELOEIL_REQUIRE_CALL_T(obj, func, .TROMPELOEIL_INFINITY_TIMES())
 
 // Accept three or more arguments.
 #define TROMPELOEIL_ALLOW_CALL_T(obj, func, ...)                               \
   TROMPELOEIL_REQUIRE_CALL_T(obj,                                              \
                              func,                                             \
-                             .TROMPELOEIL_TIMES(0, ~0ULL) __VA_ARGS__)
+                             .TROMPELOEIL_INFINITY_TIMES() __VA_ARGS__)
 
 
 #define TROMPELOEIL_NAMED_ALLOW_CALL_V(...)                                    \
@@ -4559,13 +4858,14 @@ template <typename T>
 
 // Accept only two arguments
 #define TROMPELOEIL_NAMED_ALLOW_CALL_F(obj, func)                              \
-  TROMPELOEIL_NAMED_REQUIRE_CALL_T(obj, func, .TROMPELOEIL_TIMES(0, ~0ULL))
+  TROMPELOEIL_NAMED_REQUIRE_CALL_T(obj, func, .TROMPELOEIL_INFINITY_TIMES())
 
 // Accept three or more arguments.
 #define TROMPELOEIL_NAMED_ALLOW_CALL_T(obj, func, ...)                         \
   TROMPELOEIL_NAMED_REQUIRE_CALL_T(obj,                                        \
                                    func,                                       \
-                                   .TROMPELOEIL_TIMES(0, ~0ULL) __VA_ARGS__)
+                                   .TROMPELOEIL_INFINITY_TIMES()               \
+                                   __VA_ARGS__)
 
 
 #define TROMPELOEIL_FORBID_CALL_V(...)                                         \
@@ -4637,7 +4937,7 @@ template <typename T>
 
 #define TROMPELOEIL_ALLOW_CALL_(obj, func, obj_s, func_s)                      \
   TROMPELOEIL_REQUIRE_CALL_(obj, func, obj_s, func_s)                          \
-    .TROMPELOEIL_TIMES(0, ~0ULL)
+    .TROMPELOEIL_INFINITY_TIMES()
 
 
 #define TROMPELOEIL_NAMED_ALLOW_CALL(obj, func)                                \
@@ -4645,7 +4945,7 @@ template <typename T>
 
 #define TROMPELOEIL_NAMED_ALLOW_CALL_(obj, func, obj_s, func_s)                \
   TROMPELOEIL_NAMED_REQUIRE_CALL_(obj, func, obj_s, func_s)                    \
-    .TROMPELOEIL_TIMES(0, ~0ULL)
+    .TROMPELOEIL_INFINITY_TIMES()
 
 
 #define TROMPELOEIL_FORBID_CALL(obj, func)                                     \
@@ -4676,7 +4976,7 @@ template <typename T>
   with(                                                                        \
     arg_s,                                                                     \
     [capture]                                                                  \
-    (trompeloeil_e_t::trompeloeil_call_params_type_t const& trompeloeil_x)     \
+    (typename trompeloeil_e_t::trompeloeil_call_params_type_t const& trompeloeil_x)\
     {                                                                          \
       auto& _1 = ::trompeloeil::mkarg<1>(trompeloeil_x);                       \
       auto& _2 = ::trompeloeil::mkarg<2>(trompeloeil_x);                       \
@@ -4732,7 +5032,9 @@ template <typename T>
 
 #define TROMPELOEIL_SIDE_EFFECT_(capture, ...)                                 \
   sideeffect(                                                                  \
-    [capture](trompeloeil_e_t::trompeloeil_call_params_type_t& trompeloeil_x) {\
+    [capture]                                                                  \
+    (typename trompeloeil_e_t::trompeloeil_call_params_type_t& trompeloeil_x)  \
+    {                                                                          \
       auto& _1 = ::trompeloeil::mkarg<1>(trompeloeil_x);                       \
       auto& _2 = ::trompeloeil::mkarg<2>(trompeloeil_x);                       \
       auto& _3 = ::trompeloeil::mkarg<3>(trompeloeil_x);                       \
@@ -4787,8 +5089,9 @@ template <typename T>
 
 #define TROMPELOEIL_RETURN_(capture, ...)                                      \
   handle_return(                                                               \
-    [capture](trompeloeil_e_t::trompeloeil_call_params_type_t& trompeloeil_x)  \
-      -> trompeloeil_e_t::trompeloeil_return_of_t                              \
+    [capture]                                                                  \
+    (typename trompeloeil_e_t::trompeloeil_call_params_type_t& trompeloeil_x)  \
+      -> typename trompeloeil_e_t::trompeloeil_return_of_t                     \
     {                                                                          \
       auto& _1 = ::trompeloeil::mkarg<1>(trompeloeil_x);                       \
       auto& _2 = ::trompeloeil::mkarg<2>(trompeloeil_x);                       \
@@ -4844,7 +5147,9 @@ template <typename T>
 
 #define TROMPELOEIL_THROW_(capture, ...)                                       \
   handle_throw(                                                                \
-    [capture](trompeloeil_e_t::trompeloeil_call_params_type_t& trompeloeil_x) {\
+    [capture]                                                                  \
+    (typename trompeloeil_e_t::trompeloeil_call_params_type_t& trompeloeil_x)  \
+    {                                                                          \
       auto& _1 = ::trompeloeil::mkarg<1>(trompeloeil_x);                       \
       auto& _2 = ::trompeloeil::mkarg<2>(trompeloeil_x);                       \
       auto& _3 = ::trompeloeil::mkarg<3>(trompeloeil_x);                       \
@@ -4892,13 +5197,14 @@ template <typename T>
 
 
 #define TROMPELOEIL_TIMES(...) times(::trompeloeil::multiplicity<__VA_ARGS__>{})
+#define TROMPELOEIL_INFINITY_TIMES() TROMPELOEIL_TIMES(0, ~static_cast<size_t>(0))
 
 #define TROMPELOEIL_IN_SEQUENCE(...)                                           \
   in_sequence(TROMPELOEIL_INIT_WITH_STR(::trompeloeil::sequence_matcher::init_type, __VA_ARGS__))
 
 #define TROMPELOEIL_ANY(type) ::trompeloeil::any_matcher<type>(#type)
 
-#define TROMPELOEIL_AT_LEAST(num) num, ~0ULL
+#define TROMPELOEIL_AT_LEAST(num) num, ~static_cast<size_t>(0)
 #define TROMPELOEIL_AT_MOST(num) 0, num
 
 #define TROMPELOEIL_REQUIRE_DESTRUCTION(obj)                                   \
