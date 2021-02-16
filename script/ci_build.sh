@@ -20,6 +20,10 @@ do
         -flawfinder)
             FLAWFINDER_ANALYSIS=true
             ;;
+        -codeql)
+            BUILD_ARGS=("-DCMAKE_BUILD_TYPE=Debug")
+            SANITIZER=false
+            ;;
     esac
 done
 
