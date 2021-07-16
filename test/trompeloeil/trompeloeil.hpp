@@ -439,34 +439,36 @@ namespace trompeloeil
      * ISO/IEC JTC1 SC22 WG21 N3656, 18 April 2013.
      * Available: http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3656.htm
      * Accessed: 14 June 2017
+     *
+     * Renamed types to avoid the use of reserved identifiers.
      */
     template <class T>
-    struct _Unique_if
+    struct unique_if
     {
-      typedef std::unique_ptr<T> _Single_object;
+      typedef std::unique_ptr<T> single_object;
     };
 
     template <class T>
-    struct _Unique_if<T[]>
+    struct unique_if<T[]>
     {
-      typedef std::unique_ptr<T[]> _Unknown_bound;
+      typedef std::unique_ptr<T[]> unknown_bound;
     };
 
     template <class T, size_t N>
-    struct _Unique_if<T[N]>
+    struct unique_if<T[N]>
     {
-      typedef void _Known_bound;
+      typedef void known_bound;
     };
 
     template <class T, class... Args>
-    typename _Unique_if<T>::_Single_object
+    typename unique_if<T>::single_object
     make_unique(Args&&... args)
     {
       return std::unique_ptr<T>(new T(std::forward<Args>(args)...));
     }
 
     template <class T>
-    typename _Unique_if<T>::_Unknown_bound
+    typename unique_if<T>::unknown_bound
     make_unique(size_t n)
     {
       typedef typename std::remove_extent<T>::type U;
@@ -474,7 +476,7 @@ namespace trompeloeil
     }
 
     template <class T, class... Args>
-    typename _Unique_if<T>::_Known_bound
+    typename unique_if<T>::known_bound
     make_unique(Args&&...) = delete;
 
     /* <type_traits> */
@@ -1420,6 +1422,19 @@ template <typename T>
   };
 
   template <typename T>
+  struct printer
+  {
+    static
+    void
+    print(
+      std::ostream& os,
+      T const & t)
+    {
+      streamer<T>::print(os, t);
+    }
+  };
+
+  template <typename T>
   void
   print(
     std::ostream& os,
@@ -1431,7 +1446,7 @@ template <typename T>
     }
     else
     {
-      streamer<T>::print(os, t);
+      printer<T>::print(os, t);
     }
   }
 
@@ -2976,24 +2991,20 @@ template <typename T>
     }
   };
 
+#if TROMPELOEIL_MSVC
+#pragma warning(push)
+#pragma warning(disable : 4702)
+#endif
   template <typename R>
   inline
   R
   default_return()
   {
-    /* Work around VS 2017 15.7.x C4702 warning by
-     * enclosing the operation in an otherwise
-     * unnecessary try/catch block.
-     */
-    try
-    {
-      return default_return_t<R>::value();
-    }
-    catch (...)
-    {
-      throw;
-    }
+    return default_return_t<R>::value();
   }
+#if TROMPELOEIL_MSVC
+#pragma warning(pop)
+#endif
 
 
 
