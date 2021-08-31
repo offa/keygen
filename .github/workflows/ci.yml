@@ -22,7 +22,7 @@ jobs:
       image: "registry.gitlab.com/offa/docker-images-ci/dist-keygen/${{ matrix.compiler }}:latest"
     name: "${{ matrix.compiler }}"
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@main
       - name: Build
         run: script/ci_build.sh
 
@@ -37,6 +37,6 @@ jobs:
       image: "registry.gitlab.com/offa/docker-images-ci/dist-keygen/gcc-10:latest"
     name: "Analyse ${{ matrix.tool }}"
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@main
       - name: Build
         run: script/ci_build.sh -${{ matrix.tool }}
