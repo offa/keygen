@@ -22,8 +22,6 @@
 #include <array>
 #include <catch2/catch.hpp>
 
-using namespace Catch::Matchers;
-
 TEST_CASE("tooShortLengthRejected", "[ArgumentTest]")
 {
     std::array<std::uint8_t, 7> buffer{{}};

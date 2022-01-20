@@ -24,8 +24,6 @@
 #include <iterator>
 #include <catch2/catch.hpp>
 
-using namespace Catch::Matchers;
-
 namespace
 {
     inline constexpr std::size_t size{1000};

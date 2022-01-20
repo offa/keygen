@@ -22,7 +22,7 @@
 #include <string>
 #include <catch2/catch.hpp>
 
-using namespace Catch::Matchers;
+using Catch::Matchers::Equals;
 
 extern const char ALPHANUMERIC_CHARS[];
 extern const size_t ALPHANUMERIC_LENGTH;

@@ -22,8 +22,6 @@
 #include "TestUtil.h"
 #include <catch2/catch.hpp>
 
-using namespace Catch::Matchers;
-
 TEST_CASE("option evaluation", "[OptionsTest]")
 {
     optind = 0;

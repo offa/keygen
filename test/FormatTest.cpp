@@ -23,8 +23,6 @@
 #include <algorithm>
 #include <catch2/catch.hpp>
 
-using namespace Catch::Matchers;
-
 extern const char ALPHANUMERIC_CHARS[];
 extern const size_t ALPHANUMERIC_LENGTH;
 extern const char ASCII_REDUCED_CHARS[];
