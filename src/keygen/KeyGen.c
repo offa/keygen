@@ -32,18 +32,16 @@
 #include <openssl/err.h>
 
 /** Buffer size of error messages. */
-#define ERR_MSG_LENGTH              128
+#define ERR_MSG_LENGTH 128
 
 
 /** Alphanumeric set */
-const char ALPHANUMERIC_CHARS[] =
-{
+const char ALPHANUMERIC_CHARS[] = {
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E',
     'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
     'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
     'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
-    'y', 'z'
-};
+    'y', 'z'};
 
 /** Number of alphanumeric chars */
 const size_t ALPHANUMERIC_LENGTH = sizeof(ALPHANUMERIC_CHARS);
@@ -51,14 +49,13 @@ const size_t ALPHANUMERIC_LENGTH = sizeof(ALPHANUMERIC_CHARS);
 
 /** Reduced Ascii set */
 const char ASCII_REDUCED_CHARS[] =
-{
-    '!', '#', '$', '%', '&', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1',
-    '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?', '@',
-    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
-    'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', ']', '_', 'a',
-    'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
-    'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '}', '~'
-};
+    {
+        '!', '#', '$', '%', '&', '(', ')', '*', '+', ',', '-', '.', '/', '0', '1',
+        '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?', '@',
+        'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+        'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', ']', '_', 'a',
+        'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+        'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '}', '~'};
 
 /** Number of reduced Ascii chars */
 const size_t ASCII_REDUCED_LENGTH = sizeof(ASCII_REDUCED_CHARS);
@@ -66,15 +63,14 @@ const size_t ASCII_REDUCED_LENGTH = sizeof(ASCII_REDUCED_CHARS);
 
 /** Ascii set including blank char */
 const char ASCII_BLANK_CHARS[] =
-{
-    ' ', '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.',
-    '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=',
-    '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-    'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[',
-    '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
-    'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
-    'z', '{', '|', '}', '~'
-};
+    {
+        ' ', '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.',
+        '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=',
+        '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+        'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[',
+        '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+        'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
+        'z', '{', '|', '}', '~'};
 
 /** Number of Ascii chars including blank */
 const size_t ASCII_BLANK_LENGTH = sizeof(ASCII_BLANK_CHARS);
@@ -82,15 +78,14 @@ const size_t ASCII_BLANK_LENGTH = sizeof(ASCII_BLANK_CHARS);
 
 /** Full Ascii chars */
 const char ASCII_CHARS[] =
-{
-    '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/',
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>',
-    '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\',
-    ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
-    'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-    '{', '|', '}', '~'
-};
+    {
+        '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/',
+        '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>',
+        '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+        'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\',
+        ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
+        'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+        '{', '|', '}', '~'};
 
 /** Number of full Ascii chars */
 const size_t ASCII_LENGTH = sizeof(ASCII_CHARS);
@@ -110,7 +105,7 @@ static void transformBuffer(uint8_t* buffer, const size_t length,
     assert(buffer != NULL);
     assert(length > 0);
 
-    for( size_t i=0; i<length; ++i )
+    for (size_t i = 0; i < length; ++i)
     {
         const size_t pos = buffer[i] % fmtLength;
         buffer[i] = (uint8_t) fmtChars[pos];
@@ -134,7 +129,7 @@ static int getRandomBytes(uint8_t* buffer, size_t length)
     assert(length < INT_MAX);
     const int rtn = RAND_bytes(buffer, (int) length);
 
-    if( rtn != ERR_LIB_NONE )
+    if (rtn != ERR_LIB_NONE)
     {
         const unsigned long error = ERR_get_error();
         char errBuffer[ERR_MSG_LENGTH + 1]; // FlawFinder: ignore - Handled by ERR_error_string_n()
@@ -150,12 +145,12 @@ static int getRandomBytes(uint8_t* buffer, size_t length)
 
 static inline KeyGenError checkPreconditions(const uint8_t* buffer, size_t length)
 {
-    if( length > INT_MAX )
+    if (length > INT_MAX)
     {
         return KG_ERR_UNSUPPORTED;
     }
 
-    if ( ( buffer == NULL ) || ( length < KEY_MIN_LENGTH ) )
+    if ((buffer == NULL) || (length < KEY_MIN_LENGTH))
     {
         return KG_ERR_ILL_ARGUMENT;
     }
@@ -166,14 +161,14 @@ KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format f
 {
     const KeyGenError preconditionResult = checkPreconditions(buffer, length);
 
-    if( preconditionResult != KG_ERR_SUCCESS )
+    if (preconditionResult != KG_ERR_SUCCESS)
     {
         return preconditionResult;
     }
 
     uint8_t* tmpBuffer = malloc(length * sizeof(uint8_t));
 
-    if( tmpBuffer == NULL )
+    if (tmpBuffer == NULL)
     {
         return KG_ERR_MEMORY;
     }
@@ -181,11 +176,11 @@ KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format f
     KeyGenError rtn = KG_ERR_UNKNOWN;
     const int err = getRandomBytes(tmpBuffer, length);
 
-    if( err == ERR_LIB_NONE )
+    if (err == ERR_LIB_NONE)
     {
         bool error = false;
 
-        switch(format)
+        switch (format)
         {
             case ASCII:
                 transformBuffer(tmpBuffer, length, ASCII_CHARS, ASCII_LENGTH);
@@ -205,7 +200,7 @@ KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format f
                 break;
         }
 
-        if( error == false )
+        if (error == false)
         {
             memcpy(buffer, tmpBuffer, length); // FlawFinder: ignore - size is same as input
             rtn = KG_ERR_SUCCESS;
@@ -223,7 +218,7 @@ KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format f
 
 void keygen_cleanBuffer(uint8_t* buffer, size_t length)
 {
-    if( buffer != NULL && length > 0 )
+    if (buffer != NULL && length > 0)
     {
         OPENSSL_cleanse(buffer, length);
     }

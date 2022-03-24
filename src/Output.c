@@ -42,12 +42,12 @@
  */
 static inline void printLine(char lc, size_t length, bool newLine)
 {
-    for( size_t i=0; i<length; ++i )
+    for (size_t i = 0; i < length; ++i)
     {
         printf("%c", lc);
     }
 
-    if( newLine == true )
+    if (newLine == true)
     {
         printf("\n");
     }
@@ -64,7 +64,7 @@ static inline void printLine(char lc, size_t length, bool newLine)
  */
 static inline void printHelpOption(const char* optLong, char optShort, const char* value, const char* text)
 {
-    if( value != NULL )
+    if (value != NULL)
     {
         printf("  --%s <%s>\t-%c <%s>", optLong, value, optShort, value);
     }
@@ -104,7 +104,7 @@ void printHelp()
 
 void printKey(const uint8_t* key, struct CLOptions options)
 {
-    if( options.shortOutput == true )
+    if (options.shortOutput == true)
     {
         printf("%s\n", key);
         fflush(stdout);
@@ -116,7 +116,7 @@ void printKey(const uint8_t* key, struct CLOptions options)
         printLine('-', lineLength, true);
         printf("%s\n", key);
         fflush(stdout);
-        printLine('-',lineLength, true);
+        printLine('-', lineLength, true);
         printf("  Length : %ld\n\n", options.keyLength);
     }
 }
@@ -126,21 +126,21 @@ void printVersion()
     printHead();
     printf("\n License :   GNU General Public License (GPL)\n");
     printf("   Keygen is program to generate key's and passwords."
-    "\n   Copyright (C) 2014-2022  offa"
-    "\n"
-    "\n   This program is free software: you can redistribute it and/or modify"
-    "\n   it under the terms of the GNU General Public License as published by"
-    "\n   the Free Software Foundation, either version 3 of the License, or"
-    "\n   (at your option) any later version."
-    "\n"
-    "\n   This program is distributed in the hope that it will be useful,"
-    "\n   but WITHOUT ANY WARRANTY; without even the implied warranty of"
-    "\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
-    "\n   GNU General Public License for more details."
-    "\n"
-    "\n   You should have received a copy of the GNU General Public License"
-    "\n   along with this program.  If not, see <http://www.gnu.org/licenses/>."
-    "\n\n");
+           "\n   Copyright (C) 2014-2022  offa"
+           "\n"
+           "\n   This program is free software: you can redistribute it and/or modify"
+           "\n   it under the terms of the GNU General Public License as published by"
+           "\n   the Free Software Foundation, either version 3 of the License, or"
+           "\n   (at your option) any later version."
+           "\n"
+           "\n   This program is distributed in the hope that it will be useful,"
+           "\n   but WITHOUT ANY WARRANTY; without even the implied warranty of"
+           "\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
+           "\n   GNU General Public License for more details."
+           "\n"
+           "\n   You should have received a copy of the GNU General Public License"
+           "\n   along with this program.  If not, see <http://www.gnu.org/licenses/>."
+           "\n\n");
 }
 
 
@@ -148,18 +148,18 @@ int generateKey(const struct CLOptions options)
 {
     const size_t length = options.keyLength;
 
-    if( length < KEY_MIN_LENGTH )
+    if (length < KEY_MIN_LENGTH)
     {
         fprintf(stderr, "A keylength of %ld is too short! A minimum length of %d is required!\n", length, KEY_MIN_LENGTH);
         return KG_RTN_ERR_KEY_TOO_SHORT;
     }
 
     uint8_t* buffer = malloc(length * sizeof(uint8_t) + 1);
-    memset(buffer, 0, length+1);
+    memset(buffer, 0, length + 1);
 
     KeyGenError err = keygen_createKey(buffer, length, options.keyFormat);
 
-    if( err == KG_ERR_SUCCESS )
+    if (err == KG_ERR_SUCCESS)
     {
         buffer[length] = '\0';
         printKey(buffer, options);
@@ -170,7 +170,7 @@ int generateKey(const struct CLOptions options)
         return KG_RTN_ERR_ERROR;
     }
 
-    keygen_cleanBuffer(buffer, length+1);
+    keygen_cleanBuffer(buffer, length + 1);
     free(buffer);
 
     return EXIT_SUCCESS;
@@ -178,7 +178,7 @@ int generateKey(const struct CLOptions options)
 
 const char* errorMessage(KeyGenError error)
 {
-    switch(error)
+    switch (error)
     {
         case KG_ERR_SUCCESS:
             return "";

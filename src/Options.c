@@ -28,40 +28,38 @@
 #include <stdlib.h>
 
 /** Minimum of arguments. */
-#define OPT_MIN_ARGS            2
+#define OPT_MIN_ARGS 2
 /** Getopt string. */
-#define GETOPT_CLI_STR          "sawrpl:hv"
+#define GETOPT_CLI_STR "sawrpl:hv"
 
 
 static const struct option getoptOptions[] =
-{
-    { OPT_L_ASCII, no_argument, 0, OPT_ASCII },
-    { OPT_L_ASCII_REDUCED, no_argument, 0, OPT_ASCII_REDUCED },
-    { OPT_L_ASCII_BLANKS, no_argument, 0, OPT_ASCII_BLANKS },
-    { OPT_L_ALPHANUMERIC, no_argument, 0, OPT_ALPHANUMERIC },
-    { OPT_L_LENGTH, required_argument, 0, OPT_LENGTH },
-    { OPT_L_SHORT, no_argument, 0, OPT_SHORT },
-    { OPT_L_HELP, no_argument, 0, OPT_HELP },
-    { OPT_L_VERSION, no_argument, 0, OPT_VERSION },
-    { NULL, 0, 0, 0 }
-};
+    {
+        {OPT_L_ASCII, no_argument, 0, OPT_ASCII},
+        {OPT_L_ASCII_REDUCED, no_argument, 0, OPT_ASCII_REDUCED},
+        {OPT_L_ASCII_BLANKS, no_argument, 0, OPT_ASCII_BLANKS},
+        {OPT_L_ALPHANUMERIC, no_argument, 0, OPT_ALPHANUMERIC},
+        {OPT_L_LENGTH, required_argument, 0, OPT_LENGTH},
+        {OPT_L_SHORT, no_argument, 0, OPT_SHORT},
+        {OPT_L_HELP, no_argument, 0, OPT_HELP},
+        {OPT_L_VERSION, no_argument, 0, OPT_VERSION},
+        {NULL, 0, 0, 0}};
 
 
 struct CLOptions parseOptions(int argc, char** argv)
 {
     struct CLOptions options =
-    {
-        .valid = true,
-        .exit = false,
-        .shortOutput = false,
-        .showHelp = false,
-        .showVersion = false,
-        .keyLength = 0,
-        .keyFormat = ASCII
-    };
+        {
+            .valid = true,
+            .exit = false,
+            .shortOutput = false,
+            .showHelp = false,
+            .showVersion = false,
+            .keyLength = 0,
+            .keyFormat = ASCII};
 
 
-    if( argc < OPT_MIN_ARGS )
+    if (argc < OPT_MIN_ARGS)
     {
         options.valid = true;
         options.exit = true;
@@ -72,9 +70,9 @@ struct CLOptions parseOptions(int argc, char** argv)
         int c;
         int optionIndex;
 
-        while( ( c = getopt_long(argc, argv, GETOPT_CLI_STR, getoptOptions, &optionIndex) ) != -1 ) // FlawFinder: ignore - getopt_long()
+        while ((c = getopt_long(argc, argv, GETOPT_CLI_STR, getoptOptions, &optionIndex)) != -1) // FlawFinder: ignore - getopt_long()
         {
-            switch( c )
+            switch (c)
             {
                 case OPT_ASCII:
                     options.keyFormat = ASCII;
@@ -97,7 +95,7 @@ struct CLOptions parseOptions(int argc, char** argv)
                     options.keyLength = (size_t) strtoull(optarg, (char**) NULL, 10);
                     options.valid &= true;
                 }
-                    break;
+                break;
                 case OPT_SHORT:
                     options.shortOutput = true;
                     options.valid &= true;
@@ -119,13 +117,13 @@ struct CLOptions parseOptions(int argc, char** argv)
                     break;
             }
 
-            if( options.exit == true || options.valid == false )
+            if (options.exit == true || options.valid == false)
             {
                 break;
             }
         }
 
-        if ( optind < argc )
+        if (optind < argc)
         {
             fprintf(stderr, "Not an option: %s\n", argv[optind]);
             options.exit = true;

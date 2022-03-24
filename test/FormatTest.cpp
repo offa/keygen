@@ -34,7 +34,8 @@ namespace
     template <class Container>
     void testFormat(const Container& buffer, Format format)
     {
-        std::for_each(buffer.cbegin(), buffer.cend(), [format](const auto& c) {
+        std::for_each(buffer.cbegin(), buffer.cend(), [format](const auto& c)
+                      {
             switch (format)
             {
                 case ASCII:
@@ -52,8 +53,7 @@ namespace
                 default:
                     FAIL("Invalid format");
                     break;
-            }
-        });
+            } });
     }
 
     inline constexpr std::size_t size{1000};

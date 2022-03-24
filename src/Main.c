@@ -34,7 +34,6 @@
 #include "keygen/Output.h"
 
 
-
 /**
  * The <code>main</code> function of the program.
  *
@@ -47,13 +46,13 @@ int main(int argc, char** argv)
 {
     struct CLOptions options = parseOptions(argc, argv);
 
-    if( ( options.showHelp == true && options.exit == true ) )
+    if ((options.showHelp == true && options.exit == true))
     {
         printHelp();
     }
-    else if( options.valid == true )
+    else if (options.valid == true)
     {
-        if( options.showVersion == true )
+        if (options.showVersion == true)
         {
             printVersion();
         }
@@ -61,7 +60,7 @@ int main(int argc, char** argv)
         {
             const int rtn = generateKey(options);
 
-            if( rtn != EXIT_SUCCESS )
+            if (rtn != EXIT_SUCCESS)
             {
                 return rtn;
             }
