@@ -20,7 +20,7 @@ jobs:
           - clang-8
           - clang-7
     container:
-      image: "registry.gitlab.com/offa/docker-images-ci/dist-keygen/${{ matrix.compiler }}:latest"
+      image: "registry.gitlab.com/offa/docker-images/${{ matrix.compiler }}:stable"
     name: "${{ matrix.compiler }}"
     steps:
       - uses: actions/checkout@main
@@ -35,7 +35,7 @@ jobs:
           - valgrind
           - flawfinder
     container:
-      image: "registry.gitlab.com/offa/docker-images-ci/dist-keygen/gcc-10:latest"
+      image: "registry.gitlab.com/offa/docker-images/gcc-11:stable"
     name: "Analyse ${{ matrix.tool }}"
     steps:
       - uses: actions/checkout@main

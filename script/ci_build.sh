@@ -27,6 +27,9 @@ do
     esac
 done
 
+apt-get update
+apt-get install -y --no-install-recommends openssl libssl-dev valgrind
+
 
 if [[ "${FLAWFINDER_ANALYSIS}" == true ]]
 then
