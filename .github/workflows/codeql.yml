@@ -10,7 +10,7 @@ jobs:
   codeql:
     runs-on: ubuntu-20.04
     container:
-      image: "registry.gitlab.com/offa/docker-images-ci/dist-keygen/gcc-10:latest"
+      image: "registry.gitlab.com/offa/docker-images-ci/dist-keygen/gcc-11:latest"
     name: "CodeQL"
     steps:
       - name: Checkout
