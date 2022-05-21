@@ -1,8 +1,8 @@
 add_library(Catch INTERFACE)
-target_include_directories(Catch INTERFACE "catch")
+target_include_directories(Catch SYSTEM INTERFACE "catch")
 
 add_library(Trompeloeil INTERFACE)
-target_include_directories(Trompeloeil INTERFACE "trompeloeil")
+target_include_directories(Trompeloeil SYSTEM INTERFACE "trompeloeil")
 
 add_cpp_library(testmain TestMain.cpp)
 target_link_libraries(testmain PUBLIC Catch Trompeloeil build-libs)
@@ -61,4 +61,3 @@ if( VALGRIND )
                         VERBATIM
                         )
 endif()
-
