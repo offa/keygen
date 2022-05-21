@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@main
       - name: Build
-        run: script/ci_build.sh
+        run: script/ci_build.sh ${{ startsWith(matrix.compiler, 'clang-11') && '-no-san' }}
 
   build_analyse:
     runs-on: ubuntu-latest
