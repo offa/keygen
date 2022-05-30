@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(keygen VERSION 0.5.5)
+project(keygen VERSION 0.5.6)
 
 message(STATUS "~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~")
 
