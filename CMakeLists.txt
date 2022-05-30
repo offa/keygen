@@ -4,6 +4,7 @@ project(keygen VERSION 0.5.5)
 
 message(STATUS "~~ ${PROJECT_NAME} ${PROJECT_VERSION} ~~")
 
+message(STATUS "Build Type : ${CMAKE_BUILD_TYPE}")
 
 option(UNITTEST "Builds unit tests" ON)
 message(STATUS "Building Unit Tests : ${UNITTEST}")
