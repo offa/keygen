@@ -7,6 +7,11 @@ target_include_directories(Trompeloeil SYSTEM INTERFACE "trompeloeil")
 add_cpp_library(testmain TestMain.cpp)
 target_link_libraries(testmain PUBLIC Catch Trompeloeil build-libs)
 
+# #63: GCC 12 false positive
+if( CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER "12")
+    target_compile_options(testmain PRIVATE "-Wno-maybe-uninitialized")
+endif()
+
 
 
 function(add_test_suite name)
