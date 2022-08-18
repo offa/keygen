@@ -12,7 +12,7 @@ The cryptography behind is provided by *OpenSSL*.
 ## Requirements
 
  - [**OpenSSL**](https://www.openssl.org/)
- - [**CMake**](http://www.cmake.org/)
+
 
 ## Building
 
