@@ -22,7 +22,7 @@
 #include "TestUtil.h"
 #include <array>
 #include <iterator>
-#include <catch2/catch.hpp>
+#include <catch2/catch_test_macros.hpp>
 
 namespace
 {

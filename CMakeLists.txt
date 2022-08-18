@@ -23,7 +23,7 @@ option(DOXYGEN "Generate Doxygen documentation" OFF)
 message(STATUS "Doxygen : ${DOXYGEN}")
 
 
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 
 find_package(OpenSSL REQUIRED)

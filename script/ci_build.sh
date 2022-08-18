@@ -28,7 +28,19 @@ do
 done
 
 apt-get update
-apt-get install -y --no-install-recommends openssl libssl-dev valgrind
+apt-get install -y --no-install-recommends openssl libssl-dev valgrind python3-pip
+
+pip3 install -U conan
+conan profile new default --detect
+
+if [[ "${CXX}" == clang* ]]
+then
+    export CXXFLAGS="-stdlib=libc++"
+    conan profile update settings.compiler.libcxx=libc++ default
+else
+    conan profile update settings.compiler.libcxx=libstdc++11 default
+fi
+
 
 
 if [[ "${FLAWFINDER_ANALYSIS}" == true ]]
@@ -39,12 +51,6 @@ then
     exit
 fi
 
-
-if [[ "${CXX}" == clang* ]]
-then
-    export CXXFLAGS="-stdlib=libc++"
-fi
-
 if [[ "${SANITIZER}" == true ]]
 then
     BUILD_ARGS+=("-DSANITIZER_ASAN=ON" "-DSANITIZER_UBSAN=ON")
@@ -53,7 +59,15 @@ fi
 
 mkdir -p build && cd build
 
-cmake "${BUILD_ARGS[@]}" ..
+conan install \
+    --build=missing \
+    -g cmake_find_package \
+    -g cmake_paths \
+    -s compiler.cppstd=17 \
+    ..
+
+
+cmake -DCMAKE_TOOLCHAIN_FILE=./conan_paths.cmake "${BUILD_ARGS[@]}" ..
 make
 make unittest
 

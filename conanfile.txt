@@ -1,0 +1,7 @@
+[requires]
+catch2/3.1.0
+trompeloeil/42
+
+[generators]
+cmake_find_package
+cmake_paths

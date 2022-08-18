@@ -1,23 +1,11 @@
-add_library(Catch INTERFACE)
-target_include_directories(Catch SYSTEM INTERFACE "catch")
-
-add_library(Trompeloeil INTERFACE)
-target_include_directories(Trompeloeil SYSTEM INTERFACE "trompeloeil")
-
-add_cpp_library(testmain TestMain.cpp)
-target_link_libraries(testmain PUBLIC Catch Trompeloeil build-libs)
-
-# #63: GCC 12 false positive
-if( CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER "12")
-    target_compile_options(testmain PRIVATE "-Wno-maybe-uninitialized")
-endif()
-
+find_package(Catch2 REQUIRED)
+find_package(trompeloeil REQUIRED)
 
 
 function(add_test_suite name)
     add_cpp_executable(${name} ${ARGN})
     add_test(${name} ${name})
-    target_link_libraries(${name} PRIVATE testmain)
+    target_link_libraries(${name} PRIVATE Catch2::Catch2WithMain trompeloeil::trompeloeil build-libs)
 
     if( COVERAGE )
         target_link_libraries(${name} PRIVATE gcov)
