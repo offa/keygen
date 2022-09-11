@@ -46,7 +46,7 @@ extern "C"
     /**
      * Shows help information.
      */
-    void printHelp();
+    void printHelp(void);
 
     /**
      * Prints the key with the given options.
@@ -59,7 +59,7 @@ extern "C"
     /**
      * Shows version informations and license.
      */
-    void printVersion();
+    void printVersion(void);
 
     /**
      * Generates and prints a key according the parameters in

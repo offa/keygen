@@ -79,14 +79,14 @@ static inline void printHelpOption(const char* optLong, char optShort, const cha
 /**
  * Prints a common head.
  */
-static inline void printHead()
+static inline void printHead(void)
 {
     const char* header = "KeyGen\tv" KEYGEN_VERSION "\0";
     printf(" %s\n", header);
     printLine('-', strlen(header) + 2, true); // FlawFinder: ignore - \0 termination is guaranteed
 }
 
-void printHelp()
+void printHelp(void)
 {
     printHead();
     printf("\nGenerates keys and passwords.\n");
@@ -121,7 +121,7 @@ void printKey(const uint8_t* key, struct CLOptions options)
     }
 }
 
-void printVersion()
+void printVersion(void)
 {
     printHead();
     printf("\n License :   GNU General Public License (GPL)\n");
