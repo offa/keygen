@@ -33,14 +33,14 @@ jobs:
           - flawfinder
     container:
       image: "registry.gitlab.com/offa/docker-images/gcc-11:stable"
-    name: "Analyse ${{ matrix.tool }}"
+    name: "${{ matrix.tool }}"
     steps:
       - uses: actions/checkout@main
       - name: Build
         run: script/ci_build.sh -${{ matrix.tool }}
 
   formatting-check:
-    name: formatting
+    name: "formatting"
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
