@@ -3,7 +3,7 @@
 set -ex
 
 VALGRIND=false
-SANITIZER=false # Disabled due to broken Clang (#71)
+SANITIZER=true
 FLAWFINDER_ANALYSIS=false
 BUILD_ARGS=("-DCMAKE_BUILD_TYPE=Release")
 
