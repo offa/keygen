@@ -5,7 +5,8 @@ set -ex
 VALGRIND=false
 SANITIZER=true
 FLAWFINDER_ANALYSIS=false
-BUILD_ARGS=("-DCMAKE_BUILD_TYPE=Release")
+BUILD_ARGS=()
+BUILD_TYPE=Release
 
 for arg in "$@"
 do
@@ -21,7 +22,7 @@ do
             FLAWFINDER_ANALYSIS=true
             ;;
         -codeql)
-            BUILD_ARGS=("-DCMAKE_BUILD_TYPE=Debug")
+            BUILD_TYPE=Debug
             SANITIZER=false
             ;;
     esac
@@ -31,14 +32,12 @@ apt-get update
 apt-get install -y --no-install-recommends openssl libssl-dev valgrind python3-pip
 
 pip3 install -U conan
-conan profile new default --detect
+conan profile detect
 
 if [[ "${CXX}" == clang* ]]
 then
     export CXXFLAGS="-stdlib=libc++"
-    conan profile update settings.compiler.libcxx=libc++ default
-else
-    conan profile update settings.compiler.libcxx=libstdc++11 default
+    sed -i 's/^compiler.libcxx=.*$/compiler.libcxx=libc++/g' ~/.conan2/profiles/default
 fi
 
 
@@ -61,13 +60,12 @@ mkdir -p build && cd build
 
 conan install \
     --build=missing \
-    -g cmake_find_package \
-    -g cmake_paths \
     -s compiler.cppstd=17 \
+    -s build_type=${BUILD_TYPE} \
     ..
 
 
-cmake -DCMAKE_TOOLCHAIN_FILE=./conan_paths.cmake "${BUILD_ARGS[@]}" ..
+cmake -DCMAKE_TOOLCHAIN_FILE=./conan_toolchain.cmake -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" "${BUILD_ARGS[@]}" ..
 make
 make unittest
 
