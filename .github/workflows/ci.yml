@@ -32,7 +32,7 @@ jobs:
           - valgrind
           - flawfinder
     container:
-      image: "registry.gitlab.com/offa/docker-images/gcc:12"
+      image: "registry.gitlab.com/offa/docker-images/gcc:13"
     name: "${{ matrix.tool }}"
     steps:
       - uses: actions/checkout@main
