@@ -1,6 +1,6 @@
 [requires]
 catch2/3.5.1
-trompeloeil/46
+trompeloeil/47
 
 [generators]
 CMakeDeps
