@@ -4,7 +4,7 @@ set_target_properties(keygen-lib PROPERTIES
                                     ARCHIVE_OUTPUT_NAME "keygen"
                                     ARCHIVE_OUTPUT_DIRECTORY "lib"
                                     )
-target_link_libraries(keygen-lib PRIVATE OpenSSL::SSL)
+target_link_libraries(keygen-lib PRIVATE OpenSSL::SSL OpenSSL::Crypto)
 
 
 
