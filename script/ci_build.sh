@@ -28,10 +28,12 @@ do
     esac
 done
 
+export DEBIAN_FRONTEND=noninteractive
+export PATH=$HOME/.local/bin:$PATH
 apt-get update
-apt-get install -y --no-install-recommends openssl libssl-dev valgrind python3-pip
+apt-get install -y --no-install-recommends openssl libssl-dev valgrind pipx
 
-pip3 install -U conan
+pipx install conan
 conan profile detect
 
 if [[ "${CXX}" == clang* ]]
