@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdexcept>
 
 namespace test
 {
@@ -34,7 +35,10 @@ namespace test
             : fileDescriptor(dup(streamFd)), fileHandle(handle)
         {
             fflush(fileHandle);
-            [[maybe_unused]] const auto rtn = freopen("NUL", "a", fileHandle);
+            if (const auto rtn = freopen("NUL", "a", fileHandle); rtn == nullptr)
+            {
+                throw std::runtime_error{"failed to redirect stream"};
+            }
         }
 
         DisableStream(const DisableStream&) = delete;
