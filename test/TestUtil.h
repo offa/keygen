@@ -34,8 +34,13 @@ namespace test
         explicit DisableStream(FILE* handle)
             : fileDescriptor(dup(streamFd)), fileHandle(handle)
         {
+            if (fileDescriptor < 0)
+            {
+                throw std::runtime_error{"failed to dup() stream"};
+            }
             fflush(fileHandle);
-            if (const auto rtn = freopen("NUL", "a", fileHandle); rtn == nullptr)
+
+            if (const auto* rtn = freopen("NUL", "a", fileHandle); rtn == nullptr)
             {
                 throw std::runtime_error{"failed to redirect stream"};
             }
