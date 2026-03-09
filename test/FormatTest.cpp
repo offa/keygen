@@ -24,9 +24,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 extern const char ALPHANUMERIC_CHARS[];
-extern const size_t ALPHANUMERIC_LENGTH;
 extern const char ASCII_REDUCED_CHARS[];
-extern const size_t ASCII_REDUCED_LENGTH;
 
 namespace
 {
@@ -36,6 +34,7 @@ namespace
     {
         std::for_each(buffer.cbegin(), buffer.cend(), [format](const auto& c)
                       {
+                      constexpr std::size_t asciiReducedSize{88};
             switch (format)
             {
                 case ASCII:
@@ -45,7 +44,7 @@ namespace
                     CHECK_FALSE(((c < ' ') || (c > '~')));
                     break;
                 case ASCII_REDUCED:
-                    CHECK(std::find(ASCII_REDUCED_CHARS, (ASCII_REDUCED_CHARS + ASCII_REDUCED_LENGTH), c));
+                    CHECK(std::find(ASCII_REDUCED_CHARS, (ASCII_REDUCED_CHARS + asciiReducedSize), c));
                     break;
                 case ALPHA_NUMERIC:
                     CHECK(std::isalnum(c));
