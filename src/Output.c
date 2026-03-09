@@ -117,7 +117,7 @@ void printKey(const uint8_t* key, struct CLOptions options)
         printf("%s\n", key);
         fflush(stdout);
         printLine('-', lineLength, true);
-        printf("  Length : %ld\n\n", options.keyLength);
+        printf("  Length : %zu\n\n", options.keyLength);
     }
 }
 
