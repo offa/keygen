@@ -135,12 +135,12 @@ static KeyGenError getRandomBytes(uint8_t* buffer, size_t length)
 
 static inline KeyGenError checkPreconditions(const uint8_t* buffer, size_t length)
 {
-    if (length > INT_MAX)
+    if ((length < KEY_MIN_LENGTH) || (length > KEY_MAX_LENGTH))
     {
         return KG_ERR_UNSUPPORTED;
     }
 
-    if ((buffer == NULL) || (length < KEY_MIN_LENGTH))
+    if (buffer == NULL)
     {
         return KG_ERR_ILL_ARGUMENT;
     }
