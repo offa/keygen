@@ -62,3 +62,13 @@ TEST_CASE("keysize exceeding int fails", "[MockedTest]")
     const KeyGenError rtn = keygen_createKey(nullptr, greaterThanInt, ASCII);
     CHECK(rtn == KG_ERR_UNSUPPORTED);
 }
+
+TEST_CASE("keysize lower limit fails", "[MockedTest]")
+{
+    using trompeloeil::_;
+    REQUIRE_CALL(m, randBytes(_, _)).TIMES(0);
+
+    const test::DisableStderr d{stderr};
+    const KeyGenError rtn = keygen_createKey(nullptr, 3, ASCII);
+    CHECK(rtn == KG_ERR_UNSUPPORTED);
+}

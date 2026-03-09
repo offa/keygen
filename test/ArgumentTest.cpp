@@ -27,7 +27,7 @@ TEST_CASE("tooShortLengthRejected", "[ArgumentTest]")
     std::array<std::uint8_t, 7> buffer{{}};
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
-    CHECK(rtn == KG_ERR_ILL_ARGUMENT);
+    CHECK(rtn == KG_ERR_UNSUPPORTED);
 }
 
 TEST_CASE("tooShortLengthDoesntChangeBuffer", "[ArgumentTest]")
@@ -36,7 +36,7 @@ TEST_CASE("tooShortLengthDoesntChangeBuffer", "[ArgumentTest]")
     const std::array<std::uint8_t, 7> expected{{}};
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
-    CHECK(rtn == KG_ERR_ILL_ARGUMENT);
+    CHECK(rtn == KG_ERR_UNSUPPORTED);
     CHECK(buffer == expected);
 }
 

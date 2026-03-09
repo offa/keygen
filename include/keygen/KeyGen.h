@@ -46,6 +46,8 @@ extern "C"
 
 /** Minimum key length. */
 #define KEY_MIN_LENGTH 8
+/** Maximal key length. */
+#define KEY_MAX_LENGTH INT_MAX
 
 
     /**
@@ -105,7 +107,7 @@ extern "C"
      * for <code>length</code> less than <code>1</code>.
      *
      * @param buffer        Buffer to store the key
-     * @param length        Key length (>= <code>KEY_MIN_LENGTH</code>)
+     * @param length        Key length (<code>KEY_MIN_LENGTH <= length <= KEY_MAX_LENGTH</code>)
      * @param format        Output format
      * @return              Returns <code>KG_ERR_SUCCESS</code> on success or
      *                      an error code
