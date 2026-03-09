@@ -123,26 +123,27 @@ static void transformBuffer(uint8_t* buffer, const size_t length,
  *
  * @param buffer        Buffer
  * @param length        Length (size)
- * @return              Returns <code>ERR_LIB_NONE</code> on success or an
+ * @return              Returns <code>KG_ERR_SUCCESS</code> on success or an
  *                      error code
  */
-static int getRandomBytes(uint8_t* buffer, size_t length)
+static KeyGenError getRandomBytes(uint8_t* buffer, size_t length)
 {
     assert(length < INT_MAX);
     const int rtn = RAND_bytes(buffer, (int) length);
 
-    if (rtn != ERR_LIB_NONE)
+    if (rtn != 1)
     {
         const unsigned long error = ERR_get_error();
         char errBuffer[ERR_MSG_LENGTH + 1]; // FlawFinder: ignore - Handled by ERR_error_string_n()
 
-        ERR_error_string_n(error, errBuffer, ERR_MSG_LENGTH);
+        ERR_error_string_n(error, errBuffer, sizeof(errBuffer));
         fprintf(stderr, "%s", errBuffer);
 
         keygen_cleanBuffer(buffer, length);
+        return KG_ERR_SECURITY;
     }
 
-    return rtn;
+    return KG_ERR_SUCCESS;
 }
 
 static inline KeyGenError checkPreconditions(const uint8_t* buffer, size_t length)
@@ -176,9 +177,9 @@ KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format f
     }
 
     KeyGenError rtn = KG_ERR_UNKNOWN;
-    const int err = getRandomBytes(tmpBuffer, length);
+    const KeyGenError err = getRandomBytes(tmpBuffer, length);
 
-    if (err == ERR_LIB_NONE)
+    if (err == KG_ERR_SUCCESS)
     {
         bool error = false;
 
