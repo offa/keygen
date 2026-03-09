@@ -36,6 +36,8 @@
 /** Buffer size of error messages. */
 #define ERR_MSG_LENGTH 128
 
+/** Number of elements in the array */
+#define COUNT_ARRAY_ELEMENTS(array) (sizeof(array) / sizeof((array)[0]))
 
 /** Alphanumeric set */
 const char ALPHANUMERIC_CHARS[] = {
@@ -44,10 +46,6 @@ const char ALPHANUMERIC_CHARS[] = {
     'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
     'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
     'y', 'z'};
-
-/** Number of alphanumeric chars */
-const size_t ALPHANUMERIC_LENGTH = sizeof(ALPHANUMERIC_CHARS);
-
 
 /** Reduced Ascii set */
 const char ASCII_REDUCED_CHARS[] =
@@ -58,10 +56,6 @@ const char ASCII_REDUCED_CHARS[] =
         'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', ']', '_', 'a',
         'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
         'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '}', '~'};
-
-/** Number of reduced Ascii chars */
-const size_t ASCII_REDUCED_LENGTH = sizeof(ASCII_REDUCED_CHARS);
-
 
 /** Ascii set including blank char */
 const char ASCII_BLANK_CHARS[] =
@@ -74,10 +68,6 @@ const char ASCII_BLANK_CHARS[] =
         'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y',
         'z', '{', '|', '}', '~'};
 
-/** Number of Ascii chars including blank */
-const size_t ASCII_BLANK_LENGTH = sizeof(ASCII_BLANK_CHARS);
-
-
 /** Full Ascii chars */
 const char ASCII_CHARS[] =
     {
@@ -88,9 +78,6 @@ const char ASCII_CHARS[] =
         ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
         'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
         '{', '|', '}', '~'};
-
-/** Number of full Ascii chars */
-const size_t ASCII_LENGTH = sizeof(ASCII_CHARS);
 
 
 /**
@@ -186,16 +173,16 @@ KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format f
         switch (format)
         {
             case ASCII:
-                transformBuffer(tmpBuffer, length, ASCII_CHARS, ASCII_LENGTH);
+                transformBuffer(tmpBuffer, length, ASCII_CHARS, COUNT_ARRAY_ELEMENTS(ASCII_CHARS));
                 break;
             case ASCII_BLANKS:
-                transformBuffer(tmpBuffer, length, ASCII_BLANK_CHARS, ASCII_BLANK_LENGTH);
+                transformBuffer(tmpBuffer, length, ASCII_BLANK_CHARS, COUNT_ARRAY_ELEMENTS(ASCII_BLANK_CHARS));
                 break;
             case ASCII_REDUCED:
-                transformBuffer(tmpBuffer, length, ASCII_REDUCED_CHARS, ASCII_REDUCED_LENGTH);
+                transformBuffer(tmpBuffer, length, ASCII_REDUCED_CHARS, COUNT_ARRAY_ELEMENTS(ASCII_REDUCED_CHARS));
                 break;
             case ALPHA_NUMERIC:
-                transformBuffer(tmpBuffer, length, ALPHANUMERIC_CHARS, ALPHANUMERIC_LENGTH);
+                transformBuffer(tmpBuffer, length, ALPHANUMERIC_CHARS, COUNT_ARRAY_ELEMENTS(ALPHANUMERIC_CHARS));
                 break;
             default:
                 rtn = KG_ERR_ILL_ARGUMENT;
