@@ -30,7 +30,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
     static char name[] = "OptionsTest";
 
 
-    SECTION("testNoArgsReturnsHelpAndExit")
+    SECTION("testNoArgsReturnsHelpAndExit", "[OptionsTest]")
     {
         char* argv[] = {name};
         const int argc{1};
@@ -42,7 +42,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.exit == true);
     }
 
-    SECTION("testFormatArgumentAscii")
+    SECTION("testFormatArgumentAscii", "[OptionsTest]")
     {
         char param[] = "-a";
         char* argv[] = {name, param};
@@ -54,7 +54,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.keyFormat == ASCII);
     }
 
-    SECTION("testFormatArgumentAsciiLong")
+    SECTION("testFormatArgumentAsciiLong", "[OptionsTest]")
     {
         char param[] = "--ascii";
         char* argv[] = {name, param};
@@ -66,7 +66,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.keyFormat == ASCII);
     }
 
-    SECTION("testFormatArgumentAsciiReduced")
+    SECTION("testFormatArgumentAsciiReduced", "[OptionsTest]")
     {
         char param[] = "-r";
         char* argv[] = {name, param};
@@ -78,7 +78,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.keyFormat == ASCII_REDUCED);
     }
 
-    SECTION("testFormatArgumentAsciiReducedLong")
+    SECTION("testFormatArgumentAsciiReducedLong", "[OptionsTest]")
     {
         char param[] = "--ascii-reduced";
         char* argv[] = {name, param};
@@ -90,7 +90,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.keyFormat == ASCII_REDUCED);
     }
 
-    SECTION("testFormatArgumentAsciiBlank")
+    SECTION("testFormatArgumentAsciiBlank", "[OptionsTest]")
     {
         char param[] = "-w";
         char* argv[] = {name, param};
@@ -102,7 +102,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.keyFormat == ASCII_BLANKS);
     }
 
-    SECTION("testFormatArgumentAsciiBlankLong")
+    SECTION("testFormatArgumentAsciiBlankLong", "[OptionsTest]")
     {
         char param[] = "--ascii-blank";
         char* argv[] = {name, param};
@@ -114,7 +114,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.keyFormat == ASCII_BLANKS);
     }
 
-    SECTION("testFormatArgumentAlphaNumeric")
+    SECTION("testFormatArgumentAlphaNumeric", "[OptionsTest]")
     {
         char param[] = "-p";
         char* argv[] = {name, param};
@@ -126,7 +126,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.keyFormat == ALPHA_NUMERIC);
     }
 
-    SECTION("testFormatArgumentAlphaNumericLong")
+    SECTION("testFormatArgumentAlphaNumericLong", "[OptionsTest]")
     {
         char param[] = "--alphanum";
         char* argv[] = {name, param};
@@ -138,7 +138,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.keyFormat == ALPHA_NUMERIC);
     }
 
-    SECTION("testLength")
+    SECTION("testLength", "[OptionsTest]")
     {
         char param[] = "-l";
         char value[] = "10";
@@ -151,7 +151,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.keyLength == 10);
     }
 
-    SECTION("testLengthLong")
+    SECTION("testLengthLong", "[OptionsTest]")
     {
         char param[] = "--length";
         char value[] = "10";
@@ -164,7 +164,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.keyLength == 10);
     }
 
-    SECTION("testLengthTooShort")
+    SECTION("testLengthTooShort", "[OptionsTest]")
     {
         char param[] = "--length";
         char value[] = "1";
@@ -177,7 +177,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.exit == true);
     }
 
-    SECTION("testLengthTooLong")
+    SECTION("testLengthTooLong", "[OptionsTest]")
     {
         char param[] = "--length";
         const std::string oversize = std::to_string(static_cast<std::size_t>(std::numeric_limits<int>::max()) + 5);
@@ -193,7 +193,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.exit == true);
     }
 
-    SECTION("testFormatArgumentShort")
+    SECTION("testFormatArgumentShort", "[OptionsTest]")
     {
         char param[] = "-s";
         char* argv[] = {name, param};
@@ -205,7 +205,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.shortOutput == true);
     }
 
-    SECTION("testFormatArgumentShortLong")
+    SECTION("testFormatArgumentShortLong", "[OptionsTest]")
     {
         char param[] = "--short";
         char* argv[] = {name, param};
@@ -217,7 +217,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.shortOutput == true);
     }
 
-    SECTION("testShowHelp")
+    SECTION("testShowHelp", "[OptionsTest]")
     {
         char param[] = "-h";
         char* argv[] = {name, param};
@@ -230,7 +230,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.exit == true);
     }
 
-    SECTION("testShowHelpLong")
+    SECTION("testShowHelpLong", "[OptionsTest]")
     {
         char param[] = "--help";
         char* argv[] = {name, param};
@@ -243,7 +243,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.exit == true);
     }
 
-    SECTION("testShowVersion")
+    SECTION("testShowVersion", "[OptionsTest]")
     {
         char param[] = "-v";
         char* argv[] = {name, param};
@@ -256,7 +256,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.exit == true);
     }
 
-    SECTION("testShowVersionLong")
+    SECTION("testShowVersionLong", "[OptionsTest]")
     {
         char param[] = "--version";
         char* argv[] = {name, param};
@@ -269,7 +269,7 @@ TEST_CASE("option evaluation", "[OptionsTest]")
         CHECK(result.exit == true);
     }
 
-    SECTION("testInvalidOptionSetsInvalidAndExit")
+    SECTION("testInvalidOptionSetsInvalidAndExit", "[OptionsTest]")
     {
         char param[] = "-q";
         char* argv[] = {name, param};
