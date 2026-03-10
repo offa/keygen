@@ -38,6 +38,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <limits.h>
 
 #ifdef __cplusplus
 extern "C"

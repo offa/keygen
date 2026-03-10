@@ -93,7 +93,13 @@ struct CLOptions parseOptions(int argc, char** argv)
                 case OPT_LENGTH:
                 {
                     options.keyLength = (size_t) strtoull(optarg, (char**) NULL, 10);
-                    options.valid &= true;
+                    const bool validLength = ((options.keyLength >= KEY_MIN_LENGTH) && (options.keyLength <= KEY_MAX_LENGTH));
+                    options.valid &= validLength;
+                    if (!validLength)
+                    {
+                        fprintf(stderr, "Invalid key length: %zu (out of limits)\n", options.keyLength);
+                        options.exit = true;
+                    }
                 }
                 break;
                 case OPT_SHORT:
