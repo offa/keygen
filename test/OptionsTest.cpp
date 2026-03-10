@@ -20,6 +20,7 @@
 
 #include "keygen/Options.h"
 #include "TestUtil.h"
+#include <algorithm>
 #include <catch2/catch_test_macros.hpp>
 
 TEST_CASE("option evaluation", "[OptionsTest]")
@@ -161,6 +162,35 @@ TEST_CASE("option evaluation", "[OptionsTest]")
 
         CHECK(result.valid == true);
         CHECK(result.keyLength == 10);
+    }
+
+    SECTION("testLengthTooShort")
+    {
+        char param[] = "--length";
+        char value[] = "1";
+        char* argv[] = {name, param, value};
+        const int argc{3};
+
+        const CLOptions result = parseOptions(argc, argv);
+
+        CHECK(result.valid == false);
+        CHECK(result.exit == true);
+    }
+
+    SECTION("testLengthTooLong")
+    {
+        char param[] = "--length";
+        const std::string oversize = std::to_string(static_cast<std::size_t>(std::numeric_limits<int>::max()) + 5);
+        char value[32];
+        std::copy_n(oversize.cbegin(), oversize.size() + 1, value);
+
+        char* argv[] = {name, param, value};
+        const int argc{3};
+
+        const CLOptions result = parseOptions(argc, argv);
+
+        CHECK(result.valid == false);
+        CHECK(result.exit == true);
     }
 
     SECTION("testFormatArgumentShort")
