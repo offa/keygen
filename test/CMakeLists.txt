@@ -10,6 +10,11 @@ function(add_test_suite name)
     if( COVERAGE )
         target_link_libraries(${name} PRIVATE gcov)
     endif()
+
+    # Workaround for catch2 #3076
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_GREATER_EQUAL "22")
+        target_compile_options(${name} PRIVATE -Wno-c2y-extensions)
+    endif()
 endfunction()
 
 
