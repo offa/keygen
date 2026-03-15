@@ -31,10 +31,7 @@ done
 export DEBIAN_FRONTEND=noninteractive
 export PATH=$HOME/.local/bin:$PATH
 apt-get update
-apt-get install -y --no-install-recommends openssl libssl-dev valgrind pipx
-
-pipx install conan
-conan profile detect
+apt-get install -y --no-install-recommends openssl libssl-dev valgrind
 
 if [[ "${CXX}" == clang* ]]
 then
