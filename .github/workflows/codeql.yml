@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@main
-      - uses: offa/conan-action@c53f2e20ee76d70775862fdc7d52f7f53e60062d
+      - uses: offa/conan-action@1132c2e396bf4af73f7196939c0d45e7359f63c8
       - name: CodeQL Initialization
         uses: github/codeql-action/init@v4
         with:
