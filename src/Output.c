@@ -155,6 +155,13 @@ int generateKey(const struct CLOptions options)
     }
 
     uint8_t* buffer = malloc(length * sizeof(uint8_t) + 1);
+
+    if (buffer == NULL)
+    {
+        fprintf(stderr, "ERROR: Memory allocation failed\n");
+        return KG_RTN_ERR_ERROR;
+    }
+
     memset(buffer, 0, length + 1);
 
     KeyGenError err = keygen_createKey(buffer, length, options.keyFormat);
@@ -167,6 +174,7 @@ int generateKey(const struct CLOptions options)
     else
     {
         fprintf(stderr, "ERROR (%d): %s\n", err, errorMessage(err));
+        free(buffer);
         return KG_RTN_ERR_ERROR;
     }
 
