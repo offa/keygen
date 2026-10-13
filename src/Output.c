@@ -150,11 +150,18 @@ int generateKey(const struct CLOptions options)
 
     if (length < KEY_MIN_LENGTH)
     {
-        fprintf(stderr, "A keylength of %ld is too short! A minimum length of %d is required!\n", length, KEY_MIN_LENGTH);
+        fprintf(stderr, "A keylength of %zu is too short! A minimum length of %d is required!\n", length, KEY_MIN_LENGTH);
         return KG_RTN_ERR_KEY_TOO_SHORT;
     }
 
     uint8_t* buffer = malloc(length * sizeof(uint8_t) + 1);
+
+    if (buffer == NULL)
+    {
+        fprintf(stderr, "ERROR: Memory allocation failed\n");
+        return KG_RTN_ERR_ERROR;
+    }
+
     memset(buffer, 0, length + 1);
 
     KeyGenError err = keygen_createKey(buffer, length, options.keyFormat);
@@ -167,6 +174,7 @@ int generateKey(const struct CLOptions options)
     else
     {
         fprintf(stderr, "ERROR (%d): %s\n", err, errorMessage(err));
+        free(buffer);
         return KG_RTN_ERR_ERROR;
     }
 
