@@ -78,11 +78,11 @@ TEST_CASE("cleanUpBorderCheck", "[MemoryTest]")
 
 TEST_CASE("overlength", "[MemoryTest]")
 {
-    constexpr std::size_t overLength{2048};
+    constexpr std::size_t overLength{1025};
     std::array<std::uint8_t, overLength> buffer{{0}};
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), overLength, ASCII);
-    CHECK(rtn == KG_ERR_SUCCESS);
+    CHECK(rtn == KG_ERR_UNSUPPORTED);
 }
 
 TEST_CASE("overAndUnderflow", "[MemoryTest]")
