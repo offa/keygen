@@ -48,7 +48,7 @@ extern "C"
 /** Minimum key length. */
 #define KEY_MIN_LENGTH 8
 /** Maximal key length. */
-#define KEY_MAX_LENGTH INT_MAX
+#define KEY_MAX_LENGTH 1024
 
 
     /**

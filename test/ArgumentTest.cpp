@@ -48,9 +48,9 @@ TEST_CASE("allowedSizeGeneratesKey8Byte", "[ArgumentTest]")
     CHECK(rtn == KG_ERR_SUCCESS);
 }
 
-TEST_CASE("allowedSizeGeneratesKey1200Byte", "[ArgumentTest]")
+TEST_CASE("allowedSizeGeneratesKey1024Byte", "[ArgumentTest]")
 {
-    std::array<std::uint8_t, 1200> buffer{{}};
+    std::array<std::uint8_t, 1024> buffer{{}};
 
     const KeyGenError rtn = keygen_createKey(buffer.data(), buffer.size(), ASCII);
     CHECK(rtn == KG_ERR_SUCCESS);
