@@ -29,7 +29,7 @@ do
 done
 
 export DEBIAN_FRONTEND=noninteractive
-export PATH=$HOME/.local/bin:$PATH
+export PATH="$HOME/.local/bin:$PATH"
 apt-get update
 apt-get install -y --no-install-recommends openssl libssl-dev valgrind
 
