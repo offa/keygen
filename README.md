@@ -40,7 +40,7 @@ make        | < target >
 
 ## Usage
 
-The unit of length are (ascii-) characters (1 char = 1 byte). So a length of 20 means 20 (ascii-) char's = 20 Byte.
+The unit of length is (ASCII) characters (1 char = 1 byte). So a length of 20 means 20 (ASCII) characters = 20 bytes.
 
 ### Application
 
@@ -78,7 +78,7 @@ Key of 24 length:
 
 this is equal to `keygen --ascii -l 20` and `keygen -a -l 20`.
 
-The same key size, but with short (key only) output:
+The same key size, displayed in short (key only) format:
 
     $ keygen -s -l 20
     ZI^fD{dX<qa?uw?%'acM
