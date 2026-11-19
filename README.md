@@ -84,9 +84,9 @@ The same key size, displayed in short (key only) format:
     ZI^fD{dX<qa?uw?%'acM
 
 
-Key of 4048 length, stored in a file:
+Key of 1024 length, stored in a file:
 
-    $ keygen --short --length 4048 > example.key
+    $ keygen --short --length 1024 > example.key
 
 *(Use `--short` / `-s` to write key only)*
 
