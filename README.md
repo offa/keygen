@@ -66,7 +66,7 @@ The application is used with commandline arguments. Run `keygen -h` to print the
 
 #### Examples
 
-Key of 24 length:
+Key of 20 length:
 
     $ keygen -l 20
 
@@ -74,7 +74,7 @@ Key of 24 length:
     ----------
     amZ5QiX>9Z-=4U.XP;bD
     ----------
-      Length : 20 / 20
+      Length : 20
 
 this is equal to `keygen --ascii -l 20` and `keygen -a -l 20`.
 
@@ -94,7 +94,7 @@ Key of 1024 length, stored in a file:
 ### Library
 
 ```c
-const int KEY_LENGTH = 100000; // Key length
+const int KEY_LENGTH = 128; // Key length (must be between KEY_MIN_LENGTH and KEY_MAX_LENGTH)
 uint8_t* buffer = malloc(KEY_LENGTH * sizeof(uint8_t)); // allocate buffer
 
 if( buffer == NULL )
@@ -115,7 +115,7 @@ else
     }
 
     // Finally clean and free the buffer
-    keygen_cleanAndFreeBuffer(buffer, length);
+    keygen_cleanAndFreeBuffer(buffer, KEY_LENGTH);
 }
 ```
 
