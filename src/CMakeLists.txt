@@ -24,7 +24,7 @@ endif()
 
 if( VALGRIND )
     add_custom_target(memcheck ${VALGRIND} ${VALGRIND_MEMCHECK_FLAGS}
-                        $<TARGET_FILE:keygen> -sl 6000 1> /dev/null
+                        $<TARGET_FILE:keygen> -sl 500 1> /dev/null
                         COMMENT "Memchecking executable\n\n"
                         VERBATIM
                         )
