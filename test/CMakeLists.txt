@@ -47,7 +47,7 @@ add_custom_target(unittest ArgumentTest
 if( VALGRIND )
     add_custom_target(memcheck-test ${VALGRIND}
         ${VALGRIND_MEMCHECK_FLAGS} $<TARGET_FILE:ArgumentTest> 1> /dev/null
-        COMMAND ${VALGRIND_MEMCHECK_FLAGS} $<TARGET_FILE:FormatTest> 1> /dev/null
+        COMMAND ${VALGRIND} ${VALGRIND_MEMCHECK_FLAGS} $<TARGET_FILE:FormatTest> 1> /dev/null
         COMMAND ${VALGRIND} ${VALGRIND_MEMCHECK_FLAGS} $<TARGET_FILE:MemoryTest> 1> /dev/null
         COMMAND ${VALGRIND} ${VALGRIND_MEMCHECK_FLAGS} $<TARGET_FILE:DataTest> 1> /dev/null
         COMMAND ${VALGRIND} ${VALGRIND_MEMCHECK_FLAGS} $<TARGET_FILE:OptionsTest> 1> /dev/null
