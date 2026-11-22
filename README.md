@@ -5,9 +5,9 @@
 [![License](https://img.shields.io/badge/license-GPLv3-yellow.svg)](LICENSE)
 ![C](https://img.shields.io/badge/c-11-green.svg)
 
-KeyGen is a generator for keys and passwords. It's usable as standalone application and library.
+KeyGen is a generator for keys and passwords. It's usable as a standalone application and as a library.
 
-The cryptography behind is provided by *OpenSSL*.
+The cryptography behind it is provided by *OpenSSL*.
 
 ## Requirements
 
@@ -35,38 +35,38 @@ or running `make` with one of these targets:
 make        | < target >
 ----------- | -------------------------------
 `test`      | Runs ctest (same as `ctest`)
-`unittest`  | Builds and  runs all test
+`unittest`  | Builds and runs all tests
 `coverage`  | Coverage (requires [gcovr](https://github.com/gcovr/gcovr))
 
 ## Usage
 
-The unit of length is (ASCII) characters (1 char = 1 byte). So a length of 20 means 20 (ASCII) characters = 20 bytes.
+The unit of length is the ASCII character (1 char = 1 byte). So a length of 20 means 20 ASCII characters = 20 bytes.
 
 ### Application
 
-The application is used with commandline arguments. Run `keygen -h` to print the help.
+The application is used with command-line arguments. Run `keygen -h` to print the help.
 
 #### Arguments:
 
 ```
  Usage: keygen [Options]
 
-  --ascii   -a :  Generates a key of ASCII characters, ranging from '!' to'~' (default)
-  --ascii-blank -w :  Generates a key of ASCII characters, ranging from ' ' to'~';
+  --ascii   -a :  Generates a key of ASCII characters, ranging from '!' to '~' (default)
+  --ascii-blank -w :  Generates a key of ASCII characters, ranging from ' ' to '~';
                       same as --ascii, but includes blanks
   --ascii-reduced   -r :  Generates a key of reduced ASCII
   --alphanum    -p :  Generates a key of alphanumeric characters
-  --length <n>  -l <n> :  Generates a key of <n> bytes length
+  --length <n>  -l <n> :  Generates a key of length <n> bytes
   --short   -s :  Shows only the key
   --help    -h :  Shows the help
-  --version -v :  Shows version informations and license.
+  --version -v :  Shows version information and license.
 ```
 
-**Note:** For generating, the `--length` / `-l` parameter is *always* necessary.
+**Note:** To generate a key, the `--length` / `-l` parameter is always required.
 
 #### Examples
 
-Key of 20 length:
+Key of length 20:
 
     $ keygen -l 20
 
@@ -76,7 +76,7 @@ Key of 20 length:
     ----------
       Length : 20
 
-this is equal to `keygen --ascii -l 20` and `keygen -a -l 20`.
+This is equal to `keygen --ascii -l 20` and `keygen -a -l 20`.
 
 The same key size, displayed in short (key only) format:
 
@@ -84,7 +84,7 @@ The same key size, displayed in short (key only) format:
     ZI^fD{dX<qa?uw?%'acM
 
 
-Key of 1024 length, stored in a file:
+Key of length 1024, stored in a file:
 
     $ keygen --short --length 1024 > example.key
 
@@ -121,8 +121,8 @@ else
 
 ## Notes
 
- - The keylength is set to a minimum of 8 - lesser length is not allowed
- - Using parameter `-s` / `--short` will reduce the output to key only
+ - The key length is set to a minimum of 8 — lesser lengths are not allowed
+ - Using parameter `-s` / `--short` will reduce the output to the key only
 
 ## Documentation
 
