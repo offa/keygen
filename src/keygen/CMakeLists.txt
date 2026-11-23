@@ -8,5 +8,5 @@ target_link_libraries(keygen-lib PRIVATE OpenSSL::SSL OpenSSL::Crypto)
 
 
 
-install(TARGETS keygen-lib EXPORT keygen-config DESTINATION include)
+install(TARGETS keygen-lib EXPORT keygen-config DESTINATION lib)
 install(EXPORT keygen-config DESTINATION share/keygen/cmake)
