@@ -180,7 +180,12 @@ static KeyGenError transformBuffer(uint8_t* buffer, const size_t length,
  */
 static KeyGenError getRandomBytes(uint8_t* buffer, size_t length)
 {
-    assert(length < INT_MAX);
+    if (length > (size_t) INT_MAX)
+    {
+        keygen_cleanBuffer(buffer, length);
+        return KG_ERR_UNSUPPORTED;
+    }
+
     const int rtn = RAND_bytes(buffer, (int) length);
 
     if (rtn != 1)
@@ -261,7 +266,7 @@ KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format f
     }
     else
     {
-        rtn = KG_ERR_SECURITY;
+        rtn = err;
     }
 
     keygen_cleanAndFreeBuffer(tmpBuffer, length);
