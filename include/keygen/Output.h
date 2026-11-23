@@ -66,7 +66,7 @@ extern "C"
      * <code>options</code>.
      *
      * @remark
-     * A key less than <code>KEY_LENGTH_MIN</code> is not supported and results
+     * A key less than <code>KEY_MIN_LENGTH</code> is not supported and results
      * in an error.
      *
      * @param options       Options
