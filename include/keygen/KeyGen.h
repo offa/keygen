@@ -87,9 +87,10 @@ extern "C"
      * success,the caller is responsible for cleaning <code>buffer</code> using
      * <code>keygen_cleanBuffer()</code>.
      *
-     * Key lengths less than <code>KEY_MIN_LENGTH</code> are not allowed! If a
-     * smaller key length is given, this will always return
-     * <code>KG_ERR_ILL_ARGUMENT</code> immediately - without generating a key.
+     * Key lengths outside the supported range (from
+     * <code>KEY_MIN_LENGTH</code> to <code>KEY_MAX_LENGTH</code>) are not
+     * allowed! If such a length is given, this will always return
+     * <code>KG_ERR_UNSUPPORTED</code> immediately - without generating a key.
      *
      * The buffer must not be <code>NULL</code> - this will return
      * <code>KG_ERR_ILL_ARGUMENT</code> immediately too.
