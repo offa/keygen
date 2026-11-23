@@ -77,19 +77,15 @@ struct CLOptions parseOptions(int argc, char** argv)
             {
                 case OPT_ASCII:
                     options.keyFormat = ASCII;
-                    options.valid &= true;
                     break;
                 case OPT_ASCII_BLANKS:
                     options.keyFormat = ASCII_BLANKS;
-                    options.valid &= true;
                     break;
                 case OPT_ASCII_REDUCED:
                     options.keyFormat = ASCII_REDUCED;
-                    options.valid &= true;
                     break;
                 case OPT_ALPHANUMERIC:
                     options.keyFormat = ALPHA_NUMERIC;
-                    options.valid &= true;
                     break;
                 case OPT_LENGTH:
                 {
@@ -105,16 +101,13 @@ struct CLOptions parseOptions(int argc, char** argv)
                 break;
                 case OPT_SHORT:
                     options.shortOutput = true;
-                    options.valid &= true;
                     break;
                 case OPT_HELP:
                     options.showHelp = true;
-                    options.valid &= true;
                     options.exit = true;
                     break;
                 case OPT_VERSION:
                     options.showVersion = true;
-                    options.valid &= true;
                     options.exit = true;
                     break;
                 default:

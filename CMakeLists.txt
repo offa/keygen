@@ -38,7 +38,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(CompilerOptions)
-add_common_flags(-Wall
+add_common_flags(
+    -Wall
     -Wextra
     -Werror
     -pedantic
@@ -48,7 +49,7 @@ add_common_flags(-Wall
     -Wconversion
     -Wsign-conversion
     )
-add_cpp_flags(-Wold-style-cast
+add_cpp_flags(
     -Wold-style-cast
     -Wnon-virtual-dtor
     -Woverloaded-virtual
