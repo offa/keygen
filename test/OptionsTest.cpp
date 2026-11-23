@@ -21,6 +21,9 @@
 #include "keygen/Options.h"
 #include "TestUtil.h"
 #include <algorithm>
+#include <getopt.h>
+#include <limits>
+#include <string>
 #include <catch2/catch_test_macros.hpp>
 
 TEST_CASE("option evaluation", "[OptionsTest]")

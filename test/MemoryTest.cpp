@@ -19,7 +19,6 @@
  */
 
 #include "keygen/KeyGen.h"
-#include "TestUtil.h"
 #include <array>
 #include <iterator>
 #include <catch2/catch_test_macros.hpp>
