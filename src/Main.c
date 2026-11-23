@@ -68,7 +68,7 @@ int main(int argc, char** argv)
     }
     else
     {
-        /* empty */
+        return KG_RTN_ERR_ERROR;
     }
 
     return EXIT_SUCCESS;
