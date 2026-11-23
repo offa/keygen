@@ -17,6 +17,7 @@ endif()
 
 
 add_custom_target(coverage ${CMAKE_COMMAND} -E make_directory ${COV_DIR}
+    COMMAND ctest --output-on-failure
     COMMAND ${GCOVR} --root ${PROJECT_SOURCE_DIR}
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
     COMMENT "Generate coverage data"
