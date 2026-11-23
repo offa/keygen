@@ -27,7 +27,6 @@
 
 #pragma once
 
-#include <getopt.h>
 #include <stdbool.h>
 
 #include "keygen/KeyGen.h"
