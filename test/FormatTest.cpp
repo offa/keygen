@@ -35,7 +35,7 @@ namespace
     {
         std::for_each(buffer.cbegin(), buffer.cend(), [format](const auto& c)
                       {
-                      constexpr std::size_t asciiReducedSize{88};
+                      constexpr std::size_t asciiReducedSize{sizeof(ASCII_REDUCED_CHARS)};
             switch (format)
             {
                 case ASCII:
