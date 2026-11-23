@@ -23,6 +23,7 @@
 #include <algorithm>
 #include <cctype>
 #include <catch2/catch_test_macros.hpp>
+#include <cstring>
 
 extern const char ALPHANUMERIC_CHARS[];
 extern const char ASCII_REDUCED_CHARS[];
@@ -35,7 +36,7 @@ namespace
     {
         std::for_each(buffer.cbegin(), buffer.cend(), [format](const auto& c)
                       {
-                      constexpr std::size_t asciiReducedSize{sizeof(ASCII_REDUCED_CHARS)};
+                      std::size_t asciiReducedSize = std::strlen(ASCII_REDUCED_CHARS);
             switch (format)
             {
                 case ASCII:
