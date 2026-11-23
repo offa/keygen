@@ -40,7 +40,7 @@ namespace test
             }
             fflush(fileHandle);
 
-            if (const auto* rtn = freopen("NUL", "a", fileHandle); rtn == nullptr)
+            if (const auto* rtn = freopen("/dev/null", "a", fileHandle); rtn == nullptr)
             {
                 throw std::runtime_error{"failed to redirect stream"};
             }
