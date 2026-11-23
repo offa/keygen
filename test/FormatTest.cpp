@@ -21,6 +21,7 @@
 #include "keygen/KeyGen.h"
 #include <array>
 #include <algorithm>
+#include <cctype>
 #include <catch2/catch_test_macros.hpp>
 
 extern const char ALPHANUMERIC_CHARS[];

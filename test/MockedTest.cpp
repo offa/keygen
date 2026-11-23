@@ -22,7 +22,7 @@
 #include "TestUtil.h"
 #include <cstdio>
 #include <cstring>
-#include <unistd.h>
+#include <limits>
 #include <array>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/trompeloeil.hpp>
