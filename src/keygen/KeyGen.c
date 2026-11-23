@@ -25,7 +25,7 @@
 
 #include "keygen/KeyGen.h"
 #include <string.h>
-#include <stdbool.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -81,24 +81,89 @@ const char ASCII_CHARS[] =
 
 
 /**
+ * Prints the last OpenSSL error message.
+ */
+static void printOpenSSLError(void)
+{
+    const unsigned long error = ERR_get_error();
+    char errBuffer[ERR_MSG_LENGTH + 1]; // FlawFinder: ignore - Handled by ERR_error_string_n()
+
+    ERR_error_string_n(error, errBuffer, sizeof(errBuffer));
+    fprintf(stderr, "%s", errBuffer);
+}
+
+/**
+ * Generates a single random byte.
+ *
+ * @param byte      Output byte
+ * @return          Returns <code>KG_ERR_SUCCESS</code> on success or an
+ *                  error code
+ */
+static KeyGenError getRandomByte(uint8_t* byte)
+{
+    assert(byte != NULL);
+
+    if (RAND_bytes(byte, 1) != 1)
+    {
+        printOpenSSLError();
+        return KG_ERR_SECURITY;
+    }
+
+    return KG_ERR_SUCCESS;
+}
+
+/**
  * Transforms the buffer to the given format.
+ *
+ * Each random byte is mapped onto the format using rejection sampling: values
+ * at or above the largest multiple of <code>fmtLength</code> are discarded and
+ * replaced by a newly generated random byte. This avoids the modulo bias that
+ * would result from mapping the full <code>0-255</code> range directly.
  *
  * @param buffer        Input buffer
  * @param length        Input buffer length
  * @param fmtChars      Format char's
  * @param fmtLength     Format char's length
+ * @return              Returns <code>KG_ERR_SUCCESS</code> on success or an
+ *                      error code
  */
-static void transformBuffer(uint8_t* buffer, const size_t length,
-                            const char* fmtChars, const size_t fmtLength)
+static KeyGenError transformBuffer(uint8_t* buffer, const size_t length,
+                                   const char* fmtChars, const size_t fmtLength)
 {
     assert(buffer != NULL);
     assert(length > 0);
+    assert(fmtChars != NULL);
+
+    const size_t numberOfByteValues = (size_t) UINT8_MAX + 1;
+
+    if ((fmtLength == 0) || (fmtLength > numberOfByteValues))
+    {
+        return KG_ERR_ILL_ARGUMENT;
+    }
+
+    const size_t acceptanceLimit = numberOfByteValues - (numberOfByteValues % fmtLength);
 
     for (size_t i = 0; i < length; ++i)
     {
-        const size_t pos = buffer[i] % fmtLength;
-        buffer[i] = (uint8_t) fmtChars[pos];
+        size_t randomValue = (size_t) buffer[i];
+
+        while (randomValue >= acceptanceLimit)
+        {
+            uint8_t extraByte = 0;
+            const KeyGenError err = getRandomByte(&extraByte);
+
+            if (err != KG_ERR_SUCCESS)
+            {
+                return err;
+            }
+
+            randomValue = (size_t) extraByte;
+        }
+
+        buffer[i] = (uint8_t) fmtChars[randomValue % fmtLength];
     }
+
+    return KG_ERR_SUCCESS;
 }
 
 /**
@@ -120,12 +185,7 @@ static KeyGenError getRandomBytes(uint8_t* buffer, size_t length)
 
     if (rtn != 1)
     {
-        const unsigned long error = ERR_get_error();
-        char errBuffer[ERR_MSG_LENGTH + 1]; // FlawFinder: ignore - Handled by ERR_error_string_n()
-
-        ERR_error_string_n(error, errBuffer, sizeof(errBuffer));
-        fprintf(stderr, "%s", errBuffer);
-
+        printOpenSSLError();
         keygen_cleanBuffer(buffer, length);
         return KG_ERR_SECURITY;
     }
@@ -168,32 +228,35 @@ KeyGenError keygen_createKey(uint8_t* buffer, const size_t length, enum Format f
 
     if (err == KG_ERR_SUCCESS)
     {
-        bool error = false;
+        KeyGenError transformResult = KG_ERR_UNKNOWN;
 
         switch (format)
         {
             case ASCII:
-                transformBuffer(tmpBuffer, length, ASCII_CHARS, COUNT_ARRAY_ELEMENTS(ASCII_CHARS));
+                transformResult = transformBuffer(tmpBuffer, length, ASCII_CHARS, COUNT_ARRAY_ELEMENTS(ASCII_CHARS));
                 break;
             case ASCII_BLANKS:
-                transformBuffer(tmpBuffer, length, ASCII_BLANK_CHARS, COUNT_ARRAY_ELEMENTS(ASCII_BLANK_CHARS));
+                transformResult = transformBuffer(tmpBuffer, length, ASCII_BLANK_CHARS, COUNT_ARRAY_ELEMENTS(ASCII_BLANK_CHARS));
                 break;
             case ASCII_REDUCED:
-                transformBuffer(tmpBuffer, length, ASCII_REDUCED_CHARS, COUNT_ARRAY_ELEMENTS(ASCII_REDUCED_CHARS));
+                transformResult = transformBuffer(tmpBuffer, length, ASCII_REDUCED_CHARS, COUNT_ARRAY_ELEMENTS(ASCII_REDUCED_CHARS));
                 break;
             case ALPHA_NUMERIC:
-                transformBuffer(tmpBuffer, length, ALPHANUMERIC_CHARS, COUNT_ARRAY_ELEMENTS(ALPHANUMERIC_CHARS));
+                transformResult = transformBuffer(tmpBuffer, length, ALPHANUMERIC_CHARS, COUNT_ARRAY_ELEMENTS(ALPHANUMERIC_CHARS));
                 break;
             default:
-                rtn = KG_ERR_ILL_ARGUMENT;
-                error = true;
+                transformResult = KG_ERR_ILL_ARGUMENT;
                 break;
         }
 
-        if (error == false)
+        if (transformResult == KG_ERR_SUCCESS)
         {
             memcpy(buffer, tmpBuffer, length); // FlawFinder: ignore - size is same as input
             rtn = KG_ERR_SUCCESS;
+        }
+        else
+        {
+            rtn = transformResult;
         }
     }
     else

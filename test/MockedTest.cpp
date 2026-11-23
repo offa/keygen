@@ -21,10 +21,14 @@
 #include "keygen/KeyGen.h"
 #include "TestUtil.h"
 #include <cstdio>
+#include <cstring>
 #include <unistd.h>
 #include <array>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/trompeloeil.hpp>
+
+extern const char ALPHANUMERIC_CHARS[];
+extern const char ASCII_CHARS[];
 
 namespace
 {
@@ -71,4 +75,75 @@ TEST_CASE("keysize lower limit fails", "[MockedTest]")
     const test::DisableStderr d{stderr};
     const KeyGenError rtn = keygen_createKey(nullptr, 3, ASCII);
     CHECK(rtn == KG_ERR_UNSUPPORTED);
+}
+
+TEST_CASE("values below acceptance limit are mapped without rejection", "[MockedTest]")
+{
+    using trompeloeil::_;
+
+    constexpr std::size_t length{8};
+    std::array<std::uint8_t, length> initialBytes{};
+    std::array<std::uint8_t, length> expected{};
+    std::array<std::uint8_t, length> buffer{};
+
+    for (std::size_t i = 0; i < length; ++i)
+    {
+        initialBytes[i] = static_cast<std::uint8_t>(i);
+        expected[i] = static_cast<std::uint8_t>(ASCII_CHARS[i]);
+    }
+
+    REQUIRE_CALL(m, randBytes(_, static_cast<int>(length)))
+        .LR_SIDE_EFFECT((std::memcpy(_1, initialBytes.data(), length)))
+        .RETURN(1);
+    REQUIRE_CALL(m, randBytes(_, 1)).TIMES(0);
+
+    const KeyGenError rtn = keygen_createKey(buffer.data(), length, ASCII);
+
+    CHECK(rtn == KG_ERR_SUCCESS);
+    CHECK(buffer == expected);
+}
+
+TEST_CASE("rejected values are replaced by new random bytes", "[MockedTest]")
+{
+    using trompeloeil::_;
+
+    constexpr std::size_t length{8};
+    std::array<std::uint8_t, length> expected{};
+    std::array<std::uint8_t, length> buffer{};
+    expected.fill(static_cast<std::uint8_t>(ALPHANUMERIC_CHARS[0]));
+
+    REQUIRE_CALL(m, randBytes(_, static_cast<int>(length)))
+        .LR_SIDE_EFFECT((std::memset(_1, 0xFF, length)))
+        .RETURN(1);
+    REQUIRE_CALL(m, randBytes(_, 1))
+        .TIMES(length)
+        .LR_SIDE_EFFECT((std::memset(_1, 0x00, 1)))
+        .RETURN(1);
+
+    const KeyGenError rtn = keygen_createKey(buffer.data(), length, ALPHA_NUMERIC);
+
+    CHECK(rtn == KG_ERR_SUCCESS);
+    CHECK(buffer == expected);
+}
+
+TEST_CASE("failure during rejection leaves buffer untouched", "[MockedTest]")
+{
+    using trompeloeil::_;
+
+    constexpr std::size_t length{8};
+    std::array<std::uint8_t, length> buffer{};
+    buffer.fill(static_cast<std::uint8_t>(0xAA));
+    const auto expected = buffer;
+
+    REQUIRE_CALL(m, randBytes(_, static_cast<int>(length)))
+        .LR_SIDE_EFFECT((std::memset(_1, 0xFF, length)))
+        .RETURN(1);
+    REQUIRE_CALL(m, randBytes(_, 1))
+        .RETURN(0);
+
+    const test::DisableStderr d{stderr};
+    const KeyGenError rtn = keygen_createKey(buffer.data(), length, ALPHA_NUMERIC);
+
+    CHECK(rtn == KG_ERR_SECURITY);
+    CHECK(buffer == expected);
 }
